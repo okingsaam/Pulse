@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Agendar Consulta - Pulse{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+        <div class="card pulse-card">
+            <div class="card-header bg-white text-center">
+                <h2 class="card-title mb-0">
+                    <i class="bi bi-calendar-plus text-success"></i> Agendar Consulta
+                </h2>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-success pulse-btn">
+                            <i class="bi bi-calendar-check"></i> Confirmar Agendamento
+                        </button>
+                        <a href="{% url 'core:dashboard' %}" class="btn btn-outline-secondary pulse-btn">
+                            <i class="bi bi-arrow-left"></i> Voltar ao Dashboard
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

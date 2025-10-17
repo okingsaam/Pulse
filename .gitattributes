@@ -1,2 +1,86 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Git Attributes para Projeto Django Python
+# ========================================
+
+# Definir todos os arquivos de texto como LF (Unix line endings)
+* text=auto eol=lf
+
+# Arquivos Python
+*.py text diff=python
+
+# Arquivos de template
+*.html text
+*.css text
+*.js text
+*.json text
+*.xml text
+*.yml text
+*.yaml text
+
+# Arquivos de configuração
+*.ini text
+*.cfg text
+*.conf text
+*.config text
+
+# Arquivos de documentação
+*.md text
+*.txt text
+*.rst text
+
+# Arquivos de dados
+*.sql text
+*.csv text
+
+# Arquivos binários (não devem ser convertidos)
+*.db binary
+*.sqlite3 binary
+*.pyc binary
+*.pyo binary
+*.pyd binary
+*.so binary
+*.dll binary
+*.exe binary
+*.dmg binary
+*.pkg binary
+*.deb binary
+*.rpm binary
+
+# Imagens
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg text
+
+# Fontes
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+*.eot binary
+
+# Vídeos e áudios
+*.mp4 binary
+*.avi binary
+*.mov binary
+*.wmv binary
+*.mp3 binary
+*.wav binary
+
+# Arquivos compactados
+*.zip binary
+*.tar.gz binary
+*.tgz binary
+*.rar binary
+*.7z binary
+
+# Linguística do GitHub - Detectar projeto como Python
+*.py linguist-language=Python
+*.html linguist-language=HTML
+*.css linguist-language=CSS
+*.js linguist-language=JavaScript
+
+# Ignorar arquivos de dependências na contagem
+requirements.txt linguist-generated=false
+manage.py linguist-generated=false

@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Pulse{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 fw-bold">
+        <i class="bi bi-speedometer2"></i> Dashboard
+    </h1>
+    <div>
+        <span class="badge bg-primary fs-6">{{ user.get_role_display }}</span>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-3 col-md-6">
+        <div class="card stats-card text-center p-4">
+            <div class="card-body">
+                <i class="bi bi-calendar-check display-4 mb-3"></i>
+                <h3 class="fw-bold">{{ total_agendamentos }}</h3>
+                <p class="mb-0">
+                    {% if user.role == 'admin' %}Total de Agendamentos{% else %}Meus Agendamentos{% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    {% if user.role == 'admin' %}
+    <div class="col-lg-3 col-md-6">
+        <div class="card stats-card text-center p-4">
+            <div class="card-body">
+                <i class="bi bi-people display-4 mb-3"></i>
+                <h3 class="fw-bold">{{ total_profissionais }}</h3>
+                <p class="mb-0">Profissionais</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6">
+        <div class="card stats-card text-center p-4">
+            <div class="card-body">
+                <i class="bi bi-gear display-4 mb-3"></i>
+                <h3 class="fw-bold">{{ total_servicos }}</h3>
+                <p class="mb-0">Serviços</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="col-lg-3 col-md-6">
+        <div class="card pulse-card text-center p-4">
+            <div class="card-body">
+                <a href="{% url 'core:agendar' %}" class="btn btn-success btn-lg pulse-btn">
+                    <i class="bi bi-calendar-plus"></i><br>
+                    Novo Agendamento
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Appointments -->
+<div class="row">
+    <div class="col-12">
+        <div class="card pulse-card">
+            <div class="card-header bg-white">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-clock-history"></i> Agendamentos Recentes
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if agendamentos %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    {% if user.role == 'admin' %}
+                                    <th>Paciente</th>
+                                    {% endif %}
+                                    <th>Serviço</th>
+                                    <th>Profissional</th>
+                                    <th>Data/Hora</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for agendamento in agendamentos %}
+                                <tr>
+                                    {% if user.role == 'admin' %}
+                                    <td>{{ agendamento.paciente.username }}</td>
+                                    {% endif %}
+                                    <td>{{ agendamento.servico.nome }}</td>
+                                    <td>{{ agendamento.profissional.nome }}</td>
+                                    <td>{{ agendamento.data_hora|date:"d/m/Y H:i" }}</td>
+                                    <td>
+                                        {% if agendamento.status == 'confirmado' %}
+                                            <span class="badge bg-success">{{ agendamento.get_status_display }}</span>
+                                        {% elif agendamento.status == 'pendente' %}
+                                            <span class="badge bg-warning">{{ agendamento.get_status_display }}</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">{{ agendamento.get_status_display }}</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="bi bi-calendar-x display-1 text-muted"></i>
+                        <h5 class="text-muted mt-3">Nenhum agendamento encontrado</h5>
+                        <a href="{% url 'core:agendar' %}" class="btn btn-primary pulse-btn mt-3">
+                            <i class="bi bi-calendar-plus"></i> Fazer Primeiro Agendamento
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

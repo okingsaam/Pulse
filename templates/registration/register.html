@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Cadastro - Pulse{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6">
+        <div class="card pulse-card">
+            <div class="card-body p-5">
+                <div class="text-center mb-4">
+                    <i class="bi bi-person-plus display-1 text-success"></i>
+                    <h2 class="card-title fw-bold">Criar Conta</h2>
+                    <p class="text-muted">Junte-se ao Pulse</p>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    
+                    <button type="submit" class="btn btn-success w-100 pulse-btn mt-3">
+                        <i class="bi bi-person-plus"></i> Criar Conta
+                    </button>
+                </form>
+
+                <hr class="my-4">
+                
+                <div class="text-center">
+                    <p class="mb-0">Já tem uma conta?</p>
+                    <a href="{% url 'core:login' %}" class="btn btn-outline-primary w-100 pulse-btn mt-2">
+                        <i class="bi bi-box-arrow-in-right"></i> Entrar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

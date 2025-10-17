@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Pulse - Início{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold text-primary mb-3">
+                <i class="bi bi-heart-pulse"></i> Bem-vindo ao Pulse
+            </h1>
+            <p class="lead text-muted">
+                Sistema inteligente de agendamento médico. Gerencie consultas, profissionais e serviços de forma simples e eficiente.
+            </p>
+        </div>
+
+        <!-- Features Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="card pulse-card h-100 text-center p-4">
+                    <div class="card-body">
+                        <i class="bi bi-calendar-check display-1 text-success mb-3"></i>
+                        <h5 class="card-title">Agendamento Fácil</h5>
+                        <p class="card-text">Agende suas consultas de forma rápida e intuitiva.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card pulse-card h-100 text-center p-4">
+                    <div class="card-body">
+                        <i class="bi bi-people display-1 text-info mb-3"></i>
+                        <h5 class="card-title">Profissionais</h5>
+                        <p class="card-text">Acesso aos melhores profissionais da área médica.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card pulse-card h-100 text-center p-4">
+                    <div class="card-body">
+                        <i class="bi bi-shield-check display-1 text-warning mb-3"></i>
+                        <h5 class="card-title">Seguro & Confiável</h5>
+                        <p class="card-text">Seus dados protegidos com máxima segurança.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="text-center">
+            {% if not user.is_authenticated %}
+                <a href="{% url 'core:register' %}" class="btn btn-primary btn-lg pulse-btn me-3">
+                    <i class="bi bi-person-plus"></i> Criar Conta
+                </a>
+                <a href="{% url 'core:login' %}" class="btn btn-outline-primary btn-lg pulse-btn">
+                    <i class="bi bi-box-arrow-in-right"></i> Entrar
+                </a>
+            {% else %}
+                <a href="{% url 'core:dashboard' %}" class="btn btn-primary btn-lg pulse-btn me-3">
+                    <i class="bi bi-speedometer2"></i> Ir para Dashboard
+                </a>
+                <a href="{% url 'core:agendar' %}" class="btn btn-success btn-lg pulse-btn">
+                    <i class="bi bi-calendar-plus"></i> Agendar Consulta
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
