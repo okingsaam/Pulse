@@ -1,0 +1,184 @@
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/pulse_admin.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/pulse_perfect.css' %}">
+    <style>
+        /* Estilos inline adicionais para garantir que sejam aplicados */
+        
+        /* Header melhorado */
+        #header {
+            background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%) !important;
+            box-shadow: 0 2px 10px rgba(33, 150, 243, 0.3) !important;
+        }
+        
+        /* Logo e título do header */
+        #branding h1 {
+            color: white !important;
+            font-weight: 700 !important;
+            font-size: 24px !important;
+            margin: 0 !important;
+            padding: 15px 0 !important;
+        }
+        
+        #branding h1 a {
+            color: white !important;
+            text-decoration: none !important;
+        }
+        
+        /* User tools no header */
+        #user-tools {
+            color: white !important;
+            padding: 15px 0 !important;
+        }
+        
+        #user-tools a {
+            color: #e3f2fd !important;
+            text-decoration: none !important;
+            margin: 0 10px !important;
+            font-weight: 500 !important;
+        }
+        
+        #user-tools a:hover {
+            color: white !important;
+            text-decoration: underline !important;
+        }
+        
+        /* Content area */
+        #content {
+            padding: 20px !important;
+            background-color: #f8f9fa !important;
+            min-height: calc(100vh - 120px) !important;
+        }
+        
+        /* Dashboard styling */
+        #content-main {
+            background: white !important;
+            border-radius: 12px !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+            padding: 30px !important;
+            margin-bottom: 20px !important;
+        }
+        
+        /* Titles */
+        h1, h2, h3 {
+            color: #1976d2 !important;
+            font-weight: 600 !important;
+        }
+        
+        .dashboard h1 {
+            text-align: center !important;
+            margin-bottom: 30px !important;
+            font-size: 28px !important;
+            background: linear-gradient(135deg, #2196f3, #1976d2) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+        }
+        
+        /* Footer */
+        #footer {
+            background: linear-gradient(135deg, #37474f 0%, #263238 100%) !important;
+            color: white !important;
+            text-align: center !important;
+            padding: 15px !important;
+            margin-top: 40px !important;
+        }
+        
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #2196f3;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Smooth transitions */
+        * {
+            transition: all 0.3s ease !important;
+        }
+        
+        /* Better spacing */
+        .form-row {
+            margin-bottom: 20px !important;
+        }
+        
+        /* Success indicators */
+        .yes, .true {
+            color: #4caf50 !important;
+            font-weight: bold !important;
+        }
+        
+        .no, .false {
+            color: #f44336 !important;
+            font-weight: bold !important;
+        }
+        
+        /* Better fieldsets */
+        fieldset {
+            border: 2px solid #e0e0e0 !important;
+            border-radius: 8px !important;
+            padding: 20px !important;
+            margin-bottom: 20px !important;
+        }
+        
+        fieldset legend {
+            background: white !important;
+            padding: 5px 15px !important;
+            border: 2px solid #2196f3 !important;
+            border-radius: 6px !important;
+            color: #2196f3 !important;
+            font-weight: 600 !important;
+        }
+    </style>
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script>
+        // JavaScript para melhorar a experiência
+        document.addEventListener('DOMContentLoaded', function() {
+            // Adicionar indicador de loading nos formulários
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function() {
+                    const submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.innerHTML = '<span class="loading"></span> Salvando...';
+                        submitBtn.disabled = true;
+                    }
+                });
+            });
+            
+            // Melhorar tooltips
+            const tooltips = document.querySelectorAll('[title]');
+            tooltips.forEach(element => {
+                element.style.cursor = 'help';
+            });
+            
+            // Adicionar confirmação para deletar
+            const deleteLinks = document.querySelectorAll('a[href*="delete"]');
+            deleteLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (!confirm('Tem certeza que deseja excluir este item?')) {
+                        e.preventDefault();
+                    }
+                });
+            });
+            
+            // Melhorar navegação
+            console.log('🎨 Interface administrativa Pulse carregada com sucesso!');
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+
+{% block title %}Agenda Semanal - Pulse{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="bi bi-calendar-week"></i> Agenda Semanal</h2>
+                <div class="btn-group">
+                    <button class="btn btn-outline-primary" onclick="semanaAnterior()">
+                        <i class="bi bi-chevron-left"></i> Anterior
+                    </button>
+                    <button class="btn btn-primary" onclick="semanaAtual()">
+                        Hoje
+                    </button>
+                    <button class="btn btn-outline-primary" onclick="proximaSemana()">
+                        Próxima <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendário Semanal -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card pulse-card">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered mb-0">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th class="text-center">Horário</th>
+                                    {% for dia, agendamentos_dia in agenda_semanal.items %}
+                                    <th class="text-center">
+                                        {{ dia|date:"D d/m" }}
+                                        <br>
+                                        <small class="text-muted">{{ agendamentos_dia|length }} agendamento{{ agendamentos_dia|length|pluralize:"s" }}</small>
+                                    </th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for hora in "08,09,10,11,12,13,14,15,16,17,18"|split:"," %}
+                                <tr>
+                                    <td class="text-center bg-light fw-bold">{{ hora }}:00</td>
+                                    {% for dia, agendamentos_dia in agenda_semanal.items %}
+                                    <td class="agenda-slot" data-dia="{{ dia|date:'Y-m-d' }}" data-hora="{{ hora }}">
+                                        {% for agendamento in agendamentos_dia %}
+                                            {% if agendamento.data_hora.hour == hora|add:0 %}
+                                            <div class="agenda-item status-{{ agendamento.status }}" data-bs-toggle="tooltip" 
+                                                 title="{{ agendamento.paciente.get_full_name|default:agendamento.paciente.username }} - {{ agendamento.servico.nome }}">
+                                                <div class="agenda-time">{{ agendamento.data_hora|date:"H:i" }}</div>
+                                                <div class="agenda-patient">{{ agendamento.paciente.username }}</div>
+                                                <div class="agenda-service">{{ agendamento.servico.nome }}</div>
+                                                <div class="agenda-professional">{{ agendamento.profissional.nome }}</div>
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Legenda -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h6>Legenda:</h6>
+                    <div class="d-flex gap-3">
+                        <span class="badge status-pendente">Pendente</span>
+                        <span class="badge status-confirmado">Confirmado</span>
+                        <span class="badge status-cancelado">Cancelado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lista de Agendamentos -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="bi bi-list-ul"></i> Agendamentos da Semana</h5>
+                </div>
+                <div class="card-body">
+                    {% if agendamentos %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Data/Hora</th>
+                                    <th>Paciente</th>
+                                    <th>Serviço</th>
+                                    <th>Profissional</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for agendamento in agendamentos %}
+                                <tr>
+                                    <td>{{ agendamento.data_hora|date:"d/m/Y H:i" }}</td>
+                                    <td>{{ agendamento.paciente.get_full_name|default:agendamento.paciente.username }}</td>
+                                    <td>{{ agendamento.servico.nome }}</td>
+                                    <td>{{ agendamento.profissional.nome }}</td>
+                                    <td>
+                                        <span class="badge status-{{ agendamento.status }}">
+                                            {{ agendamento.get_status_display }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {% if user.role == 'admin' %}
+                                        <div class="btn-group btn-group-sm">
+                                            {% if agendamento.status != 'confirmado' %}
+                                            <button class="btn btn-success" onclick="confirmarAgendamento({{ agendamento.id }})">
+                                                <i class="bi bi-check"></i>
+                                            </button>
+                                            {% endif %}
+                                            {% if agendamento.status != 'cancelado' %}
+                                            <button class="btn btn-danger" onclick="cancelarAgendamento({{ agendamento.id }})">
+                                                <i class="bi bi-x"></i>
+                                            </button>
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5">
+                        <i class="bi bi-calendar-x display-1 text-muted"></i>
+                        <p class="text-muted mt-3">Nenhum agendamento nesta semana</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.agenda-slot {
+    height: 80px;
+    padding: 2px;
+    vertical-align: top;
+    position: relative;
+}
+
+.agenda-item {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 4px;
+    margin: 1px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.agenda-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.agenda-item.status-confirmado {
+    background: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.agenda-item.status-pendente {
+    background: #fff3cd;
+    border-color: #ffeaa7;
+}
+
+.agenda-item.status-cancelado {
+    background: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.agenda-time {
+    font-weight: bold;
+    color: #495057;
+}
+
+.agenda-patient {
+    font-weight: 600;
+    color: #007bff;
+}
+
+.agenda-service {
+    color: #6c757d;
+}
+
+.agenda-professional {
+    color: #28a745;
+    font-size: 0.7rem;
+}
+</style>
+
+<script>
+function semanaAnterior() {
+    // Implementar navegação para semana anterior
+    window.location.href = '?semana=anterior';
+}
+
+function semanaAtual() {
+    // Voltar para semana atual
+    window.location.href = window.location.pathname;
+}
+
+function proximaSemana() {
+    // Implementar navegação para próxima semana
+    window.location.href = '?semana=proxima';
+}
+
+function confirmarAgendamento(id) {
+    if (confirm('Confirmar este agendamento?')) {
+        // Implementar confirmação via AJAX
+        fetch(`/api/agendamentos/${id}/confirmar/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        }).then(response => {
+            if (response.ok) {
+                showToast('Agendamento confirmado!', 'success');
+                location.reload();
+            }
+        });
+    }
+}
+
+function cancelarAgendamento(id) {
+    if (confirm('Cancelar este agendamento?')) {
+        // Implementar cancelamento via AJAX
+        fetch(`/api/agendamentos/${id}/cancelar/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        }).then(response => {
+            if (response.ok) {
+                showToast('Agendamento cancelado!', 'warning');
+                location.reload();
+            }
+        });
+    }
+}
+</script>
+{% endblock %}

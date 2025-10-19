@@ -49,7 +49,8 @@ class Profissional(models.Model):
     """
     nome = models.CharField(
         max_length=100,
-        help_text="Nome completo do profissional"
+        help_text="Nome completo do profissional",
+        db_index=True
     )
     especialidade = models.CharField(
         max_length=100,
@@ -63,6 +64,7 @@ class Profissional(models.Model):
     class Meta:
         verbose_name = "Profissional"
         verbose_name_plural = "Profissionais"
+        ordering = ['nome']
 
 # ==========================================
 # MODELO DE SERVIÇO (CONSULTAS/EXAMES)
@@ -115,7 +117,9 @@ class Agendamento(models.Model):
     STATUS_CHOICES = (
         ('pendente', 'Pendente'),       # Aguardando confirmação
         ('confirmado', 'Confirmado'),   # Consulta confirmada
+        ('realizado', 'Realizado'),     # Consulta foi realizada
         ('cancelado', 'Cancelado'),     # Consulta cancelada
+        ('faltou', 'Paciente Faltou'),  # Paciente não compareceu
     )
 
     # RELACIONAMENTOS (chaves estrangeiras)

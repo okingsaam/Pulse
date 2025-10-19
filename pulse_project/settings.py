@@ -15,18 +15,27 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # CHAVE SECRETA (manter em segredo em produção!)
-SECRET_KEY = 'django-insecure-vbi^m((o!u8p2l0wb*^)4fzsve8!^jpi)g$8%%dn3t&$eb2=t&'
+SECRET_KEY = '6SF_t3PDi34vsAETRg0n4VIZdrWq-YyypzluGhSepOIHui5sYKMHaQEfjS1O4rlQUU8'
 
 # MODO DEBUG (True = desenvolvimento, False = produção)
-DEBUG = True
+DEBUG = True  # Mantido como True para desenvolvimento local
 
 # Hosts permitidos (em produção, especificar domínios)
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*.herokuapp.com']
+
+# Configurações de segurança para produção
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
 
 # ==========================================
 # APLICAÇÕES INSTALADAS
 # ==========================================
 INSTALLED_APPS = [
+    # Interface admin melhorada (deve vir antes do admin padrão)
+    'admin_interface',
+    'colorfield',
+    
     # Apps padrão do Django
     'django.contrib.admin',          # Interface administrativa
     'django.contrib.auth',           # Sistema de autenticação
@@ -76,6 +85,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.context_processors.admin_stats',  # Estatísticas do admin
             ],
         },
     },
@@ -167,3 +177,73 @@ AUTH_USER_MODEL = 'core.User'       # Usar nosso User ao invés do padrão
 LOGIN_URL = '/login/'               # Para onde enviar se não logado
 LOGIN_REDIRECT_URL = '/dashboard/'  # Para onde ir após login
 LOGOUT_REDIRECT_URL = '/'          # Para onde ir após logout
+
+# ==========================================
+# CONFIGURAÇÕES DE CACHE
+# ==========================================
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'pulse-cache',
+        'TIMEOUT': 300,  # 5 minutos
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000,
+        }
+    }
+}
+
+# ==========================================
+# CONFIGURAÇÕES DE PERFORMANCE
+# ==========================================
+# Paginação padrão
+DEFAULT_PAGE_SIZE = 10
+
+# Otimizações de banco
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ==========================================
+# CONFIGURAÇÕES DE LOGGING
+# ==========================================
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs' / 'pulse.log',
+            'formatter': 'verbose',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'root': {
+        'handlers': ['console', 'file'],
+        'level': 'WARNING',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'core': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}

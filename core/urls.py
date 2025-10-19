@@ -14,6 +14,8 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
 from . import views
+from .consultorio_views import consultorio_dashboard
+from .consultorio_extra_views import consultorio_pacientes, consultorio_agenda, consultorio_financeiro
 
 # ==========================================
 # CONFIGURAÇÃO DA API REST
@@ -37,10 +39,24 @@ urlpatterns = [
     # =====================================
     # URLs PRINCIPAIS DO SITE
     # =====================================
-    path('', views.home, name='home'),
+    path('', consultorio_dashboard, name='home'),
     # URL: "/"
-    # View: views.home
+    # View: consultorio_dashboard (redirecionado para novo dashboard)
     # Nome: 'core:home' (usado em templates)
+    
+    path('consultorio/', consultorio_dashboard, name='consultorio_dashboard'),
+    # URL: "/consultorio/"
+    # View: consultorio_dashboard
+    # Função: Dashboard moderno do consultório
+    
+    path('consultorio/pacientes/', consultorio_pacientes, name='consultorio_pacientes'),
+    # URL: "/consultorio/pacientes/"
+    
+    path('consultorio/agenda/', consultorio_agenda, name='consultorio_agenda'),
+    # URL: "/consultorio/agenda/"
+    
+    path('consultorio/financeiro/', consultorio_financeiro, name='consultorio_financeiro'),
+    # URL: "/consultorio/financeiro/"
     
     path('register/', views.register, name='register'),
     # URL: "/register/"
@@ -94,6 +110,12 @@ urlpatterns = [
     # URL: "/agendamentos/"
     # View: views.agendamento_list
     # Função: Lista agendamentos (filtrado por usuário)
+    
+    # =====================================
+    # URLs DE RELATÓRIOS E AGENDA
+    # =====================================
+    path('agenda/', include('core.reports_urls')),
+    # URLs para relatórios e agenda visual
     
     # =====================================
     # URLs DA API REST

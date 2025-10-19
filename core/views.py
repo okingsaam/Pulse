@@ -16,6 +16,9 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.http import HttpResponse
+from django.core.paginator import Paginator
+from django.core.cache import cache
+from django.db.models import Q, Count
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -78,30 +81,46 @@ def dashboard(request):
     PAINEL PRINCIPAL ("/dashboard/")
     
     LÓGICA:
-    - Admin: Vê dados de todo o sistema
+    - Admin: Vê dados de todo o sistema com cache
     - Paciente: Vê apenas seus próprios dados
     """
-    if request.user.role == 'admin':
-        # ADMIN → Dados gerais do sistema
-        agendamentos = Agendamento.objects.all().order_by('-data_hora')[:5]
-        total_agendamentos = Agendamento.objects.count()
-        total_profissionais = Profissional.objects.count()
-        total_servicos = Servico.objects.count()
-    else:
-        # PACIENTE → Apenas seus agendamentos
-        agendamentos = Agendamento.objects.filter(paciente=request.user).order_by('-data_hora')[:5]
-        total_agendamentos = Agendamento.objects.filter(paciente=request.user).count()
-        total_profissionais = None  # Paciente não vê estes dados
-        total_servicos = None
+    cache_key = f"dashboard_data_{request.user.id}_{request.user.role}"
+    cached_data = cache.get(cache_key)
     
-    # Preparar dados para o template
-    context = {
-        'agendamentos': agendamentos,
-        'total_agendamentos': total_agendamentos,
-        'total_profissionais': total_profissionais,
-        'total_servicos': total_servicos,
-    }
-    return render(request, 'core/dashboard.html', context)
+    if not cached_data:
+        if request.user.role == 'admin':
+            # ADMIN → Dados gerais do sistema com otimizações
+            agendamentos = Agendamento.objects.select_related(
+                'paciente', 'servico', 'profissional'
+            ).all().order_by('-data_hora')[:5]
+            
+            total_agendamentos = Agendamento.objects.count()
+            total_profissionais = Profissional.objects.count()
+            total_servicos = Servico.objects.count()
+            total_usuarios = User.objects.filter(role='paciente').count()
+        else:
+            # PACIENTE → Apenas seus agendamentos
+            agendamentos = Agendamento.objects.select_related(
+                'servico', 'profissional'
+            ).filter(paciente=request.user).order_by('-data_hora')[:5]
+            
+            total_agendamentos = Agendamento.objects.filter(paciente=request.user).count()
+            total_profissionais = None  # Paciente não vê estes dados
+            total_servicos = None
+            total_usuarios = None
+        
+        cached_data = {
+            'agendamentos': agendamentos,
+            'total_agendamentos': total_agendamentos,
+            'total_profissionais': total_profissionais,
+            'total_servicos': total_servicos,
+            'total_usuarios': total_usuarios,
+        }
+        
+        # Cache por 5 minutos
+        cache.set(cache_key, cached_data, 300)
+    
+    return render(request, 'core/dashboard.html', cached_data)
 
 @login_required
 def agendar_consulta(request):

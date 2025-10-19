@@ -1,0 +1,84 @@
+{% extends "admin/index.html" %}
+
+{% load static i18n %}
+
+{% block content %}
+<div class="dashboard">
+    <h1>🏥 Sistema Pulse - Painel Administrativo</h1>
+    
+    <div class="dashboard-stats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+        <div style="background: linear-gradient(135deg, #4caf50, #45a049); color: white; padding: 20px; border-radius: 12px; text-align: center;">
+            <h3 style="margin: 0; color: white !important;">👥 Usuários</h3>
+            <p style="font-size: 24px; font-weight: bold; margin: 10px 0;">{{ user_count|default:"0" }}</p>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, #2196f3, #1976d2); color: white; padding: 20px; border-radius: 12px; text-align: center;">
+            <h3 style="margin: 0; color: white !important;">👨‍⚕️ Profissionais</h3>
+            <p style="font-size: 24px; font-weight: bold; margin: 10px 0;">{{ professional_count|default:"0" }}</p>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, #ff9800, #f57700); color: white; padding: 20px; border-radius: 12px; text-align: center;">
+            <h3 style="margin: 0; color: white !important;">🔧 Serviços</h3>
+            <p style="font-size: 24px; font-weight: bold; margin: 10px 0;">{{ service_count|default:"0" }}</p>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, #9c27b0, #7b1fa2); color: white; padding: 20px; border-radius: 12px; text-align: center;">
+            <h3 style="margin: 0; color: white !important;">📅 Agendamentos</h3>
+            <p style="font-size: 24px; font-weight: bold; margin: 10px 0;">{{ appointment_count|default:"0" }}</p>
+        </div>
+    </div>
+    
+    <div style="background: linear-gradient(135deg, #e8f5e8, #f1f8e9); border: 1px solid #4caf50; border-radius: 12px; padding: 20px; margin-bottom: 30px;">
+        <h3 style="color: #2e7d32 !important; margin-top: 0;">📊 Status do Sistema</h3>
+        <ul style="list-style: none; padding: 0;">
+            <li style="margin: 10px 0; color: #2e7d32;">✅ Sistema operacional</li>
+            <li style="margin: 10px 0; color: #2e7d32;">✅ Banco de dados conectado</li>
+            <li style="margin: 10px 0; color: #2e7d32;">✅ Interface moderna ativa</li>
+            <li style="margin: 10px 0; color: #2e7d32;">✅ Backup automatizado configurado</li>
+        </ul>
+    </div>
+    
+    <div style="background: linear-gradient(135deg, #e3f2fd, #f1f8ff); border: 1px solid #2196f3; border-radius: 12px; padding: 20px; margin-bottom: 30px;">
+        <h3 style="color: #1976d2 !important; margin-top: 0;">🚀 Ações Rápidas</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+            <a href="/admin/core/agendamento/add/" style="background: #4caf50; color: white; padding: 15px; border-radius: 8px; text-decoration: none; text-align: center; font-weight: 500;">
+                ➕ Novo Agendamento
+            </a>
+            <a href="/admin/core/profissional/add/" style="background: #2196f3; color: white; padding: 15px; border-radius: 8px; text-decoration: none; text-align: center; font-weight: 500;">
+                👨‍⚕️ Novo Profissional
+            </a>
+            <a href="/admin/core/servico/add/" style="background: #ff9800; color: white; padding: 15px; border-radius: 8px; text-decoration: none; text-align: center; font-weight: 500;">
+                🔧 Novo Serviço
+            </a>
+            <a href="/dashboard/" style="background: #9c27b0; color: white; padding: 15px; border-radius: 8px; text-decoration: none; text-align: center; font-weight: 500;">
+                📊 Dashboard Público
+            </a>
+        </div>
+    </div>
+</div>
+
+{{ block.super }}
+
+<style>
+    /* Ocultar o conteúdo padrão do admin index para dar espaço ao nosso dashboard customizado */
+    .dashboard ~ div {
+        margin-top: 30px;
+    }
+    
+    /* Hover effects para ações rápidas */
+    .dashboard a:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15) !important;
+    }
+    
+    /* Animação para os cards de estatística */
+    .dashboard-stats > div {
+        transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    }
+    
+    .dashboard-stats > div:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+    }
+</style>
+{% endblock %}

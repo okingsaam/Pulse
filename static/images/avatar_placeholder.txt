@@ -1,0 +1,3 @@
+# Avatar placeholder - aguardando imagem do usuário
+# A imagem será salva como avatar.png ou avatar.jpg
+# Este arquivo serve como placeholder
