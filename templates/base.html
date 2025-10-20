@@ -3,236 +3,388 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Dr. Pulse - Sistema de Gestão Médica{% endblock %}</title>
+    <title>{% block title %}Pulse - Sistema Médico{% endblock %}</title>
     
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    {% load static %}
-    <!-- Tema Pulse Padrão -->
-    <link href="{% static 'css/pulse_theme.css' %}" rel="stylesheet">
-    <!-- Estilos customizados -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            --pulse-primary: #8e44ad;
-            --pulse-primary-light: #af7ac5;
-            --pulse-primary-dark: #6c3483;
-            --pulse-secondary: #3498db;
-            --pulse-success: #27ae60;
-            --pulse-warning: #f39c12;
-            --pulse-danger: #e74c3c;
-            --pulse-info: #17a2b8;
-            --pulse-light: #f8f9fa;
-            --pulse-dark: #343a40;
-            --pulse-white: #ffffff;
-            --pulse-black: #000000;
-            --pulse-gray: #6c757d;
-            --pulse-light-gray: #e9ecef;
-            --pulse-border-radius: 8px;
-            --pulse-border-radius-lg: 12px;
-            --pulse-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            --pulse-shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-            --pulse-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
-            --pulse-gradient-primary: linear-gradient(135deg, #8e44ad, #9b59b6);
-            --pulse-gradient-secondary: linear-gradient(135deg, #3498db, #5dade2);
-            --pulse-gradient-subtle: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            --pulse-font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            --pulse-text: #2c3e50;
-            --pulse-danger-light: rgba(231, 76, 60, 0.1);
+            --primary-purple: #8e44ad;
+            --secondary-purple: #7d3c98;
+            --light-purple: #bb8fce;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --medium-gray: #6c757d;
+            --dark-gray: #343a40;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --info: #3498db;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
         }
-        
+
         body {
-            font-family: var(--pulse-font-family);
-            background: var(--pulse-light);
-            color: var(--pulse-text);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            line-height: 1.6;
         }
-        
-        .pulse-navbar {
-            background: var(--pulse-gradient-primary);
-            box-shadow: var(--pulse-shadow-md);
-            padding: 12px 0;
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(180deg, var(--primary-purple) 0%, var(--secondary-purple) 100%);
+            color: var(--white);
+            z-index: 1000;
+            transition: var(--transition);
+            overflow-y: auto;
         }
-        
-        .navbar-brand {
-            font-weight: 700 !important;
-            font-size: 1.5rem !important;
-            color: var(--pulse-white) !important;
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
-        .nav-link {
-            color: var(--pulse-white) !important;
-            font-weight: 500;
-            padding: 8px 16px !important;
-            border-radius: var(--pulse-border-radius);
-            transition: all 0.3s ease;
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
         }
-        
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--pulse-white) !important;
+
+        .sidebar-logo i {
+            margin-right: 0.75rem;
+            font-size: 2rem;
         }
-        
-        .pulse-card {
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 1rem 0;
+        }
+
+        .sidebar-nav-item {
+            margin: 0.25rem 0;
+        }
+
+        .sidebar-nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav-link:hover,
+        .sidebar-nav-link.active {
+            color: var(--white);
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left-color: var(--white);
+        }
+
+        .sidebar-nav-link i {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            height: var(--header-height);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-btn {
+            background: none;
             border: none;
-            border-radius: var(--pulse-border-radius-lg);
-            box-shadow: var(--pulse-shadow-md);
-            background: var(--pulse-white);
+            color: var(--medium-gray);
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 0.5rem;
+            border-radius: 50%;
         }
-        
-        .pulse-btn {
-            border-radius: 25px;
-            padding: 10px 25px;
-            background: var(--pulse-gradient-primary);
-            color: var(--pulse-white);
+
+        .header-btn:hover {
+            color: var(--primary-purple);
+            background-color: var(--light-gray);
+        }
+
+        /* Content Area */
+        .content {
+            padding: 2rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
             border: none;
-            transition: all 0.3s ease;
-            font-weight: 500;
+            transition: var(--transition);
         }
-        
-        .pulse-btn:hover {
-            color: var(--pulse-white);
+
+        .card:hover {
             transform: translateY(-2px);
-            box-shadow: var(--pulse-shadow-md);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
-        
-        .stats-card {
-            background: var(--pulse-gradient-primary);
-            color: var(--pulse-white);
-            border-radius: var(--pulse-border-radius-lg);
-            box-shadow: var(--pulse-shadow-md);
+
+        .stat-card {
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
         }
-        
-        .dropdown-menu {
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-purple), var(--light-purple));
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-purple);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--medium-gray);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2.5rem;
+            color: var(--light-purple);
+            opacity: 0.3;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-purple), var(--secondary-purple));
             border: none;
-            box-shadow: var(--pulse-shadow-lg);
-            border-radius: var(--pulse-border-radius);
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: var(--transition);
         }
-        
-        .dropdown-item {
-            padding: 8px 16px;
-            transition: all 0.3s ease;
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(142, 68, 173, 0.3);
         }
-        
-        .dropdown-item:hover {
-            background: var(--pulse-primary-light);
-            color: var(--pulse-white);
+
+        .btn-outline-primary {
+            border: 2px solid var(--primary-purple);
+            color: var(--primary-purple);
+            background: transparent;
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: var(--transition);
         }
-        
-        footer {
-            background: var(--pulse-gradient-primary) !important;
-            color: var(--pulse-white);
+
+        .btn-outline-primary:hover {
+            background: var(--primary-purple);
+            border-color: var(--primary-purple);
+        }
+
+        /* Utilities */
+        .text-purple {
+            color: var(--primary-purple) !important;
+        }
+
+        .bg-purple {
+            background-color: var(--primary-purple) !important;
+        }
+
+        .border-purple {
+            border-color: var(--primary-purple) !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .content {
+                padding: 1rem;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
         }
     </style>
+    
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg pulse-navbar">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'core:home' %}">
-                <i class="fas fa-heartbeat"></i> Dr. Pulse
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <a href="{% url 'core:dashboard' %}" class="sidebar-logo">
+                <i class="fas fa-heartbeat"></i>
+                Pulse
             </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="border: none; box-shadow: none;">
-                <i class="fas fa-bars" style="color: var(--pulse-white);"></i>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'core:dashboard' %}">
-                                <i class="fas fa-tachometer-alt"></i> Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'core:agendar' %}">
-                                <i class="fas fa-calendar-plus"></i> Agendar
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-                
-                <ul class="navbar-nav">
-                    {% if user.is_authenticated %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                <i class="fas fa-user-circle"></i> {{ user.username }}
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> Perfil</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Configurações</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'core:logout' %}"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
-                            </ul>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'core:login' %}">
-                                <i class="fas fa-sign-in-alt"></i> Entrar
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'core:register' %}">
-                                <i class="fas fa-user-plus"></i> Cadastrar
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
         </div>
+        
+        <ul class="sidebar-nav">
+            <li class="sidebar-nav-item">
+                <a href="{% url 'core:dashboard' %}" class="sidebar-nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                    <i class="fas fa-chart-pie"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li class="sidebar-nav-item">
+                <a href="{% url 'core:agenda' %}" class="sidebar-nav-link {% if request.resolver_match.url_name == 'agenda' %}active{% endif %}">
+                    <i class="fas fa-calendar-alt"></i>
+                    Agenda
+                </a>
+            </li>
+            <li class="sidebar-nav-item">
+                <a href="{% url 'core:pacientes' %}" class="sidebar-nav-link {% if request.resolver_match.url_name == 'pacientes' %}active{% endif %}">
+                    <i class="fas fa-users"></i>
+                    Pacientes
+                </a>
+            </li>
+            <li class="sidebar-nav-item">
+                <a href="{% url 'core:financeiro' %}" class="sidebar-nav-link {% if request.resolver_match.url_name == 'financeiro' %}active{% endif %}">
+                    <i class="fas fa-chart-line"></i>
+                    Financeiro
+                </a>
+            </li>
+            <li class="sidebar-nav-item">
+                <a href="/admin/" class="sidebar-nav-link">
+                    <i class="fas fa-cog"></i>
+                    Administração
+                </a>
+            </li>
+        </ul>
     </nav>
 
-    <!-- Messages -->
-    {% if messages %}
-        <div class="container mt-3">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="border: none; border-radius: var(--pulse-border-radius); box-shadow: var(--pulse-shadow-sm);">
-                    <i class="fas fa-info-circle"></i> {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-
     <!-- Main Content -->
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
-
-    <!-- Footer -->
-    <footer class="text-center py-4 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 text-md-start">
-                    <p class="mb-0">
-                        <i class="fas fa-heartbeat"></i> 
-                        <strong>Dr. Pulse</strong> - Sistema de Gestão Médica
-                    </p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="mb-0">
-                        &copy; 2025 Todos os direitos reservados
-                    </p>
-                </div>
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="header-title">{% block page_title %}Dashboard{% endblock %}</h1>
+            <div class="header-actions">
+                <button class="header-btn mobile-menu-toggle d-md-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <button class="header-btn">
+                    <i class="fas fa-bell"></i>
+                </button>
+                <button class="header-btn">
+                    <i class="fas fa-user-circle"></i>
+                </button>
             </div>
-        </div>
-    </footer>
+        </header>
 
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- JavaScript customizado -->
-    <script src="{% static 'js/pulse.js' %}"></script>
-    
-    <!-- Container para notificações -->
-    <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3"></div>
+        <!-- Content -->
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-toggle')?.addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('show');
+        });
+
+        // Add fade-in animation to cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('fade-in-up');
+                }, index * 100);
+            });
+        });
+    </script>
     
     {% block extra_js %}{% endblock %}
 </body>

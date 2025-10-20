@@ -16,9 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect
+
+def redirect_to_dashboard(request):
+    return redirect('/consultorio/dashboard/')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('rest_framework.urls')),
-    path('', include('core.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('consultorio/', include('core.urls')),
+    path('', redirect_to_dashboard),  # Redireciona página inicial para dashboard
 ]

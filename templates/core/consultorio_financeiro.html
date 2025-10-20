@@ -1,459 +1,636 @@
-{% load static %}{% load static %}
-
-<!DOCTYPE html><!DOCTYPE html>
-
-<html lang="pt-br"><html lang="pt-br">
-
-<head><head>
-
-    <meta charset="UTF-8">    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Financeiro - Sistema Pulse</title>    <title>Financeiro - Sistema Pulse</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <link href="{% static 'css/pulse_theme.css' %}" rel="stylesheet">    <link href="{% static 'css/pulse_theme.css' %}" rel="stylesheet">
-
-    <link href="{% static 'css/dr_pulse_avatar.css' %}" rel="stylesheet">    <style>
-
-    <link href="{% static 'css/dashboard_advanced.css' %}" rel="stylesheet">        body {
-
-    <link href="{% static 'css/dashboard_improved.css' %}" rel="stylesheet">            font-family: var(--pulse-font-family);
-
-    <link href="{% static 'css/components_enhanced.css' %}" rel="stylesheet">            background-color: var(--pulse-light);
-
-    <link href="{% static 'css/layout_fixes.css' %}" rel="stylesheet">            color: var(--pulse-dark-gray);
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>        }
-
-</head>
-
-<body>        .header {
-
-    <!-- Container Principal -->            background: var(--pulse-gradient-primary);
-
-    <div class="main-container">            color: var(--pulse-white);
-
-        <!-- Sidebar -->            padding: 30px 0;
-
-        <div class="sidebar">            margin-bottom: 30px;
-
-            <div class="sidebar-header">            box-shadow: var(--pulse-shadow-md);
-
-                <a href="#" class="sidebar-brand">        }
-
-                    <i class="fas fa-heartbeat"></i>
-
-                    Pulse        .financial-card {
-
-                </a>            background: var(--pulse-white);
-
-            </div>            border-radius: var(--pulse-border-radius);
-
-                    padding: 25px;
-
-        <ul class="sidebar-menu">            margin-bottom: 20px;
-
-            <li><a href="{% url 'core:consultorio_dashboard' %}">            box-shadow: var(--pulse-shadow-md);
-
-                <i class="fas fa-home"></i>             border: 1px solid var(--pulse-light-gray);
-
-                <span>Início</span>            transition: all 0.3s ease;
-
-            </a></li>        }
-
-            <li><a href="{% url 'core:consultorio_pacientes' %}">
-
-                <i class="fas fa-users"></i>         .financial-card:hover {
-
-                <span>Pacientes</span>            transform: translateY(-2px);
-
-            </a></li>            box-shadow: var(--pulse-shadow-lg);
-
-            <li><a href="{% url 'core:consultorio_agenda' %}">        }
-
-                <i class="fas fa-calendar-alt"></i> 
-
-                <span>Agenda</span>        .stat-icon {
-
-            </a></li>            width: 50px;
-
-            <li><a href="{% url 'core:consultorio_financeiro' %}" class="active">            height: 50px;
-
-                <i class="fas fa-dollar-sign"></i>             border-radius: var(--pulse-border-radius);
-
-                <span>Financeiro</span>            display: flex;
-
-                <div class="nav-indicator"></div>            align-items: center;
-
-            </a></li>            justify-content: center;
-
-            <li><a href="/admin/">            margin-bottom: 15px;
-
-                <i class="fas fa-cog"></i>             font-size: 20px;
-
-                <span>Administração</span>            color: var(--pulse-white);
-
-            </a></li>        }
-
-        </ul>
-
-        </div>        .stat-icon.green {
-
-            background: var(--pulse-gradient-success);
-
-        <!-- Content Wrapper -->        }
-
-        <div class="content-wrapper">
-
-            <!-- Header -->        .stat-icon.blue {
-
-            <header class="main-header">            background: var(--pulse-gradient-primary);
-
-                <div class="header-title">        }
-
-                    <i class="fas fa-dollar-sign"></i>
-
-                    Controle Financeiro        .stat-number {
-
-                </div>            font-size: 28px;
-
-                <div class="header-user">            font-weight: 700;
-
-                    <span>Dr. Pulse</span>            color: var(--pulse-dark-gray);
-
-                    <div class="dr-pulse-avatar" title="Dr. Pulse - Seu médico especialista">            margin-bottom: 5px;
-
-                        <i class="fas fa-user-md"></i>        }
-
-                    </div>
-
-                </div>        .btn-back {
-
-            </header>            background: var(--pulse-gradient-success);
-
-            border: none;
-
-            <!-- Toggle Modo Escuro Centralizado -->            color: var(--pulse-white);
-
-            <button id="darkModeToggle" class="dark-mode-toggle" title="Alternar entre modo claro e escuro">            padding: 10px 20px;
-
-                <i class="fas fa-moon"></i>            border-radius: var(--pulse-border-radius-sm);
-
-                <span>Modo Escuro</span>            text-decoration: none;
-
-            </button>            display: inline-flex;
-
-            align-items: center;
-
-            <!-- Main Content -->            gap: 8px;
-
-            <main class="main-content">            font-weight: 500;
-
-                <!-- Perfil Dr. Pulse Expandido -->            transition: all 0.3s ease;
-
-                <div class="doctor-profile fade-in-up">        }
-
-                    <div class="doctor-info">
-
-                        <div class="doctor-avatar-large">        .btn-back:hover {
-
-                            <i class="fas fa-user-md"></i>            color: var(--pulse-white);
-
-                        </div>            transform: translateY(-2px);
-
-                        <div class="doctor-details">            box-shadow: var(--pulse-shadow-md);
-
-                            <h2>Dr. Pulse</h2>        }
-
-                            <p>Sistema Médico Especializado</p>    </style>
-
-                            <div class="doctor-quote"></head>
-
-                                "Mantendo suas finanças organizadas e saudáveis."<body>
-
-                            </div>    <div class="header">
-
-                        </div>        <div class="container">
-
-                    </div>            <div class="d-flex justify-content-between align-items-center">
-
-                </div>                <h1><i class="fas fa-dollar-sign"></i> Financeiro</h1>
-
-                <a href="{% url 'core:consultorio_dashboard' %}" class="btn-back">
-
-                <!-- Título da Página -->                    <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
-
-                <h1 class="page-title">                </a>
-
-                    <i class="fas fa-dollar-sign"></i> Controle Financeiro            </div>
-
-                </h1>        </div>
-
+{% extends 'base.html' %}
+
+{% block title %}Financeiro - Pulse{% endblock %}
+{% block page_title %}Financeiro{% endblock %}
+
+{% block extra_css %}
+<style>
+    .financial-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .period-selector {
+        display: flex;
+        background: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        padding: 0.25rem;
+    }
+
+    .period-btn {
+        padding: 0.5rem 1rem;
+        background: transparent;
+        border: none;
+        border-radius: calc(var(--border-radius) - 0.25rem);
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--medium-gray);
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .period-btn.active {
+        background: var(--primary-purple);
+        color: var(--white);
+    }
+
+    .financial-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .stat-card {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(135deg, var(--primary-purple), var(--light-purple));
+    }
+
+    .stat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        color: var(--white);
+    }
+
+    .stat-icon.revenue {
+        background: linear-gradient(135deg, #27ae60, #2ecc71);
+    }
+
+    .stat-icon.expenses {
+        background: linear-gradient(135deg, #e74c3c, #f39c12);
+    }
+
+    .stat-icon.profit {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+    }
+
+    .stat-icon.pending {
+        background: linear-gradient(135deg, #f39c12, #f1c40f);
+    }
+
+    .stat-title {
+        font-size: 0.875rem;
+        color: var(--medium-gray);
+        font-weight: 500;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--dark-gray);
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-change {
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .stat-change.positive {
+        color: var(--success);
+    }
+
+    .stat-change.negative {
+        color: var(--danger);
+    }
+
+    .charts-section {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .chart-container {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+    }
+
+    .chart-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--dark-gray);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .transactions-section {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+    }
+
+    .transactions-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .filter-tabs {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .filter-tab {
+        padding: 0.5rem 1rem;
+        background: transparent;
+        border: 2px solid var(--light-purple);
+        color: var(--primary-purple);
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .filter-tab:hover,
+    .filter-tab.active {
+        background: var(--primary-purple);
+        color: var(--white);
+    }
+
+    .transaction-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        border-radius: var(--border-radius);
+        border: 1px solid #f0f0f0;
+        margin-bottom: 0.5rem;
+        transition: var(--transition);
+    }
+
+    .transaction-item:hover {
+        background-color: #f8f9fa;
+        transform: translateX(5px);
+    }
+
+    .transaction-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex: 1;
+    }
+
+    .transaction-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        color: var(--white);
+    }
+
+    .transaction-icon.income {
+        background: linear-gradient(135deg, #27ae60, #2ecc71);
+    }
+
+    .transaction-icon.expense {
+        background: linear-gradient(135deg, #e74c3c, #f39c12);
+    }
+
+    .transaction-details h5 {
+        margin: 0 0 0.25rem 0;
+        font-weight: 600;
+        color: var(--dark-gray);
+    }
+
+    .transaction-details p {
+        margin: 0;
+        font-size: 0.875rem;
+        color: var(--medium-gray);
+    }
+
+    .transaction-amount {
+        text-align: right;
+    }
+
+    .transaction-value {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .transaction-value.income {
+        color: var(--success);
+    }
+
+    .transaction-value.expense {
+        color: var(--danger);
+    }
+
+    .transaction-date {
+        font-size: 0.75rem;
+        color: var(--medium-gray);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--medium-gray);
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: var(--light-purple);
+    }
+
+    @media (max-width: 768px) {
+        .charts-section {
+            grid-template-columns: 1fr;
+        }
+        
+        .transaction-info {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        
+        .transaction-item {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .transaction-amount {
+            text-align: left;
+            margin-top: 0.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Header with Period Selector -->
+<div class="financial-header">
+    <div class="period-selector">
+        <button class="period-btn" data-period="today">Hoje</button>
+        <button class="period-btn" data-period="week">Semana</button>
+        <button class="period-btn active" data-period="month">Mês</button>
+        <button class="period-btn" data-period="year">Ano</button>
     </div>
+    <button class="btn btn-primary">
+        <i class="fas fa-plus"></i> Nova Transação
+    </button>
+</div>
 
-                <!-- Stats Financeiros -->
-
-                <div class="stats-grid">    <div class="container">
-
-                    <div class="stat-card success">        <div class="row">
-
-                        <div class="stat-icon green">            <div class="col-md-6">
-
-                            <i class="fas fa-arrow-up"></i>                <div class="financial-card">
-
-                        </div>                    <div class="stat-icon green">
-
-                        <div class="stat-number">R$ 15.750</div>                        <i class="fas fa-chart-line"></i>
-
-                        <div class="stat-label">Receita do Mês</div>                    </div>
-
-                    </div>                    <div class="stat-number">{{ total_agendamentos }}</div>
-
-                                        <div class="text-muted">Consultas este mês</div>
-
-                    <div class="stat-card warning">                </div>
-
-                        <div class="stat-icon orange">            </div>
-
-                            <i class="fas fa-arrow-down"></i>            <div class="col-md-6">
-
-                        </div>                <div class="financial-card">
-
-                        <div class="stat-number">R$ 4.320</div>                    <div class="stat-icon purple">
-
-                        <div class="stat-label">Despesas do Mês</div>                        <i class="fas fa-calendar-check"></i>
-
-                    </div>                    </div>
-
-                                        <div class="stat-number">R$ 0,00</div>
-
-                    <div class="stat-card">                    <div class="text-muted">Receita estimada</div>
-
-                        <div class="stat-icon purple">                </div>
-
-                            <i class="fas fa-wallet"></i>            </div>
-
-                        </div>        </div>
-
-                        <div class="stat-number">R$ 11.430</div>
-
-                        <div class="stat-label">Lucro Líquido</div>        <div class="row">
-
-                    </div>            <div class="col-12">
-
-                </div>                <div class="financial-card">
-
-                    <h5 class="mb-3">Agendamentos do Mês</h5>
-
-                <!-- Botões de Ação -->                    {% for agendamento in agendamentos_mes %}
-
-                <div class="quick-actions" style="margin-bottom: 30px;">                    <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-
-                    <a href="#" class="action-btn success">                        <div>
-
-                        <i class="fas fa-plus"></i> Nova Receita                            <strong>{{ agendamento.cliente.get_full_name|default:agendamento.cliente.username }}</strong>
-
-                    </a>                            <br>
-
-                    <a href="#" class="action-btn warning">                            <small class="text-muted">{{ agendamento.servico.nome }}</small>
-
-                        <i class="fas fa-minus"></i> Nova Despesa                        </div>
-
-                    </a>                        <div class="text-end">
-
-                    <a href="#" class="action-btn purple">                            <div>{{ agendamento.data_hora|date:"d/m/Y H:i" }}</div>
-
-                        <i class="fas fa-file-pdf"></i> Relatório Mensal                            <small class="text-success">{{ agendamento.status|capfirst }}</small>
-
-                    </a>                        </div>
-
-                </div>                    </div>
-
-                    {% empty %}
-
-                <!-- Resumo Financeiro -->                    <div class="text-center py-4">
-
-                <div class="info-grid">                        <i class="fas fa-chart-line fa-3x text-muted mb-3"></i>
-
-                    <div class="info-card">                        <h5 class="text-muted">Nenhum agendamento este mês</h5>
-
-                        <h3 class="info-title">                        <p class="text-muted">Os dados financeiros aparecerão aqui conforme os agendamentos forem confirmados.</p>
-
-                            <i class="fas fa-credit-card"></i> Receitas Recentes                    </div>
-
-                        </h3>                    {% endfor %}
-
-                        <div class="patient-item">                </div>
-
-                            <div class="patient-avatar">R$</div>            </div>
-
-                            <div class="patient-info">        </div>
-
-                                <div class="patient-name">Consulta - Maria Silva</div>    </div>
-
-                                <div class="patient-details">R$ 150,00 - 20/10/2025</div></body>
-
-                            </div></html>
-
-                        </div>
-                        <div class="patient-item">
-                            <div class="patient-avatar">R$</div>
-                            <div class="patient-info">
-                                <div class="patient-name">Exame - João Santos</div>
-                                <div class="patient-details">R$ 200,00 - 19/10/2025</div>
-                            </div>
-                        </div>
-                        <div class="patient-item">
-                            <div class="patient-avatar">R$</div>
-                            <div class="patient-info">
-                                <div class="patient-name">Consulta - Ana Pereira</div>
-                                <div class="patient-details">R$ 150,00 - 18/10/2025</div>
-                            </div>
-                        </div>
-                        <div class="patient-item">
-                            <div class="patient-avatar">R$</div>
-                            <div class="patient-info">
-                                <div class="patient-name">Procedimento - Carlos Ferreira</div>
-                                <div class="patient-details">R$ 300,00 - 17/10/2025</div>
-                            </div>
-                        </div>
-                        <div class="patient-item">
-                            <div class="patient-avatar">R$</div>
-                            <div class="patient-info">
-                                <div class="patient-name">Consulta - Luiza Martins</div>
-                                <div class="patient-details">R$ 150,00 - 16/10/2025</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="info-card">
-                        <h3 class="info-title">
-                            <i class="fas fa-chart-pie"></i> Despesas do Mês
-                        </h3>
-                        <div class="patient-item">
-                            <div class="patient-avatar">💡</div>
-                            <div class="patient-info">
-                                <div class="patient-name">Energia Elétrica</div>
-                                <div class="patient-details">R$ 850,00 - Pago</div>
-                            </div>
-                        </div>
-                        <div class="patient-item">
-                            <div class="patient-avatar">📞</div>
-                            <div class="patient-info">
-                                <div class="patient-name">Telefone/Internet</div>
-                                <div class="patient-details">R$ 320,00 - Pago</div>
-                            </div>
-                        </div>
-                        <div class="patient-item">
-                            <div class="patient-avatar">🏠</div>
-                            <div class="patient-info">
-                                <div class="patient-name">Aluguel</div>
-                                <div class="patient-details">R$ 2.500,00 - Pago</div>
-                            </div>
-                        </div>
-                        <div class="patient-item">
-                            <div class="patient-avatar">🧹</div>
-                            <div class="patient-info">
-                                <div class="patient-name">Limpeza</div>
-                                <div class="patient-details">R$ 450,00 - Pendente</div>
-                            </div>
-                        </div>
-                        <div class="text-muted" style="text-align: center; padding: 20px;">
-                            <i class="fas fa-coins"></i> Controle seus gastos!
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Gráfico Financeiro -->
-                <div class="info-card" style="margin-bottom: 30px;">
-                    <h3 class="info-title">
-                        <i class="fas fa-chart-line"></i> Evolução Financeira - 2025
-                    </h3>
-                    <div style="position: relative; height: 300px; margin: 20px 0;">
-                        <canvas id="financeChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Ações Rápidas Adicionais -->
-                <div class="quick-actions">
-                    <a href="#" class="action-btn">
-                        <i class="fas fa-search"></i> Consultar Extrato
-                    </a>
-                    <a href="#" class="action-btn success">
-                        <i class="fas fa-calculator"></i> Calcular Impostos
-                    </a>
-                    <a href="#" class="action-btn warning">
-                        <i class="fas fa-backup"></i> Backup Dados
-                    </a>
-                </div>
-            </main>
+<!-- Financial Stats -->
+<div class="financial-stats">
+    <div class="stat-card">
+        <div class="stat-header">
+            <div class="stat-icon revenue">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+            <div class="stat-title">Receitas</div>
+        </div>
+        <div class="stat-value">R$ 12.450,00</div>
+        <div class="stat-change positive">
+            <i class="fas fa-arrow-up"></i>
+            <span>+15% em relação ao mês anterior</span>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'js/dashboard_advanced.js' %}"></script>
-    
-    <script>
-        // Gráfico Financeiro
-        const ctx = document.getElementById('financeChart').getContext('2d');
-        const financeChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out'],
-                datasets: [{
-                    label: 'Receitas',
-                    data: [12000, 13500, 11800, 15200, 14600, 16100, 15800, 16500, 14900, 15750],
-                    borderColor: '#27ae60',
-                    backgroundColor: 'rgba(39, 174, 96, 0.1)',
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.4
-                }, {
-                    label: 'Despesas',
-                    data: [4500, 4200, 4800, 4100, 4600, 4300, 4700, 4400, 4500, 4320],
-                    borderColor: '#e67e22',
-                    backgroundColor: 'rgba(230, 126, 34, 0.1)',
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'top'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: 'rgba(142, 68, 173, 0.1)'
-                        },
-                        ticks: {
-                            callback: function(value) {
-                                return 'R$ ' + value.toLocaleString();
-                            }
+    <div class="stat-card">
+        <div class="stat-header">
+            <div class="stat-icon expenses">
+                <i class="fas fa-arrow-down"></i>
+            </div>
+            <div class="stat-title">Despesas</div>
+        </div>
+        <div class="stat-value">R$ 3.280,00</div>
+        <div class="stat-change negative">
+            <i class="fas fa-arrow-up"></i>
+            <span>+8% em relação ao mês anterior</span>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-header">
+            <div class="stat-icon profit">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="stat-title">Lucro Líquido</div>
+        </div>
+        <div class="stat-value">R$ 9.170,00</div>
+        <div class="stat-change positive">
+            <i class="fas fa-arrow-up"></i>
+            <span>+18% em relação ao mês anterior</span>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-header">
+            <div class="stat-icon pending">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="stat-title">Pendentes</div>
+        </div>
+        <div class="stat-value">R$ 2.150,00</div>
+        <div class="stat-change">
+            <i class="fas fa-minus"></i>
+            <span>7 consultas em aberto</span>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Section -->
+<div class="charts-section">
+    <div class="chart-container">
+        <div class="chart-title">
+            <i class="fas fa-chart-area"></i>
+            Fluxo de Caixa - Últimos 6 Meses
+        </div>
+        <canvas id="cashFlowChart" height="120"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <div class="chart-title">
+            <i class="fas fa-chart-pie"></i>
+            Categorias de Despesas
+        </div>
+        <canvas id="expensesChart" height="200"></canvas>
+    </div>
+</div>
+
+<!-- Transactions Section -->
+<div class="transactions-section">
+    <div class="transactions-header">
+        <h3>Transações Recentes</h3>
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">Todas</button>
+            <button class="filter-tab" data-filter="income">Receitas</button>
+            <button class="filter-tab" data-filter="expense">Despesas</button>
+        </div>
+    </div>
+
+    <div class="transactions-list">
+        <!-- Sample transactions -->
+        <div class="transaction-item" data-type="income">
+            <div class="transaction-info">
+                <div class="transaction-icon income">
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="transaction-details">
+                    <h5>Consulta - Maria Silva</h5>
+                    <p>Consulta de rotina</p>
+                </div>
+            </div>
+            <div class="transaction-amount">
+                <div class="transaction-value income">+R$ 180,00</div>
+                <div class="transaction-date">Hoje, 14:30</div>
+            </div>
+        </div>
+
+        <div class="transaction-item" data-type="income">
+            <div class="transaction-info">
+                <div class="transaction-icon income">
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="transaction-details">
+                    <h5>Consulta - João Santos</h5>
+                    <p>Exame de rotina</p>
+                </div>
+            </div>
+            <div class="transaction-amount">
+                <div class="transaction-value income">+R$ 150,00</div>
+                <div class="transaction-date">Hoje, 10:15</div>
+            </div>
+        </div>
+
+        <div class="transaction-item" data-type="expense">
+            <div class="transaction-info">
+                <div class="transaction-icon expense">
+                    <i class="fas fa-minus"></i>
+                </div>
+                <div class="transaction-details">
+                    <h5>Material Médico</h5>
+                    <p>Compra de insumos</p>
+                </div>
+            </div>
+            <div class="transaction-amount">
+                <div class="transaction-value expense">-R$ 450,00</div>
+                <div class="transaction-date">Ontem, 16:20</div>
+            </div>
+        </div>
+
+        <div class="transaction-item" data-type="expense">
+            <div class="transaction-info">
+                <div class="transaction-icon expense">
+                    <i class="fas fa-minus"></i>
+                </div>
+                <div class="transaction-details">
+                    <h5>Energia Elétrica</h5>
+                    <p>Conta de luz - Janeiro</p>
+                </div>
+            </div>
+            <div class="transaction-amount">
+                <div class="transaction-value expense">-R$ 280,00</div>
+                <div class="transaction-date">Ontem, 09:00</div>
+            </div>
+        </div>
+
+        <div class="transaction-item" data-type="income">
+            <div class="transaction-info">
+                <div class="transaction-icon income">
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="transaction-details">
+                    <h5>Consulta - Ana Costa</h5>
+                    <p>Consulta especializada</p>
+                </div>
+            </div>
+            <div class="transaction-amount">
+                <div class="transaction-value income">+R$ 200,00</div>
+                <div class="transaction-date">2 dias atrás</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 1.5rem;">
+        <button class="btn btn-outline-primary">
+            <i class="fas fa-eye"></i> Ver Todas as Transações
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Cash Flow Chart
+    const cashFlowCtx = document.getElementById('cashFlowChart').getContext('2d');
+    new Chart(cashFlowCtx, {
+        type: 'line',
+        data: {
+            labels: ['Ago', 'Set', 'Out', 'Nov', 'Dez', 'Jan'],
+            datasets: [{
+                label: 'Receitas',
+                data: [8500, 9200, 11000, 10800, 12450, 13200],
+                borderColor: '#27ae60',
+                backgroundColor: 'rgba(39, 174, 96, 0.1)',
+                tension: 0.4,
+                fill: true
+            }, {
+                label: 'Despesas',
+                data: [3200, 3800, 4100, 3900, 3280, 3500],
+                borderColor: '#e74c3c',
+                backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return 'R$ ' + value.toLocaleString('pt-BR');
                         }
-                    },
-                    x: {
-                        grid: {
-                            display: false
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': R$ ' + context.parsed.y.toLocaleString('pt-BR');
                         }
                     }
                 }
             }
+        }
+    });
+
+    // Expenses Chart
+    const expensesCtx = document.getElementById('expensesChart').getContext('2d');
+    new Chart(expensesCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Material Médico', 'Energia', 'Telefone', 'Aluguel', 'Outros'],
+            datasets: [{
+                data: [45, 15, 8, 25, 7],
+                backgroundColor: [
+                    '#8e44ad',
+                    '#3498db',
+                    '#27ae60',
+                    '#f39c12',
+                    '#e74c3c'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 15,
+                        usePointStyle: true
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.parsed + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Period selector
+    const periodButtons = document.querySelectorAll('.period-btn');
+    periodButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            periodButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Here you would typically reload data for the selected period
+            console.log('Period changed to:', this.dataset.period);
         });
-    </script>
-</body>
-</html>
+    });
+
+    // Filter tabs
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const transactionItems = document.querySelectorAll('.transaction-item');
+    
+    filterTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            filterTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            const filter = this.dataset.filter;
+            
+            transactionItems.forEach(item => {
+                if (filter === 'all') {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = item.dataset.type === filter ? 'flex' : 'none';
+                }
+            });
+        });
+    });
+
+    // Add hover animations to transaction items
+    transactionItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = '#f8f9fa';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = 'transparent';
+        });
+    });
+});
+</script>
+{% endblock %}

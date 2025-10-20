@@ -1,112 +1,90 @@
 """
-SETTINGS.PY - Configurações do Sistema Pulse
-============================================
-Este arquivo contém todas as configurações do Django.
-É o "centro de controle" do sistema.
+Django settings for pulse_project project.
 """
 
 from pathlib import Path
 
-# ==========================================
-# CONFIGURAÇÕES BÁSICAS
-# ==========================================
-
-# Diretório base do projeto
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# CHAVE SECRETA (manter em segredo em produção!)
+# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '6SF_t3PDi34vsAETRg0n4VIZdrWq-YyypzluGhSepOIHui5sYKMHaQEfjS1O4rlQUU8'
 
-# MODO DEBUG (True = desenvolvimento, False = produção)
-DEBUG = True  # Mantido como True para desenvolvimento local
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
-# Hosts permitidos (em produção, especificar domínios)
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver', '*.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver']
 
-# Configurações de segurança para produção
+# Security Settings
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
+SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 
-# ==========================================
-# APLICAÇÕES INSTALADAS
-# ==========================================
+# Session Security
+SESSION_COOKIE_SECURE = False  # True em produção com HTTPS
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_AGE = 3600  # 1 hora
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# CSRF Protection
+CSRF_COOKIE_SECURE = False  # True em produção com HTTPS
+CSRF_COOKIE_HTTPONLY = True
+
+# Application definition
 INSTALLED_APPS = [
-    # Interface admin melhorada (deve vir antes do admin padrão)
-    'admin_interface',
-    'colorfield',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
     
-    # Apps padrão do Django
-    'django.contrib.admin',          # Interface administrativa
-    'django.contrib.auth',           # Sistema de autenticação
-    'django.contrib.contenttypes',   # Sistema de tipos de conteúdo
-    'django.contrib.sessions',       # Gerenciamento de sessões
-    'django.contrib.messages',       # Sistema de mensagens
-    'django.contrib.staticfiles',    # Arquivos estáticos (CSS, JS, imagens)
-    
-    # Apps de terceiros
-    'rest_framework',        # API REST
-    'corsheaders',          # CORS (para frontend separado)
-    'crispy_forms',         # Formulários bonitos
-    'crispy_bootstrap5',    # Tema Bootstrap 5 para forms
-    
-    # Nossas aplicações
-    'core.apps.CoreConfig', # App principal do sistema
+    # Our apps
+    'core.apps.CoreConfig',
 ]
 
-# ==========================================
-# MIDDLEWARES (camadas de processamento)
-# ==========================================
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',      # Segurança
-    'django.contrib.sessions.middleware.SessionMiddleware', # Sessões
-    'corsheaders.middleware.CorsMiddleware',              # CORS
-    'django.middleware.common.CommonMiddleware',          # Funcionalidades comuns
-    'django.middleware.csrf.CsrfViewMiddleware',          # Proteção CSRF
-    'django.contrib.auth.middleware.AuthenticationMiddleware', # Autenticação
-    'django.contrib.messages.middleware.MessageMiddleware',    # Mensagens
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',  # Anti-clickjacking
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# URL principal do projeto
 ROOT_URLCONF = 'pulse_project.urls'
 
-# ==========================================
-# CONFIGURAÇÃO DE TEMPLATES
-# ==========================================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Onde buscar templates
-        'APP_DIRS': True,                  # Buscar em apps também
+        'DIRS': [BASE_DIR / 'templates'],
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'core.context_processors.admin_stats',  # Estatísticas do admin
             ],
         },
     },
 ]
 
-# Aplicação WSGI (para deploy)
 WSGI_APPLICATION = 'pulse_project.wsgi.application'
 
-# ==========================================
-# CONFIGURAÇÃO DO BANCO DE DADOS
-# ==========================================
+# Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',        # Tipo: SQLite
-        'NAME': BASE_DIR / 'db.sqlite3',               # Arquivo do banco
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
-# ==========================================
-# VALIDAÇÃO DE SENHAS
-# ==========================================
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -122,128 +100,27 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# ==========================================
-# CONFIGURAÇÕES REGIONAIS
-# ==========================================
-LANGUAGE_CODE = 'pt-br'  # Idioma português brasileiro
-TIME_ZONE = 'America/Sao_Paulo'  # Fuso horário de São Paulo
-USE_I18N = True          # Internacionalização
-USE_TZ = True           # Usar timezone
+# Internationalization
+LANGUAGE_CODE = 'pt-br'
+TIME_ZONE = 'America/Sao_Paulo'
+USE_I18N = True
+USE_TZ = True
 
-# ==========================================
-# ARQUIVOS ESTÁTICOS (CSS, JS, IMAGENS)
-# ==========================================
-STATIC_URL = 'static/'              # URL para acessar arquivos estáticos
-STATICFILES_DIRS = [                # Diretórios de arquivos estáticos
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# ==========================================
-# CONFIGURAÇÕES ESPECÍFICAS DO PULSE
-# ==========================================
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
-# Campo de chave primária padrão
+# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# DJANGO REST FRAMEWORK (API)
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',  # Usar sessões
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',           # Só logados
-    ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 20  # 20 items por página
-}
-
-# CORS (Cross-Origin Resource Sharing)
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",    # React/Vue/Angular local
-    "http://127.0.0.1:3000",
-    "http://localhost:8000",    # Django local
-    "http://127.0.0.1:8000",
-]
-CORS_ALLOW_CREDENTIALS = True    # Permitir cookies
-
-# CRISPY FORMS (formulários bonitos)
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = "bootstrap5"
-
-# MODELO DE USUÁRIO CUSTOMIZADO
-AUTH_USER_MODEL = 'core.User'       # Usar nosso User ao invés do padrão
-
-# CONFIGURAÇÕES DE LOGIN/LOGOUT
-LOGIN_URL = '/login/'               # Para onde enviar se não logado
-LOGIN_REDIRECT_URL = '/dashboard/'  # Para onde ir após login
-LOGOUT_REDIRECT_URL = '/'          # Para onde ir após logout
-
-# ==========================================
-# CONFIGURAÇÕES DE CACHE
-# ==========================================
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'pulse-cache',
-        'TIMEOUT': 300,  # 5 minutos
-        'OPTIONS': {
-            'MAX_ENTRIES': 1000,
-        }
-    }
-}
-
-# ==========================================
-# CONFIGURAÇÕES DE PERFORMANCE
-# ==========================================
-# Paginação padrão
-DEFAULT_PAGE_SIZE = 10
-
-# Otimizações de banco
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# ==========================================
-# CONFIGURAÇÕES DE LOGGING
-# ==========================================
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'logs' / 'pulse.log',
-            'formatter': 'verbose',
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
-        },
-    },
-    'root': {
-        'handlers': ['console', 'file'],
-        'level': 'WARNING',
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console', 'file'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-        'core': {
-            'handlers': ['console', 'file'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    },
-}
+# Login URLs
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/consultorio/dashboard/'
+LOGOUT_REDIRECT_URL = '/'

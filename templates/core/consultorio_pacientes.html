@@ -1,414 +1,414 @@
-{% load static %}{% load static %}
-
-<!DOCTYPE html><!DOCTYPE html>
-
-<html lang="pt-br"><html lang="pt-br">
-
-<head><head>
-
-    <meta charset="UTF-8">    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Pacientes - Sistema Pulse</title>    <title>Pacientes - Sistema Pulse</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <link href="{% static 'css/pulse_theme.css' %}" rel="stylesheet">    <link href="{% static 'css/pulse_theme.css' %}" rel="stylesheet">
-
-    <link href="{% static 'css/dr_pulse_avatar.css' %}" rel="stylesheet">    <link href="{% static 'css/dr_pulse_avatar.css' %}" rel="stylesheet">
-
-    <link href="{% static 'css/dashboard_advanced.css' %}" rel="stylesheet">    <link href="{% static 'css/dashboard_advanced.css' %}" rel="stylesheet">
-
-    <link href="{% static 'css/dashboard_improved.css' %}" rel="stylesheet">    <link href="{% static 'css/dashboard_improved.css' %}" rel="stylesheet">
-
-    <link href="{% static 'css/components_enhanced.css' %}" rel="stylesheet">    <link href="{% static 'css/components_enhanced.css' %}" rel="stylesheet">
-
-    <link href="{% static 'css/layout_fixes.css' %}" rel="stylesheet">    <link href="{% static 'css/layout_fixes.css' %}" rel="stylesheet">
-
-</head></head>
-
-<body><body>
-
-    <!-- Container Principal -->    <!-- Container Principal -->
-
-    <div class="main-container">    <div class="main-container">
-
-        <!-- Sidebar -->        <!-- Sidebar -->
-
-        <div class="sidebar">        <div class="sidebar">
-
-            <div class="sidebar-header">            <div class="sidebar-header">
-
-                <a href="#" class="sidebar-brand">                <a href="#" class="sidebar-brand">
-
-                    <i class="fas fa-heartbeat"></i>                    <i class="fas fa-heartbeat"></i>
-
-                    Pulse                    Pulse
-
-                </a>                </a>
-
-            </div>            </div>
-
-                
-
-        <ul class="sidebar-menu">        <ul class="sidebar-menu">
-
-            <li><a href="{% url 'core:consultorio_dashboard' %}">            <li><a href="{% url 'core:consultorio_dashboard' %}">
-
-                <i class="fas fa-home"></i>                 <i class="fas fa-home"></i> 
-
-                <span>Início</span>                <span>Início</span>
-
-            </a></li>            </a></li>
-
-            <li><a href="{% url 'core:consultorio_pacientes' %}" class="active">            <li><a href="{% url 'core:consultorio_pacientes' %}" class="active">
-
-                <i class="fas fa-users"></i>                 <i class="fas fa-users"></i> 
-
-                <span>Pacientes</span>                <span>Pacientes</span>
-
-                <div class="nav-indicator"></div>                <div class="nav-indicator"></div>
-
-            </a></li>            </a></li>
-
-            <li><a href="{% url 'core:consultorio_agenda' %}">            <li><a href="{% url 'core:consultorio_agenda' %}">
-
-                <i class="fas fa-calendar-alt"></i>                 <i class="fas fa-calendar-alt"></i> 
-
-                <span>Agenda</span>                <span>Agenda</span>
-
-            </a></li>            </a></li>
-
-            <li><a href="{% url 'core:consultorio_financeiro' %}">            <li><a href="{% url 'core:consultorio_financeiro' %}">
-
-                <i class="fas fa-dollar-sign"></i>                 <i class="fas fa-dollar-sign"></i> 
-
-                <span>Financeiro</span>                <span>Financeiro</span>
-
-            </a></li>            </a></li>
-
-            <li><a href="/admin/">            <li><a href="/admin/">
-
-                <i class="fas fa-cog"></i>                 <i class="fas fa-cog"></i> 
-
-                <span>Administração</span>                <span>Administração</span>
-
-            </a></li>            </a></li>
-
-        </ul>        </ul>
-
-        </div>        </div>
-
-
-
-        <!-- Content Wrapper -->        <!-- Content Wrapper -->
-
-        <div class="content-wrapper">        <div class="content-wrapper">
-
-            <!-- Header -->            <!-- Header -->
-
-            <header class="main-header">            <header class="main-header">
-
-                <div class="header-title">                <div class="header-title">
-
-                    <i class="fas fa-users"></i>                    <i class="fas fa-users"></i>
-
-                    Gerenciamento de Pacientes                    Gerenciamento de Pacientes
-
-                </div>                </div>
-
-                <div class="header-user">                <div class="header-user">
-
-                    <span>Dr. Pulse</span>                    <span>Dr. Pulse</span>
-
-                    <div class="dr-pulse-avatar" title="Dr. Pulse - Seu médico especialista">                    <div class="dr-pulse-avatar" title="Dr. Pulse - Seu médico especialista">
-
-                        <i class="fas fa-user-md"></i>                        <i class="fas fa-user-md"></i>
-
-                    </div>                    </div>
-
-                </div>                </div>
-
-            </header>            </header>
-
-
-
-            <!-- Toggle Modo Escuro Centralizado -->            <!-- Toggle Modo Escuro Centralizado -->
-
-            <button id="darkModeToggle" class="dark-mode-toggle" title="Alternar entre modo claro e escuro">            <button id="darkModeToggle" class="dark-mode-toggle" title="Alternar entre modo claro e escuro">
-
-                <i class="fas fa-moon"></i>                <i class="fas fa-moon"></i>
-
-                <span>Modo Escuro</span>                <span>Modo Escuro</span>
-
-            </button>            </button>
-
-
-
-            <!-- Main Content -->            <!-- Main Content -->
-
-            <main class="main-content">            <main class="main-content">
-
-                <!-- Perfil Dr. Pulse Expandido -->            margin-bottom: 20px;
-
-                <div class="doctor-profile fade-in-up">            box-shadow: var(--pulse-shadow-md);
-
-                    <div class="doctor-info">            border: 1px solid var(--pulse-light-gray);
-
-                        <div class="doctor-avatar-large">            transition: all 0.3s ease;
-
-                            <i class="fas fa-user-md"></i>        }
-
-                        </div>
-
-                        <div class="doctor-details">        .patient-card:hover {
-
-                            <h2>Dr. Pulse</h2>            transform: translateY(-3px);
-
-                            <p>Sistema Médico Especializado</p>            box-shadow: var(--pulse-shadow-lg);
-
-                            <div class="doctor-quote">        }
-
-                                "Gerenciando seus pacientes com eficiência e cuidado."
-
-                            </div>        .patient-avatar {
-
-                        </div>            width: 60px;
-
-                    </div>            height: 60px;
-
-                </div>            border-radius: 50%;
-
-            background: var(--pulse-gradient-primary);
-
-                <!-- Título da Página -->            display: flex;
-
-                <h1 class="page-title">            align-items: center;
-
-                    <i class="fas fa-users"></i> Gerenciamento de Pacientes            justify-content: center;
-
-                </h1>            color: var(--pulse-white);
-
-            font-weight: 600;
-
-                <!-- Stats de Pacientes -->            font-size: 24px;
-
-                <div class="stats-grid">        }
-
-                    <div class="stat-card">
-
-                        <div class="stat-icon purple">        .btn-back {
-
-                            <i class="fas fa-users"></i>            background: var(--pulse-gradient-success);
-
-                        </div>            border: none;
-
-                        <div class="stat-number">127</div>            color: var(--pulse-white);
-
-                        <div class="stat-label">Total de Pacientes</div>            padding: 10px 20px;
-
-                    </div>            border-radius: var(--pulse-border-radius-sm);
-
-                                text-decoration: none;
-
-                    <div class="stat-card success">            display: inline-flex;
-
-                        <div class="stat-icon green">            align-items: center;
-
-                            <i class="fas fa-user-plus"></i>            gap: 8px;
-
-                        </div>            font-weight: 500;
-
-                        <div class="stat-number">12</div>            transition: all 0.3s ease;
-
-                        <div class="stat-label">Novos Este Mês</div>        }
-
-                    </div>
-
-                            .btn-back:hover {
-
-                    <div class="stat-card warning">            color: var(--pulse-white);
-
-                        <div class="stat-icon orange">            transform: translateY(-2px);
-
-                            <i class="fas fa-calendar-check"></i>            box-shadow: var(--pulse-shadow-md);
-
-                        </div>        }
-
-                        <div class="stat-number">8</div>
-
-                        <div class="stat-label">Consultas Hoje</div>        .text-primary {
-
-                    </div>            color: var(--pulse-primary) !important;
-
-                </div>        }
-
-    </style>
-
-                <!-- Botões de Ação --></head>
-
-                <div class="quick-actions" style="margin-bottom: 30px;"><body>
-
-                    <a href="/admin/core/paciente/add/" class="action-btn success">    <div class="header">
-
-                        <i class="fas fa-user-plus"></i> Novo Paciente        <div class="container">
-
-                    </a>            <div class="d-flex justify-content-between align-items-center">
-
-                    <a href="/admin/core/paciente/" class="action-btn purple">                <h1><i class="fas fa-users"></i> Pacientes</h1>
-
-                        <i class="fas fa-edit"></i> Gerenciar Pacientes                <a href="{% url 'core:consultorio_dashboard' %}" class="btn-back">
-
-                    </a>                    <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
-
-                    <a href="#" class="action-btn warning">                </a>
-
-                        <i class="fas fa-file-export"></i> Exportar Lista            </div>
-
-                    </a>        </div>
-
-                </div>    </div>
-
-
-
-                <!-- Lista de Pacientes -->    <div class="container">
-
-                <div class="info-grid">        <div class="row">
-
-                    <div class="info-card">            <div class="col-12">
-
-                        <h3 class="info-title">                <div class="mb-4">
-
-                            <i class="fas fa-users"></i> Pacientes Recentes                    <h3>Total de Pacientes: <span class="text-primary">{{ total_pacientes }}</span></h3>
-
-                        </h3>                </div>
-
-                        <div class="patient-item">
-
-                            <div class="patient-avatar">MA</div>                {% for paciente in pacientes %}
-
-                            <div class="patient-info">                <div class="patient-card">
-
-                                <div class="patient-name">Maria Silva</div>                    <div class="row align-items-center">
-
-                                <div class="patient-details">Última consulta: 15/10/2025</div>                        <div class="col-auto">
-
-                            </div>                            <div class="patient-avatar">
-
-                        </div>                                {{ paciente.first_name.0|default:paciente.username.0 }}
-
-                        <div class="patient-item">                            </div>
-
-                            <div class="patient-avatar">JS</div>                        </div>
-
-                            <div class="patient-info">                        <div class="col">
-
-                                <div class="patient-name">João Santos</div>                            <h5 class="mb-1">{{ paciente.get_full_name|default:paciente.username }}</h5>
-
-                                <div class="patient-details">Última consulta: 14/10/2025</div>                            <p class="text-muted mb-1">
-
-                            </div>                                <i class="fas fa-envelope"></i> {{ paciente.email|default:"Email não informado" }}
-
-                        </div>                            </p>
-
-                        <div class="patient-item">                            <small class="text-muted">
-
-                            <div class="patient-avatar">AP</div>                                <i class="fas fa-calendar"></i> Cadastrado em {{ paciente.date_joined|date:"d/m/Y" }}
-
-                            <div class="patient-info">                            </small>
-
-                                <div class="patient-name">Ana Pereira</div>                        </div>
-
-                                <div class="patient-details">Última consulta: 13/10/2025</div>                        <div class="col-auto">
-
-                            </div>                            <span class="badge bg-success">Ativo</span>
-
-                        </div>                        </div>
-
-                        <div class="patient-item">                    </div>
-
-                            <div class="patient-avatar">CF</div>                </div>
-
-                            <div class="patient-info">                {% empty %}
-
-                                <div class="patient-name">Carlos Ferreira</div>                <div class="text-center py-5">
-
-                                <div class="patient-details">Última consulta: 12/10/2025</div>                    <i class="fas fa-users fa-3x text-muted mb-3"></i>
-
-                            </div>                    <h4 class="text-muted">Nenhum paciente cadastrado</h4>
-
-                        </div>                    <p class="text-muted">Os pacientes aparecerão aqui conforme forem sendo cadastrados no sistema.</p>
-
-                        <div class="patient-item">                </div>
-
-                            <div class="patient-avatar">LM</div>                {% endfor %}
-
-                            <div class="patient-info">            </div>
-
-                                <div class="patient-name">Luiza Martins</div>        </div>
-
-                                <div class="patient-details">Última consulta: 11/10/2025</div>    </div>
-
-                            </div></body>
-
-                        </div></html>
-
-                    </div>
-
-                    <div class="info-card">
-                        <h3 class="info-title">
-                            <i class="fas fa-birthday-cake"></i> Aniversariantes do Mês
-                        </h3>
-                        <div class="patient-item">
-                            <div class="patient-avatar">LM</div>
-                            <div class="patient-info">
-                                <div class="patient-name">Luiza Martins</div>
-                                <div class="patient-details">Aniversário hoje! 🎉</div>
-                            </div>
-                        </div>
-                        <div class="patient-item">
-                            <div class="patient-avatar">RS</div>
-                            <div class="patient-info">
-                                <div class="patient-name">Roberto Silva</div>
-                                <div class="patient-details">Aniversário amanhã</div>
-                            </div>
-                        </div>
-                        <div class="patient-item">
-                            <div class="patient-avatar">TF</div>
-                            <div class="patient-info">
-                                <div class="patient-name">Teresa Freitas</div>
-                                <div class="patient-details">Aniversário: 25/10</div>
-                            </div>
-                        </div>
-                        <div class="text-muted" style="text-align: center; padding: 20px;">
-                            <i class="fas fa-smile"></i> Lembre-se de parabenizar!
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Ações Rápidas Adicionais -->
-                <div class="quick-actions">
-                    <a href="#" class="action-btn">
-                        <i class="fas fa-search"></i> Buscar Paciente
-                    </a>
-                    <a href="#" class="action-btn success">
-                        <i class="fas fa-calendar-plus"></i> Agendar Consulta
-                    </a>
-                    <a href="#" class="action-btn warning">
-                        <i class="fas fa-chart-bar"></i> Relatórios
-                    </a>
-                </div>
-            </main>
-        </div>
+{% extends 'base.html' %}
+
+{% block title %}Pacientes - Pulse{% endblock %}
+{% block page_title %}Pacientes{% endblock %}
+
+{% block extra_css %}
+<style>
+    .patients-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .search-container {
+        position: relative;
+        flex: 1;
+        max-width: 400px;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 3rem;
+        border: 2px solid var(--light-purple);
+        border-radius: 25px;
+        font-size: 1rem;
+        transition: var(--transition);
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: var(--primary-purple);
+        box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.1);
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--medium-gray);
+    }
+
+    .patients-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .patient-card {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        transition: var(--transition);
+        border-left: 4px solid var(--primary-purple);
+    }
+
+    .patient-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .patient-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+    }
+
+    .patient-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary-purple), var(--light-purple));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        font-weight: 600;
+        font-size: 1.25rem;
+        margin-right: 1rem;
+    }
+
+    .patient-info h4 {
+        color: var(--dark-gray);
+        margin-bottom: 0.25rem;
+        font-weight: 600;
+    }
+
+    .patient-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .patient-detail {
+        display: flex;
+        align-items: center;
+        color: var(--medium-gray);
+        font-size: 0.9rem;
+    }
+
+    .patient-detail i {
+        width: 20px;
+        margin-right: 0.75rem;
+        color: var(--primary-purple);
+    }
+
+    .patient-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .patient-status {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .status-active {
+        background-color: rgba(39, 174, 96, 0.1);
+        color: var(--success);
+    }
+
+    .status-inactive {
+        background-color: rgba(231, 76, 60, 0.1);
+        color: var(--danger);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--medium-gray);
+        grid-column: 1 / -1;
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        color: var(--light-purple);
+    }
+
+    .stats-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .mini-stat {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .mini-stat-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-purple);
+        margin-bottom: 0.25rem;
+    }
+
+    .mini-stat-label {
+        font-size: 0.875rem;
+        color: var(--medium-gray);
+    }
+
+    .filters-bar {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .filter-chip {
+        padding: 0.5rem 1rem;
+        background: transparent;
+        border: 2px solid var(--light-purple);
+        color: var(--primary-purple);
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .filter-chip:hover,
+    .filter-chip.active {
+        background: var(--primary-purple);
+        color: var(--white);
+    }
+
+    .age-badge {
+        background-color: rgba(52, 152, 219, 0.1);
+        color: var(--info);
+        padding: 0.25rem 0.5rem;
+        border-radius: 10px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Header with Search -->
+<div class="patients-header">
+    <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" class="search-input" placeholder="Buscar pacientes por nome, CPF ou telefone..." value="{{ busca }}">
     </div>
+    <button class="btn btn-primary">
+        <i class="fas fa-user-plus"></i> Novo Paciente
+    </button>
+</div>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'js/dashboard_advanced.js' %}"></script>
-</body>
-</html>
+<!-- Stats Row -->
+<div class="stats-row">
+    <div class="mini-stat">
+        <div class="mini-stat-value">{{ total_pacientes|default:0 }}</div>
+        <div class="mini-stat-label">Total de Pacientes</div>
+    </div>
+    <div class="mini-stat">
+        <div class="mini-stat-value">{{ pacientes_novos_mes|default:0 }}</div>
+        <div class="mini-stat-label">Novos Este Mês</div>
+    </div>
+    <div class="mini-stat">
+        <div class="mini-stat-value">{{ total_pacientes|default:0 }}</div>
+        <div class="mini-stat-label">Pacientes Ativos</div>
+    </div>
+    <div class="mini-stat">
+        <div class="mini-stat-value">0</div>
+        <div class="mini-stat-label">Aniversariantes</div>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="filters-bar">
+    <span style="font-weight: 500; color: var(--dark-gray);">Filtros:</span>
+    <button class="filter-chip active" data-filter="all">Todos</button>
+    <button class="filter-chip" data-filter="active">Ativos</button>
+    <button class="filter-chip" data-filter="new">Novos</button>
+    <button class="filter-chip" data-filter="birthday">Aniversariantes</button>
+</div>
+
+<!-- Patients Grid -->
+<div class="patients-grid">
+    {% if pacientes %}
+        {% for paciente in pacientes %}
+        <div class="patient-card" data-status="{% if paciente.ativo %}active{% else %}inactive{% endif %}">
+            <div class="patient-header">
+                <div style="display: flex; align-items: center; flex: 1;">
+                    <div class="patient-avatar">
+                        {{ paciente.nome|first|upper }}
+                    </div>
+                    <div class="patient-info">
+                        <h4>{{ paciente.nome }}</h4>
+                        <span class="age-badge">
+                            {{ paciente.data_nascimento|timesince }} de idade
+                        </span>
+                    </div>
+                </div>
+                <div class="patient-status {% if paciente.ativo %}status-active{% else %}status-inactive{% endif %}">
+                    {% if paciente.ativo %}Ativo{% else %}Inativo{% endif %}
+                </div>
+            </div>
+
+            <div class="patient-details">
+                <div class="patient-detail">
+                    <i class="fas fa-id-card"></i>
+                    <span>{{ paciente.cpf }}</span>
+                </div>
+                <div class="patient-detail">
+                    <i class="fas fa-phone"></i>
+                    <span>{{ paciente.telefone }}</span>
+                </div>
+                {% if paciente.email %}
+                <div class="patient-detail">
+                    <i class="fas fa-envelope"></i>
+                    <span>{{ paciente.email }}</span>
+                </div>
+                {% endif %}
+                <div class="patient-detail">
+                    <i class="fas fa-calendar"></i>
+                    <span>Cadastrado em {{ paciente.criado_em|date:"d/m/Y" }}</span>
+                </div>
+            </div>
+
+            <div class="patient-actions">
+                <button class="btn btn-primary btn-sm">
+                    <i class="fas fa-eye"></i> Ver
+                </button>
+                <button class="btn btn-outline-primary btn-sm">
+                    <i class="fas fa-edit"></i> Editar
+                </button>
+                <button class="btn btn-outline-primary btn-sm">
+                    <i class="fas fa-calendar-plus"></i> Agendar
+                </button>
+                <button class="btn btn-outline-primary btn-sm">
+                    <i class="fas fa-phone"></i> Ligar
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty-state">
+            <i class="fas fa-user-friends"></i>
+            <h3>Nenhum paciente encontrado</h3>
+            <p>{% if busca %}Não foram encontrados pacientes com os critérios "{{ busca }}".{% else %}Ainda não há pacientes cadastrados no sistema.{% endif %}</p>
+            <button class="btn btn-primary" style="margin-top: 1rem;">
+                <i class="fas fa-user-plus"></i> Cadastrar Primeiro Paciente
+            </button>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Pagination (if needed) -->
+{% if pacientes and pacientes|length >= 50 %}
+<div style="text-align: center; margin-top: 2rem;">
+    <button class="btn btn-outline-primary">
+        <i class="fas fa-chevron-down"></i> Carregar Mais Pacientes
+    </button>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Search functionality
+    const searchInput = document.querySelector('.search-input');
+    let searchTimeout;
+    
+    searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            const searchTerm = this.value.trim();
+            if (searchTerm.length >= 2 || searchTerm.length === 0) {
+                // Redirect to search
+                window.location.href = `?busca=${encodeURIComponent(searchTerm)}`;
+            }
+        }, 500);
+    });
+
+    // Filter functionality
+    const filterChips = document.querySelectorAll('.filter-chip');
+    const patientCards = document.querySelectorAll('.patient-card');
+    
+    filterChips.forEach(chip => {
+        chip.addEventListener('click', function() {
+            // Remove active class from all chips
+            filterChips.forEach(c => c.classList.remove('active'));
+            // Add active class to clicked chip
+            this.classList.add('active');
+            
+            const filter = this.dataset.filter;
+            
+            patientCards.forEach(card => {
+                if (filter === 'all') {
+                    card.style.display = 'block';
+                } else if (filter === 'active') {
+                    card.style.display = card.dataset.status === 'active' ? 'block' : 'none';
+                } else if (filter === 'new') {
+                    // Show patients created in the last 30 days
+                    card.style.display = 'block'; // Simplified for now
+                } else {
+                    card.style.display = 'block';
+                }
+            });
+        });
+    });
+
+    // Add click animation to patient cards
+    patientCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            if (!e.target.closest('button')) {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+            }
+        });
+    });
+
+    // Phone number formatting
+    document.querySelectorAll('.patient-detail span').forEach(span => {
+        const text = span.textContent;
+        if (/^\d{10,11}$/.test(text.replace(/\D/g, ''))) {
+            const phone = text.replace(/\D/g, '');
+            if (phone.length === 11) {
+                span.textContent = `(${phone.slice(0,2)}) ${phone.slice(2,7)}-${phone.slice(7)}`;
+            } else if (phone.length === 10) {
+                span.textContent = `(${phone.slice(0,2)}) ${phone.slice(2,6)}-${phone.slice(6)}`;
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

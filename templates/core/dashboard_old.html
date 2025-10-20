@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - Dr. Pulse{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="fas fa-heartbeat text-primary"></i> Meu Consultório</h2>
+        <div class="text-muted">
+            <i class="fas fa-calendar"></i> {% now "d/m/Y" %}
+        </div>
+    </div>
+    
+    <!-- Cards de Estatísticas -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="pulse-stats-card">
+                <div class="pulse-stats-icon primary">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="pulse-stats-number">{{ total_pacientes }}</div>
+                <div class="pulse-stats-label">Pacientes cadastrados</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="pulse-stats-card">
+                <div class="pulse-stats-icon success">
+                    <i class="fas fa-stethoscope"></i>
+                </div>
+                <div class="pulse-stats-number">{{ agendamentos_hoje }}</div>
+                <div class="pulse-stats-label">Agendamentos hoje</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="pulse-stats-card">
+                <div class="pulse-stats-icon warning">
+                    <i class="fas fa-calendar-day"></i>
+                </div>
+                <div class="pulse-stats-number">{{ consultas_mes }}</div>
+                <div class="pulse-stats-label">Consultas este mês</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="pulse-stats-card">
+                <div class="pulse-stats-icon primary">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="pulse-stats-number">R$ {{ faturamento_mes|floatformat:0 }}</div>
+                <div class="pulse-stats-label">Faturamento do mês</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seções Principais -->
+    <div class="row">
+        <div class="col-lg-8 mb-4">
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(135deg, var(--pulse-primary) 0%, var(--pulse-secondary) 100%); color: white;">
+                    <h5 class="mb-0"><i class="fas fa-user-plus"></i> Pacientes recentes</h5>
+                </div>
+                <div class="card-body">
+                    {% if pacientes_recentes %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Telefone</th>
+                                        <th>Cadastrado em</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for paciente in pacientes_recentes %}
+                                    <tr>
+                                        <td>{{ paciente.nome }}</td>
+                                        <td>{{ paciente.telefone }}</td>
+                                        <td>{{ paciente.criado_em|date:"d/m/Y" }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">Nenhum paciente cadastrado ainda</p>
+                            <a href="/consultorio/pacientes/" class="btn btn-pulse-primary">
+                                <i class="fas fa-plus"></i> Cadastrar Primeiro Paciente
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(135deg, var(--pulse-success) 0%, #2ecc71 100%); color: white;">
+                    <h5 class="mb-0"><i class="fas fa-bolt"></i> Ações Rápidas</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-3">
+                        <button class="btn btn-pulse-success">
+                            <i class="fas fa-plus"></i> Novo Agendamento
+                        </button>
+                        <button class="btn btn-pulse-primary">
+                            <i class="fas fa-user-md"></i> Novo Profissional
+                        </button>
+                        <button class="btn btn-pulse-warning">
+                            <i class="fas fa-cog"></i> Novo Serviço
+                        </button>
+                        <button class="btn btn-pulse-danger">
+                            <i class="fas fa-times"></i> Painel Admin
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sala de Espera -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(135deg, var(--pulse-warning) 0%, #e67e22 100%); color: white;">
+                    <h5 class="mb-0"><i class="fas fa-clock"></i> Sala de Espera</h5>
+                </div>
+                <div class="card-body">
+                    {% if proximos_agendamentos %}
+                        <div class="row">
+                            {% for agendamento in proximos_agendamentos %}
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-center p-3 border rounded">
+                                    <div class="pulse-stats-icon primary me-3" style="width: 40px; height: 40px; font-size: 1rem;">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">{{ agendamento.paciente.nome }}</h6>
+                                        <small class="text-muted">{{ agendamento.data_hora|date:"d/m/Y H:i" }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <div class="pulse-stats-icon primary mx-auto mb-3" style="width: 80px; height: 80px; font-size: 2rem;">
+                                <i class="fas fa-user-clock"></i>
+                            </div>
+                            <h5 class="text-muted mb-2">0</h5>
+                            <p class="text-muted">pacientes aguardando</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

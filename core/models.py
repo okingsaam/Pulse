@@ -1,164 +1,136 @@
-"""
-MODELS.PY - Modelos do Sistema Pulse
-====================================
-Este arquivo define a estrutura do banco de dados.
-Cada classe = uma tabela no banco.
-"""
-
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
+from django.utils import timezone
 
-# ==========================================
-# MODELO DE USUÁRIO CUSTOMIZADO
-# ==========================================
-class User(AbstractUser):
-    """
-    Usuário customizado que estende o User padrão do Django.
-    Adiciona campo 'role' para diferenciar Admin de Paciente.
-    """
-    # Opções de papéis no sistema
-    ROLE_CHOICES = (
-        ('admin', 'Administrador'),     # Gerencia tudo
-        ('paciente', 'Paciente'),       # Só agenda consultas
-    )
+class Paciente(models.Model):
+    """Modelo para pacientes do consultório"""
+    SEXO_CHOICES = [
+        ('M', 'Masculino'),
+        ('F', 'Feminino'),
+        ('O', 'Outro'),
+    ]
     
-    # Campos adicionais ao User padrão
-    role = models.CharField(
-        max_length=10, 
-        choices=ROLE_CHOICES, 
-        default='paciente',
-        help_text="Define se é admin ou paciente"
+    nome = models.CharField(max_length=200, verbose_name="Nome Completo")
+    cpf = models.CharField(
+        max_length=14, 
+        unique=True,
+        validators=[RegexValidator(
+            regex=r'^\d{3}\.\d{3}\.\d{3}-\d{2}$',
+            message='CPF deve estar no formato: 000.000.000-00'
+        )],
+        verbose_name="CPF"
     )
-    phone = models.CharField(
-        max_length=20, 
-        blank=True,
-        help_text="Telefone do usuário"
-    )
-
+    rg = models.CharField(max_length=20, blank=True, verbose_name="RG")
+    data_nascimento = models.DateField(verbose_name="Data de Nascimento")
+    sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, verbose_name="Sexo")
+    telefone = models.CharField(max_length=20, verbose_name="Telefone")
+    email = models.EmailField(blank=True, verbose_name="E-mail")
+    endereco = models.TextField(blank=True, verbose_name="Endereço")
+    observacoes = models.TextField(blank=True, verbose_name="Observações")
+    
+    # Campos de controle
+    ativo = models.BooleanField(default=True, verbose_name="Ativo")
+    criado_em = models.DateTimeField(auto_now_add=True, verbose_name="Criado em")
+    atualizado_em = models.DateTimeField(auto_now=True, verbose_name="Atualizado em")
+    
+    class Meta:
+        verbose_name = "Paciente"
+        verbose_name_plural = "Pacientes"
+        ordering = ['nome']
+    
     def __str__(self):
-        """Como o usuário aparece quando printado"""
-        return f"{self.username} ({self.get_role_display()})"
+        return self.nome
+    
+    @property
+    def idade(self):
+        """Calcula a idade do paciente"""
+        hoje = timezone.now().date()
+        return hoje.year - self.data_nascimento.year - ((hoje.month, hoje.day) < (self.data_nascimento.month, self.data_nascimento.day))
 
-# ==========================================
-# MODELO DE PROFISSIONAL (MÉDICOS)
-# ==========================================
 class Profissional(models.Model):
-    """
-    Médicos, dentistas, fisioterapeutas, etc.
-    Quem oferece os serviços médicos.
-    """
-    nome = models.CharField(
-        max_length=100,
-        help_text="Nome completo do profissional",
-        db_index=True
-    )
-    especialidade = models.CharField(
-        max_length=100,
-        help_text="Ex: Cardiologia, Dermatologia, etc."
-    )
-
-    def __str__(self):
-        """Como aparece na listagem"""
-        return f"{self.nome} - {self.especialidade}"
-
+    """Modelo para profissionais do consultório"""
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    nome = models.CharField(max_length=200, verbose_name="Nome Completo")
+    especialidade = models.CharField(max_length=100, verbose_name="Especialidade")
+    crm = models.CharField(max_length=20, unique=True, verbose_name="CRM")
+    telefone = models.CharField(max_length=20, verbose_name="Telefone")
+    email = models.EmailField(verbose_name="E-mail")
+    
+    ativo = models.BooleanField(default=True, verbose_name="Ativo")
+    criado_em = models.DateTimeField(auto_now_add=True, verbose_name="Criado em")
+    
     class Meta:
         verbose_name = "Profissional"
         verbose_name_plural = "Profissionais"
         ordering = ['nome']
-
-# ==========================================
-# MODELO DE SERVIÇO (CONSULTAS/EXAMES)
-# ==========================================
-class Servico(models.Model):
-    """
-    Tipos de consulta ou exame que podem ser agendados.
-    Ex: Consulta Cardiológica, Raio-X, etc.
-    """
-    nome = models.CharField(
-        max_length=100,
-        help_text="Nome do serviço/consulta"
-    )
-    descricao = models.TextField(
-        blank=True,
-        help_text="Detalhes sobre o serviço"
-    )
-    duracao = models.DurationField(
-        help_text="Quanto tempo dura o serviço (ex: 1h)"
-    )
-    preco = models.DecimalField(
-        max_digits=8, 
-        decimal_places=2,
-        help_text="Valor em reais"
-    )
     
-    # RELACIONAMENTO: Cada serviço pertence a 1 profissional
-    profissional = models.ForeignKey(
-        Profissional, 
-        on_delete=models.CASCADE,
-        help_text="Profissional que oferece este serviço"
-    )
-
     def __str__(self):
-        return self.nome
+        return f"Dr(a). {self.nome}"
 
-    class Meta:
-        verbose_name = "Serviço"
-        verbose_name_plural = "Serviços"
-
-# ==========================================
-# MODELO DE AGENDAMENTO (CONSULTAS MARCADAS)
-# ==========================================
 class Agendamento(models.Model):
-    """
-    Consulta marcada por um paciente.
-    Conecta: Paciente + Serviço + Profissional + Data/Hora
-    """
-    # Status possíveis do agendamento
-    STATUS_CHOICES = (
-        ('pendente', 'Pendente'),       # Aguardando confirmação
-        ('confirmado', 'Confirmado'),   # Consulta confirmada
-        ('realizado', 'Realizado'),     # Consulta foi realizada
-        ('cancelado', 'Cancelado'),     # Consulta cancelada
-        ('faltou', 'Paciente Faltou'),  # Paciente não compareceu
-    )
-
-    # RELACIONAMENTOS (chaves estrangeiras)
-    paciente = models.ForeignKey(
-        User, 
-        on_delete=models.CASCADE,
-        help_text="Quem agendou a consulta"
-    )
-    servico = models.ForeignKey(
-        Servico, 
-        on_delete=models.CASCADE,
-        help_text="Que tipo de consulta"
-    )
-    profissional = models.ForeignKey(
-        Profissional, 
-        on_delete=models.CASCADE,
-        help_text="Com qual médico"
-    )
+    """Modelo para agendamentos de consultas"""
+    STATUS_CHOICES = [
+        ('agendado', 'Agendado'),
+        ('confirmado', 'Confirmado'),
+        ('realizado', 'Realizado'),
+        ('cancelado', 'Cancelado'),
+        ('faltou', 'Paciente Faltou'),
+    ]
     
-    # DADOS DO AGENDAMENTO
-    data_hora = models.DateTimeField(
-        help_text="Quando acontecerá a consulta"
-    )
-    status = models.CharField(
-        max_length=10, 
-        choices=STATUS_CHOICES, 
-        default='pendente',
-        help_text="Situação atual do agendamento"
-    )
-    observacoes = models.TextField(
-        blank=True,
-        help_text="Informações extras do paciente"
-    )
-
-    def __str__(self):
-        """Como aparece na listagem"""
-        return f"{self.paciente.username} - {self.servico.nome} em {self.data_hora.strftime('%d/%m/%Y %H:%M')}"
-
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, verbose_name="Paciente")
+    profissional = models.ForeignKey(Profissional, on_delete=models.CASCADE, verbose_name="Profissional")
+    data_hora = models.DateTimeField(verbose_name="Data e Hora")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='agendado', verbose_name="Status")
+    observacoes = models.TextField(blank=True, verbose_name="Observações")
+    
+    criado_em = models.DateTimeField(auto_now_add=True, verbose_name="Criado em")
+    atualizado_em = models.DateTimeField(auto_now=True, verbose_name="Atualizado em")
+    
     class Meta:
         verbose_name = "Agendamento"
         verbose_name_plural = "Agendamentos"
-        ordering = ['-data_hora']  # Mais recentes primeiro
+        ordering = ['data_hora']
+        unique_together = ['profissional', 'data_hora']  # Evita duplo agendamento
+    
+    def __str__(self):
+        return f"{self.paciente.nome} - {self.data_hora.strftime('%d/%m/%Y %H:%M')}"
+
+class Consulta(models.Model):
+    """Modelo para consultas realizadas"""
+    agendamento = models.OneToOneField(Agendamento, on_delete=models.CASCADE, verbose_name="Agendamento")
+    sintomas = models.TextField(verbose_name="Sintomas Relatados")
+    diagnostico = models.TextField(verbose_name="Diagnóstico")
+    tratamento = models.TextField(verbose_name="Tratamento Prescrito")
+    observacoes = models.TextField(blank=True, verbose_name="Observações")
+    receita = models.TextField(blank=True, verbose_name="Receita Médica")
+    
+    valor = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Valor da Consulta")
+    pago = models.BooleanField(default=False, verbose_name="Pago")
+    
+    criado_em = models.DateTimeField(auto_now_add=True, verbose_name="Criado em")
+    
+    class Meta:
+        verbose_name = "Consulta"
+        verbose_name_plural = "Consultas"
+        ordering = ['-criado_em']
+    
+    def __str__(self):
+        return f"Consulta: {self.agendamento.paciente.nome} - {self.criado_em.strftime('%d/%m/%Y')}"
+
+class Servico(models.Model):
+    """Modelo para serviços oferecidos"""
+    nome = models.CharField(max_length=200, verbose_name="Nome do Serviço")
+    descricao = models.TextField(blank=True, verbose_name="Descrição")
+    valor = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Valor")
+    ativo = models.BooleanField(default=True, verbose_name="Ativo")
+    
+    criado_em = models.DateTimeField(auto_now_add=True, verbose_name="Criado em")
+    
+    class Meta:
+        verbose_name = "Serviço"
+        verbose_name_plural = "Serviços"
+        ordering = ['nome']
+    
+    def __str__(self):
+        return self.nome

@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Pacientes - Dr. Pulse{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <h2><i class="fas fa-users"></i> Gestão de Pacientes</h2>
+    
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="pulse-stats-card">
+                <div class="pulse-stats-icon primary">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="pulse-stats-number">0</div>
+                <div class="pulse-stats-label">Pacientes Cadastrados</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="pulse-stats-card">
+                <div class="pulse-stats-icon success">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <div class="pulse-stats-number">0</div>
+                <div class="pulse-stats-label">Pacientes Ativos</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="pulse-stats-card">
+                <div class="pulse-stats-icon warning">
+                    <i class="fas fa-calendar-day"></i>
+                </div>
+                <div class="pulse-stats-number">0</div>
+                <div class="pulse-stats-label">Consultas Hoje</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="pulse-stats-card">
+                <div class="pulse-stats-icon primary">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="pulse-stats-number">0</div>
+                <div class="pulse-stats-label">Novos este Mês</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, var(--pulse-primary) 0%, var(--pulse-secondary) 100%); color: white;">
+                    <h5 class="mb-0"><i class="fas fa-list"></i> Lista de Pacientes</h5>
+                    <button class="btn btn-light btn-sm">
+                        <i class="fas fa-plus"></i> Novo Paciente
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>CPF</th>
+                                    <th>Telefone</th>
+                                    <th>Email</th>
+                                    <th>Última Consulta</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" class="text-center py-4">
+                                        <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                                        <p class="text-muted">Nenhum paciente cadastrado</p>
+                                        <button class="btn btn-pulse-primary">
+                                            <i class="fas fa-plus"></i> Cadastrar Primeiro Paciente
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção de Busca Rápida -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(135deg, var(--pulse-success) 0%, #2ecc71 100%); color: white;">
+                    <h5 class="mb-0"><i class="fas fa-search"></i> Busca Rápida</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="busca-nome">Nome do Paciente</label>
+                                <input type="text" class="form-control" id="busca-nome" placeholder="Digite o nome...">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="busca-cpf">CPF</label>
+                                <input type="text" class="form-control" id="busca-cpf" placeholder="000.000.000-00">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-pulse-success me-2">
+                            <i class="fas fa-search"></i> Buscar Paciente
+                        </button>
+                        <button class="btn btn-outline-secondary">
+                            <i class="fas fa-eraser"></i> Limpar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ações Rápidas -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(135deg, var(--pulse-warning) 0%, #e67e22 100%); color: white;">
+                    <h5 class="mb-0"><i class="fas fa-bolt"></i> Ações Rápidas</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <button class="btn btn-pulse-success w-100">
+                                <i class="fas fa-user-plus"></i><br>
+                                <small>Novo Agendamento</small>
+                            </button>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <button class="btn btn-pulse-primary w-100">
+                                <i class="fas fa-user-md"></i><br>
+                                <small>Novo Profissional</small>
+                            </button>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <button class="btn btn-pulse-warning w-100">
+                                <i class="fas fa-cog"></i><br>
+                                <small>Novo Serviço</small>
+                            </button>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <button class="btn btn-pulse-danger w-100">
+                                <i class="fas fa-times"></i><br>
+                                <small>Painel Admin</small>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
