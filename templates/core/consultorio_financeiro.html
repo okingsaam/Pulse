@@ -1,152 +1,459 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financeiro - Sistema Pulse</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="{% static 'css/pulse_theme.css' %}" rel="stylesheet">
-    <style>
-        body {
-            font-family: var(--pulse-font-family);
-            background-color: var(--pulse-light);
-            color: var(--pulse-dark-gray);
-        }
+{% load static %}{% load static %}
 
-        .header {
-            background: var(--pulse-gradient-primary);
-            color: var(--pulse-white);
-            padding: 30px 0;
-            margin-bottom: 30px;
-            box-shadow: var(--pulse-shadow-md);
-        }
+<!DOCTYPE html><!DOCTYPE html>
 
-        .financial-card {
-            background: var(--pulse-white);
-            border-radius: var(--pulse-border-radius);
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: var(--pulse-shadow-md);
-            border: 1px solid var(--pulse-light-gray);
-            transition: all 0.3s ease;
-        }
+<html lang="pt-br"><html lang="pt-br">
 
-        .financial-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--pulse-shadow-lg);
-        }
+<head><head>
 
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: var(--pulse-border-radius);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-            font-size: 20px;
-            color: var(--pulse-white);
-        }
+    <meta charset="UTF-8">    <meta charset="UTF-8">
 
-        .stat-icon.green {
-            background: var(--pulse-gradient-success);
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .stat-icon.blue {
-            background: var(--pulse-gradient-primary);
-        }
+    <title>Financeiro - Sistema Pulse</title>    <title>Financeiro - Sistema Pulse</title>
 
-        .stat-number {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--pulse-dark-gray);
-            margin-bottom: 5px;
-        }
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        .btn-back {
-            background: var(--pulse-gradient-success);
-            border: none;
-            color: var(--pulse-white);
-            padding: 10px 20px;
-            border-radius: var(--pulse-border-radius-sm);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-        .btn-back:hover {
-            color: var(--pulse-white);
-            transform: translateY(-2px);
-            box-shadow: var(--pulse-shadow-md);
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="{% static 'css/pulse_theme.css' %}" rel="stylesheet">    <link href="{% static 'css/pulse_theme.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/dr_pulse_avatar.css' %}" rel="stylesheet">    <style>
+
+    <link href="{% static 'css/dashboard_advanced.css' %}" rel="stylesheet">        body {
+
+    <link href="{% static 'css/dashboard_improved.css' %}" rel="stylesheet">            font-family: var(--pulse-font-family);
+
+    <link href="{% static 'css/components_enhanced.css' %}" rel="stylesheet">            background-color: var(--pulse-light);
+
+    <link href="{% static 'css/layout_fixes.css' %}" rel="stylesheet">            color: var(--pulse-dark-gray);
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>        }
+
 </head>
-<body>
-    <div class="header">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center">
-                <h1><i class="fas fa-dollar-sign"></i> Financeiro</h1>
+
+<body>        .header {
+
+    <!-- Container Principal -->            background: var(--pulse-gradient-primary);
+
+    <div class="main-container">            color: var(--pulse-white);
+
+        <!-- Sidebar -->            padding: 30px 0;
+
+        <div class="sidebar">            margin-bottom: 30px;
+
+            <div class="sidebar-header">            box-shadow: var(--pulse-shadow-md);
+
+                <a href="#" class="sidebar-brand">        }
+
+                    <i class="fas fa-heartbeat"></i>
+
+                    Pulse        .financial-card {
+
+                </a>            background: var(--pulse-white);
+
+            </div>            border-radius: var(--pulse-border-radius);
+
+                    padding: 25px;
+
+        <ul class="sidebar-menu">            margin-bottom: 20px;
+
+            <li><a href="{% url 'core:consultorio_dashboard' %}">            box-shadow: var(--pulse-shadow-md);
+
+                <i class="fas fa-home"></i>             border: 1px solid var(--pulse-light-gray);
+
+                <span>Início</span>            transition: all 0.3s ease;
+
+            </a></li>        }
+
+            <li><a href="{% url 'core:consultorio_pacientes' %}">
+
+                <i class="fas fa-users"></i>         .financial-card:hover {
+
+                <span>Pacientes</span>            transform: translateY(-2px);
+
+            </a></li>            box-shadow: var(--pulse-shadow-lg);
+
+            <li><a href="{% url 'core:consultorio_agenda' %}">        }
+
+                <i class="fas fa-calendar-alt"></i> 
+
+                <span>Agenda</span>        .stat-icon {
+
+            </a></li>            width: 50px;
+
+            <li><a href="{% url 'core:consultorio_financeiro' %}" class="active">            height: 50px;
+
+                <i class="fas fa-dollar-sign"></i>             border-radius: var(--pulse-border-radius);
+
+                <span>Financeiro</span>            display: flex;
+
+                <div class="nav-indicator"></div>            align-items: center;
+
+            </a></li>            justify-content: center;
+
+            <li><a href="/admin/">            margin-bottom: 15px;
+
+                <i class="fas fa-cog"></i>             font-size: 20px;
+
+                <span>Administração</span>            color: var(--pulse-white);
+
+            </a></li>        }
+
+        </ul>
+
+        </div>        .stat-icon.green {
+
+            background: var(--pulse-gradient-success);
+
+        <!-- Content Wrapper -->        }
+
+        <div class="content-wrapper">
+
+            <!-- Header -->        .stat-icon.blue {
+
+            <header class="main-header">            background: var(--pulse-gradient-primary);
+
+                <div class="header-title">        }
+
+                    <i class="fas fa-dollar-sign"></i>
+
+                    Controle Financeiro        .stat-number {
+
+                </div>            font-size: 28px;
+
+                <div class="header-user">            font-weight: 700;
+
+                    <span>Dr. Pulse</span>            color: var(--pulse-dark-gray);
+
+                    <div class="dr-pulse-avatar" title="Dr. Pulse - Seu médico especialista">            margin-bottom: 5px;
+
+                        <i class="fas fa-user-md"></i>        }
+
+                    </div>
+
+                </div>        .btn-back {
+
+            </header>            background: var(--pulse-gradient-success);
+
+            border: none;
+
+            <!-- Toggle Modo Escuro Centralizado -->            color: var(--pulse-white);
+
+            <button id="darkModeToggle" class="dark-mode-toggle" title="Alternar entre modo claro e escuro">            padding: 10px 20px;
+
+                <i class="fas fa-moon"></i>            border-radius: var(--pulse-border-radius-sm);
+
+                <span>Modo Escuro</span>            text-decoration: none;
+
+            </button>            display: inline-flex;
+
+            align-items: center;
+
+            <!-- Main Content -->            gap: 8px;
+
+            <main class="main-content">            font-weight: 500;
+
+                <!-- Perfil Dr. Pulse Expandido -->            transition: all 0.3s ease;
+
+                <div class="doctor-profile fade-in-up">        }
+
+                    <div class="doctor-info">
+
+                        <div class="doctor-avatar-large">        .btn-back:hover {
+
+                            <i class="fas fa-user-md"></i>            color: var(--pulse-white);
+
+                        </div>            transform: translateY(-2px);
+
+                        <div class="doctor-details">            box-shadow: var(--pulse-shadow-md);
+
+                            <h2>Dr. Pulse</h2>        }
+
+                            <p>Sistema Médico Especializado</p>    </style>
+
+                            <div class="doctor-quote"></head>
+
+                                "Mantendo suas finanças organizadas e saudáveis."<body>
+
+                            </div>    <div class="header">
+
+                        </div>        <div class="container">
+
+                    </div>            <div class="d-flex justify-content-between align-items-center">
+
+                </div>                <h1><i class="fas fa-dollar-sign"></i> Financeiro</h1>
+
                 <a href="{% url 'core:consultorio_dashboard' %}" class="btn-back">
-                    <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
-                </a>
-            </div>
-        </div>
+
+                <!-- Título da Página -->                    <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
+
+                <h1 class="page-title">                </a>
+
+                    <i class="fas fa-dollar-sign"></i> Controle Financeiro            </div>
+
+                </h1>        </div>
+
     </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="financial-card">
-                    <div class="stat-icon green">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="stat-number">{{ total_agendamentos }}</div>
-                    <div class="text-muted">Consultas este mês</div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="financial-card">
-                    <div class="stat-icon purple">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <div class="stat-number">R$ 0,00</div>
-                    <div class="text-muted">Receita estimada</div>
-                </div>
-            </div>
-        </div>
+                <!-- Stats Financeiros -->
 
-        <div class="row">
-            <div class="col-12">
-                <div class="financial-card">
+                <div class="stats-grid">    <div class="container">
+
+                    <div class="stat-card success">        <div class="row">
+
+                        <div class="stat-icon green">            <div class="col-md-6">
+
+                            <i class="fas fa-arrow-up"></i>                <div class="financial-card">
+
+                        </div>                    <div class="stat-icon green">
+
+                        <div class="stat-number">R$ 15.750</div>                        <i class="fas fa-chart-line"></i>
+
+                        <div class="stat-label">Receita do Mês</div>                    </div>
+
+                    </div>                    <div class="stat-number">{{ total_agendamentos }}</div>
+
+                                        <div class="text-muted">Consultas este mês</div>
+
+                    <div class="stat-card warning">                </div>
+
+                        <div class="stat-icon orange">            </div>
+
+                            <i class="fas fa-arrow-down"></i>            <div class="col-md-6">
+
+                        </div>                <div class="financial-card">
+
+                        <div class="stat-number">R$ 4.320</div>                    <div class="stat-icon purple">
+
+                        <div class="stat-label">Despesas do Mês</div>                        <i class="fas fa-calendar-check"></i>
+
+                    </div>                    </div>
+
+                                        <div class="stat-number">R$ 0,00</div>
+
+                    <div class="stat-card">                    <div class="text-muted">Receita estimada</div>
+
+                        <div class="stat-icon purple">                </div>
+
+                            <i class="fas fa-wallet"></i>            </div>
+
+                        </div>        </div>
+
+                        <div class="stat-number">R$ 11.430</div>
+
+                        <div class="stat-label">Lucro Líquido</div>        <div class="row">
+
+                    </div>            <div class="col-12">
+
+                </div>                <div class="financial-card">
+
                     <h5 class="mb-3">Agendamentos do Mês</h5>
-                    {% for agendamento in agendamentos_mes %}
-                    <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-                        <div>
-                            <strong>{{ agendamento.cliente.get_full_name|default:agendamento.cliente.username }}</strong>
-                            <br>
-                            <small class="text-muted">{{ agendamento.servico.nome }}</small>
-                        </div>
-                        <div class="text-end">
-                            <div>{{ agendamento.data_hora|date:"d/m/Y H:i" }}</div>
-                            <small class="text-success">{{ agendamento.status|capfirst }}</small>
-                        </div>
-                    </div>
+
+                <!-- Botões de Ação -->                    {% for agendamento in agendamentos_mes %}
+
+                <div class="quick-actions" style="margin-bottom: 30px;">                    <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+
+                    <a href="#" class="action-btn success">                        <div>
+
+                        <i class="fas fa-plus"></i> Nova Receita                            <strong>{{ agendamento.cliente.get_full_name|default:agendamento.cliente.username }}</strong>
+
+                    </a>                            <br>
+
+                    <a href="#" class="action-btn warning">                            <small class="text-muted">{{ agendamento.servico.nome }}</small>
+
+                        <i class="fas fa-minus"></i> Nova Despesa                        </div>
+
+                    </a>                        <div class="text-end">
+
+                    <a href="#" class="action-btn purple">                            <div>{{ agendamento.data_hora|date:"d/m/Y H:i" }}</div>
+
+                        <i class="fas fa-file-pdf"></i> Relatório Mensal                            <small class="text-success">{{ agendamento.status|capfirst }}</small>
+
+                    </a>                        </div>
+
+                </div>                    </div>
+
                     {% empty %}
-                    <div class="text-center py-4">
-                        <i class="fas fa-chart-line fa-3x text-muted mb-3"></i>
-                        <h5 class="text-muted">Nenhum agendamento este mês</h5>
-                        <p class="text-muted">Os dados financeiros aparecerão aqui conforme os agendamentos forem confirmados.</p>
+
+                <!-- Resumo Financeiro -->                    <div class="text-center py-4">
+
+                <div class="info-grid">                        <i class="fas fa-chart-line fa-3x text-muted mb-3"></i>
+
+                    <div class="info-card">                        <h5 class="text-muted">Nenhum agendamento este mês</h5>
+
+                        <h3 class="info-title">                        <p class="text-muted">Os dados financeiros aparecerão aqui conforme os agendamentos forem confirmados.</p>
+
+                            <i class="fas fa-credit-card"></i> Receitas Recentes                    </div>
+
+                        </h3>                    {% endfor %}
+
+                        <div class="patient-item">                </div>
+
+                            <div class="patient-avatar">R$</div>            </div>
+
+                            <div class="patient-info">        </div>
+
+                                <div class="patient-name">Consulta - Maria Silva</div>    </div>
+
+                                <div class="patient-details">R$ 150,00 - 20/10/2025</div></body>
+
+                            </div></html>
+
+                        </div>
+                        <div class="patient-item">
+                            <div class="patient-avatar">R$</div>
+                            <div class="patient-info">
+                                <div class="patient-name">Exame - João Santos</div>
+                                <div class="patient-details">R$ 200,00 - 19/10/2025</div>
+                            </div>
+                        </div>
+                        <div class="patient-item">
+                            <div class="patient-avatar">R$</div>
+                            <div class="patient-info">
+                                <div class="patient-name">Consulta - Ana Pereira</div>
+                                <div class="patient-details">R$ 150,00 - 18/10/2025</div>
+                            </div>
+                        </div>
+                        <div class="patient-item">
+                            <div class="patient-avatar">R$</div>
+                            <div class="patient-info">
+                                <div class="patient-name">Procedimento - Carlos Ferreira</div>
+                                <div class="patient-details">R$ 300,00 - 17/10/2025</div>
+                            </div>
+                        </div>
+                        <div class="patient-item">
+                            <div class="patient-avatar">R$</div>
+                            <div class="patient-info">
+                                <div class="patient-name">Consulta - Luiza Martins</div>
+                                <div class="patient-details">R$ 150,00 - 16/10/2025</div>
+                            </div>
+                        </div>
                     </div>
-                    {% endfor %}
+
+                    <div class="info-card">
+                        <h3 class="info-title">
+                            <i class="fas fa-chart-pie"></i> Despesas do Mês
+                        </h3>
+                        <div class="patient-item">
+                            <div class="patient-avatar">💡</div>
+                            <div class="patient-info">
+                                <div class="patient-name">Energia Elétrica</div>
+                                <div class="patient-details">R$ 850,00 - Pago</div>
+                            </div>
+                        </div>
+                        <div class="patient-item">
+                            <div class="patient-avatar">📞</div>
+                            <div class="patient-info">
+                                <div class="patient-name">Telefone/Internet</div>
+                                <div class="patient-details">R$ 320,00 - Pago</div>
+                            </div>
+                        </div>
+                        <div class="patient-item">
+                            <div class="patient-avatar">🏠</div>
+                            <div class="patient-info">
+                                <div class="patient-name">Aluguel</div>
+                                <div class="patient-details">R$ 2.500,00 - Pago</div>
+                            </div>
+                        </div>
+                        <div class="patient-item">
+                            <div class="patient-avatar">🧹</div>
+                            <div class="patient-info">
+                                <div class="patient-name">Limpeza</div>
+                                <div class="patient-details">R$ 450,00 - Pendente</div>
+                            </div>
+                        </div>
+                        <div class="text-muted" style="text-align: center; padding: 20px;">
+                            <i class="fas fa-coins"></i> Controle seus gastos!
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <!-- Gráfico Financeiro -->
+                <div class="info-card" style="margin-bottom: 30px;">
+                    <h3 class="info-title">
+                        <i class="fas fa-chart-line"></i> Evolução Financeira - 2025
+                    </h3>
+                    <div style="position: relative; height: 300px; margin: 20px 0;">
+                        <canvas id="financeChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Ações Rápidas Adicionais -->
+                <div class="quick-actions">
+                    <a href="#" class="action-btn">
+                        <i class="fas fa-search"></i> Consultar Extrato
+                    </a>
+                    <a href="#" class="action-btn success">
+                        <i class="fas fa-calculator"></i> Calcular Impostos
+                    </a>
+                    <a href="#" class="action-btn warning">
+                        <i class="fas fa-backup"></i> Backup Dados
+                    </a>
+                </div>
+            </main>
         </div>
     </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/dashboard_advanced.js' %}"></script>
+    
+    <script>
+        // Gráfico Financeiro
+        const ctx = document.getElementById('financeChart').getContext('2d');
+        const financeChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out'],
+                datasets: [{
+                    label: 'Receitas',
+                    data: [12000, 13500, 11800, 15200, 14600, 16100, 15800, 16500, 14900, 15750],
+                    borderColor: '#27ae60',
+                    backgroundColor: 'rgba(39, 174, 96, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: 'Despesas',
+                    data: [4500, 4200, 4800, 4100, 4600, 4300, 4700, 4400, 4500, 4320],
+                    borderColor: '#e67e22',
+                    backgroundColor: 'rgba(230, 126, 34, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(142, 68, 173, 0.1)'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return 'R$ ' + value.toLocaleString();
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

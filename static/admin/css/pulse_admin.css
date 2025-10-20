@@ -3,10 +3,16 @@
 /* Importar variáveis do tema principal */
 @import url('/static/css/pulse_theme.css');
 
+/* Header principal */
+#header {
+    background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%) !important;
+    box-shadow: 0 2px 10px rgba(142, 68, 173, 0.3) !important;
+}
+
 /* Melhorar aparência dos cards dos módulos */
 .module {
     background: linear-gradient(135deg, var(--pulse-white) 0%, var(--pulse-light) 100%) !important;
-    border: 1px solid var(--pulse-light-gray) !important;
+    border: 1px solid #bb8fce !important;
     border-radius: var(--pulse-border-radius) !important;
     box-shadow: var(--pulse-shadow-md) !important;
     transition: all 0.3s ease !important;
@@ -16,6 +22,7 @@
 .module:hover {
     box-shadow: var(--pulse-shadow-lg) !important;
     transform: translateY(-2px) !important;
+    border-color: #8e44ad !important;
 }
 
 /* Melhorar cabeçalhos dos módulos */
@@ -38,7 +45,7 @@
 
 /* Melhorar links de ação */
 .addlink, .changelink, .viewlink {
-    background: var(--pulse-gradient-success) !important;
+    background: var(--pulse-gradient-primary) !important;
     color: var(--pulse-white) !important;
     padding: 8px 16px !important;
     border-radius: var(--pulse-border-radius-sm) !important;
@@ -54,6 +61,7 @@
     transform: translateY(-1px) !important;
     box-shadow: var(--pulse-shadow-md) !important;
     color: var(--pulse-white) !important;
+    background: linear-gradient(135deg, #7d3c98, #6c3483) !important;
 }
 
 /* Melhorar tabelas */
@@ -187,6 +195,25 @@ input[type="number"]:focus, input[type="url"]:focus, textarea:focus, select:focu
     box-shadow: 0 0 0 3px var(--pulse-primary-lightest) !important;
 }
 
+/* Adicionar consistência de cores ao corpo da página */
+body.admin {
+    background: linear-gradient(135deg, #f8f5fc 0%, #f4f1f8 100%) !important;
+    font-family: var(--pulse-font-family) !important;
+}
+
+/* Container principal */
+#container {
+    background: transparent !important;
+}
+
+#content {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border-radius: var(--pulse-border-radius) !important;
+    box-shadow: var(--pulse-shadow-md) !important;
+    margin: 20px !important;
+    padding: 20px !important;
+}
+
 /* Adicionar ícones aos botões com emojis modernos */
 .addlink:before {
     content: "➕ ";
@@ -260,6 +287,29 @@ body {
     background: var(--pulse-white) !important;
     border-radius: var(--pulse-border-radius) !important;
     box-shadow: var(--pulse-shadow-sm) !important;
+}
+
+/* Links de navegação principais */
+#user-tools a {
+    color: #e8d5f0 !important;
+    transition: all 0.3s ease !important;
+}
+
+#user-tools a:hover {
+    color: #ffffff !important;
+    text-decoration: underline !important;
+}
+
+/* Breadcrumbs estilizados */
+.breadcrumbs {
+    background: linear-gradient(135deg, #f4f1f8, #f8f5fc) !important;
+    border: 1px solid #bb8fce !important;
+}
+
+/* Títulos de página */
+h1, h2, h3 {
+    color: var(--pulse-primary) !important;
+    font-weight: 600 !important;
 }
 
 /* Header do admin */

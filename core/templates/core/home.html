@@ -1,69 +1,132 @@
 {% extends 'base.html' %}
 
-{% block title %}Pulse - Início{% endblock %}
+{% block title %}Pulse - Sistema de Gestão Médica{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-lg-8">
-        <!-- Hero Section -->
-        <div class="text-center mb-5">
-            <h1 class="display-4 fw-bold text-primary mb-3">
-                <i class="bi bi-heart-pulse"></i> Bem-vindo ao Pulse
-            </h1>
-            <p class="lead text-muted">
-                Sistema inteligente de agendamento médico. Gerencie consultas, profissionais e serviços de forma simples e eficiente.
-            </p>
-        </div>
+<div class="container-fluid" style="min-height: 100vh; background: var(--pulse-gradient-subtle); padding: 40px 20px;">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Hero Section -->
+            <div class="text-center mb-5">
+                <div class="mb-4">
+                    <i class="fas fa-heartbeat" style="font-size: 4rem; color: var(--pulse-primary); background: var(--pulse-white); padding: 20px; border-radius: 50%; box-shadow: var(--pulse-shadow-lg);"></i>
+                </div>
+                <h1 class="display-4 fw-bold mb-3" style="background: var(--pulse-gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    Dr. Pulse
+                </h1>
+                <p class="lead" style="color: var(--pulse-text); font-size: 1.3rem; max-width: 600px; margin: 0 auto;">
+                    Sistema inteligente de gestão médica. Controle consultas, pacientes, agenda e financeiro com tecnologia de ponta.
+                </p>
+            </div>
 
-        <!-- Features Cards -->
-        <div class="row g-4 mb-5">
-            <div class="col-md-4">
-                <div class="card pulse-card h-100 text-center p-4">
-                    <div class="card-body">
-                        <i class="bi bi-calendar-check display-1 text-success mb-3"></i>
-                        <h5 class="card-title">Agendamento Fácil</h5>
-                        <p class="card-text">Agende suas consultas de forma rápida e intuitiva.</p>
+            <!-- Features Cards -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-3">
+                    <div class="card h-100 text-center" style="background: var(--pulse-white); border: none; border-radius: var(--pulse-border-radius-lg); box-shadow: var(--pulse-shadow-md); transition: all 0.3s ease; padding: 30px;">
+                        <div class="card-body">
+                            <div class="mb-3" style="background: var(--pulse-gradient-primary); padding: 15px; border-radius: 50%; width: 70px; height: 70px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-calendar-check" style="font-size: 1.8rem; color: var(--pulse-white);"></i>
+                            </div>
+                            <h5 style="color: var(--pulse-text); font-weight: 600; margin-bottom: 15px;">Agenda Inteligente</h5>
+                            <p style="color: var(--pulse-gray); font-size: 14px;">Gestão completa de consultas com lembretes automáticos e sincronização em tempo real.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100 text-center" style="background: var(--pulse-white); border: none; border-radius: var(--pulse-border-radius-lg); box-shadow: var(--pulse-shadow-md); transition: all 0.3s ease; padding: 30px;">
+                        <div class="card-body">
+                            <div class="mb-3" style="background: var(--pulse-gradient-secondary); padding: 15px; border-radius: 50%; width: 70px; height: 70px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-users" style="font-size: 1.8rem; color: var(--pulse-white);"></i>
+                            </div>
+                            <h5 style="color: var(--pulse-text); font-weight: 600; margin-bottom: 15px;">Gestão de Pacientes</h5>
+                            <p style="color: var(--pulse-gray); font-size: 14px;">Prontuários digitais seguros com histórico completo e relatórios personalizados.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100 text-center" style="background: var(--pulse-white); border: none; border-radius: var(--pulse-border-radius-lg); box-shadow: var(--pulse-shadow-md); transition: all 0.3s ease; padding: 30px;">
+                        <div class="card-body">
+                            <div class="mb-3" style="background: linear-gradient(135deg, #27ae60, #2ecc71); padding: 15px; border-radius: 50%; width: 70px; height: 70px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-chart-line" style="font-size: 1.8rem; color: var(--pulse-white);"></i>
+                            </div>
+                            <h5 style="color: var(--pulse-text); font-weight: 600; margin-bottom: 15px;">Controle Financeiro</h5>
+                            <p style="color: var(--pulse-gray); font-size: 14px;">Dashboard financeiro completo com gráficos, relatórios e controle de receitas.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100 text-center" style="background: var(--pulse-white); border: none; border-radius: var(--pulse-border-radius-lg); box-shadow: var(--pulse-shadow-md); transition: all 0.3s ease; padding: 30px;">
+                        <div class="card-body">
+                            <div class="mb-3" style="background: linear-gradient(135deg, #e74c3c, #c0392b); padding: 15px; border-radius: 50%; width: 70px; height: 70px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-shield-alt" style="font-size: 1.8rem; color: var(--pulse-white);"></i>
+                            </div>
+                            <h5 style="color: var(--pulse-text); font-weight: 600; margin-bottom: 15px;">Segurança Total</h5>
+                            <p style="color: var(--pulse-gray); font-size: 14px;">Dados protegidos com criptografia avançada e conformidade com LGPD.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card pulse-card h-100 text-center p-4">
-                    <div class="card-body">
-                        <i class="bi bi-people display-1 text-info mb-3"></i>
-                        <h5 class="card-title">Profissionais</h5>
-                        <p class="card-text">Acesso aos melhores profissionais da área médica.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card pulse-card h-100 text-center p-4">
-                    <div class="card-body">
-                        <i class="bi bi-shield-check display-1 text-warning mb-3"></i>
-                        <h5 class="card-title">Seguro & Confiável</h5>
-                        <p class="card-text">Seus dados protegidos com máxima segurança.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Call to Action -->
-        <div class="text-center">
-            {% if not user.is_authenticated %}
-                <a href="{% url 'core:register' %}" class="btn btn-primary btn-lg pulse-btn me-3">
-                    <i class="bi bi-person-plus"></i> Criar Conta
-                </a>
-                <a href="{% url 'core:login' %}" class="btn btn-outline-primary btn-lg pulse-btn">
-                    <i class="bi bi-box-arrow-in-right"></i> Entrar
-                </a>
-            {% else %}
-                <a href="{% url 'core:dashboard' %}" class="btn btn-primary btn-lg pulse-btn me-3">
-                    <i class="bi bi-speedometer2"></i> Ir para Dashboard
-                </a>
-                <a href="{% url 'core:agendar' %}" class="btn btn-success btn-lg pulse-btn">
-                    <i class="bi bi-calendar-plus"></i> Agendar Consulta
-                </a>
-            {% endif %}
+            <!-- Stats Section -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <h3 style="color: var(--pulse-primary); font-weight: 700; font-size: 2.5rem;">98%</h3>
+                        <p style="color: var(--pulse-gray); font-weight: 500;">Satisfação dos Usuários</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <h3 style="color: var(--pulse-primary); font-weight: 700; font-size: 2.5rem;">24/7</h3>
+                        <p style="color: var(--pulse-gray); font-weight: 500;">Suporte Técnico</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <h3 style="color: var(--pulse-primary); font-weight: 700; font-size: 2.5rem;">100%</h3>
+                        <p style="color: var(--pulse-gray); font-weight: 500;">Segurança de Dados</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center">
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'core:register' %}" style="display: inline-block; background: var(--pulse-gradient-primary); color: var(--pulse-white); padding: 15px 30px; border-radius: var(--pulse-border-radius); text-decoration: none; font-weight: 600; font-size: 16px; margin-right: 15px; transition: all 0.3s ease; box-shadow: var(--pulse-shadow-md);">
+                        <i class="fas fa-user-plus"></i> Criar Conta Grátis
+                    </a>
+                    <a href="{% url 'core:login' %}" style="display: inline-block; background: transparent; border: 2px solid var(--pulse-primary); color: var(--pulse-primary); padding: 13px 30px; border-radius: var(--pulse-border-radius); text-decoration: none; font-weight: 600; font-size: 16px; transition: all 0.3s ease;">
+                        <i class="fas fa-sign-in-alt"></i> Entrar
+                    </a>
+                {% else %}
+                    <a href="{% url 'core:dashboard' %}" style="display: inline-block; background: var(--pulse-gradient-primary); color: var(--pulse-white); padding: 15px 30px; border-radius: var(--pulse-border-radius); text-decoration: none; font-weight: 600; font-size: 16px; margin-right: 15px; transition: all 0.3s ease; box-shadow: var(--pulse-shadow-md);">
+                        <i class="fas fa-tachometer-alt"></i> Ir para Dashboard
+                    </a>
+                    <a href="{% url 'core:agendar' %}" style="display: inline-block; background: linear-gradient(135deg, #27ae60, #2ecc71); color: var(--pulse-white); padding: 15px 30px; border-radius: var(--pulse-border-radius); text-decoration: none; font-weight: 600; font-size: 16px; transition: all 0.3s ease; box-shadow: var(--pulse-shadow-md);">
+                        <i class="fas fa-calendar-plus"></i> Agendar Consulta
+                    </a>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--pulse-shadow-lg) !important;
+    }
+    
+    a[href*="register"]:hover, a[href*="dashboard"]:hover, a[href*="agendar"]:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--pulse-shadow-lg) !important;
+    }
+    
+    a[href*="login"]:hover {
+        background: var(--pulse-primary) !important;
+        color: var(--pulse-white) !important;
+        transform: translateY(-3px);
+        box-shadow: var(--pulse-shadow-lg) !important;
+    }
+</style>
 {% endblock %}

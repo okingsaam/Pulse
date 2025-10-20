@@ -49,6 +49,11 @@ urlpatterns = [
     # View: consultorio_dashboard
     # Função: Dashboard moderno do consultório
     
+    path('dashboard/', consultorio_dashboard, name='dashboard'),
+    # URL: "/dashboard/"
+    # View: consultorio_dashboard (mesmo dashboard médico)
+    # Função: Acesso alternativo ao dashboard
+    
     path('consultorio/pacientes/', consultorio_pacientes, name='consultorio_pacientes'),
     # URL: "/consultorio/pacientes/"
     

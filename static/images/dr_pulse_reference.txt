@@ -1,0 +1,11 @@
+<!-- Arquivo de referência da imagem do Dr. Pulse -->
+<!-- Esta imagem mostra um médico com:
+- Cabelo escuro ondulado
+- Máscara branca
+- Jaleco branco
+- Estetoscópio
+- Fundo azul claro circular
+- Estilo ilustração médica profissional
+-->
+
+<!-- Para usar esta imagem, salve como dr_pulse_avatar.png -->

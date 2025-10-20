@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Pulse - Sistema de Agendamento{% endblock %}</title>
+    <title>{% block title %}Dr. Pulse - Sistema de Gestão Médica{% endblock %}</title>
     
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     {% load static %}
     <!-- Tema Pulse Padrão -->
@@ -21,14 +19,63 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     
     <style>
+        :root {
+            --pulse-primary: #8e44ad;
+            --pulse-primary-light: #af7ac5;
+            --pulse-primary-dark: #6c3483;
+            --pulse-secondary: #3498db;
+            --pulse-success: #27ae60;
+            --pulse-warning: #f39c12;
+            --pulse-danger: #e74c3c;
+            --pulse-info: #17a2b8;
+            --pulse-light: #f8f9fa;
+            --pulse-dark: #343a40;
+            --pulse-white: #ffffff;
+            --pulse-black: #000000;
+            --pulse-gray: #6c757d;
+            --pulse-light-gray: #e9ecef;
+            --pulse-border-radius: 8px;
+            --pulse-border-radius-lg: 12px;
+            --pulse-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            --pulse-shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            --pulse-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+            --pulse-gradient-primary: linear-gradient(135deg, #8e44ad, #9b59b6);
+            --pulse-gradient-secondary: linear-gradient(135deg, #3498db, #5dade2);
+            --pulse-gradient-subtle: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            --pulse-font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --pulse-text: #2c3e50;
+            --pulse-danger-light: rgba(231, 76, 60, 0.1);
+        }
+        
         body {
             font-family: var(--pulse-font-family);
-            background-color: var(--pulse-light);
+            background: var(--pulse-light);
+            color: var(--pulse-text);
         }
         
         .pulse-navbar {
             background: var(--pulse-gradient-primary);
             box-shadow: var(--pulse-shadow-md);
+            padding: 12px 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 700 !important;
+            font-size: 1.5rem !important;
+            color: var(--pulse-white) !important;
+        }
+        
+        .nav-link {
+            color: var(--pulse-white) !important;
+            font-weight: 500;
+            padding: 8px 16px !important;
+            border-radius: var(--pulse-border-radius);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--pulse-white) !important;
         }
         
         .pulse-card {
@@ -45,11 +92,12 @@
             color: var(--pulse-white);
             border: none;
             transition: all 0.3s ease;
+            font-weight: 500;
         }
         
         .pulse-btn:hover {
             color: var(--pulse-white);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
             box-shadow: var(--pulse-shadow-md);
         }
         
@@ -59,31 +107,52 @@
             border-radius: var(--pulse-border-radius-lg);
             box-shadow: var(--pulse-shadow-md);
         }
+        
+        .dropdown-menu {
+            border: none;
+            box-shadow: var(--pulse-shadow-lg);
+            border-radius: var(--pulse-border-radius);
+        }
+        
+        .dropdown-item {
+            padding: 8px 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-item:hover {
+            background: var(--pulse-primary-light);
+            color: var(--pulse-white);
+        }
+        
+        footer {
+            background: var(--pulse-gradient-primary) !important;
+            color: var(--pulse-white);
+        }
     </style>
 </head>
-<body class="bg-light">
+<body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg pulse-navbar">
         <div class="container">
-            <a class="navbar-brand text-white fw-bold fs-3" href="{% url 'core:home' %}">
-                <i class="bi bi-heart-pulse"></i> Pulse
+            <a class="navbar-brand" href="{% url 'core:home' %}">
+                <i class="fas fa-heartbeat"></i> Dr. Pulse
             </a>
             
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="border: none; box-shadow: none;">
+                <i class="fas fa-bars" style="color: var(--pulse-white);"></i>
             </button>
             
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{% url 'core:dashboard' %}">
-                                <i class="bi bi-speedometer2"></i> Dashboard
+                            <a class="nav-link" href="{% url 'core:dashboard' %}">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{% url 'core:agendar' %}">
-                                <i class="bi bi-calendar-plus"></i> Agendar
+                            <a class="nav-link" href="{% url 'core:agendar' %}">
+                                <i class="fas fa-calendar-plus"></i> Agendar
                             </a>
                         </li>
                     {% endif %}
@@ -92,21 +161,26 @@
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-person-circle"></i> {{ user.username }}
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-user-circle"></i> {{ user.username }}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> Perfil</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Configurações</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'core:logout' %}">Sair</a></li>
+                                <li><a class="dropdown-item" href="{% url 'core:logout' %}"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
                             </ul>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{% url 'core:login' %}">Login</a>
+                            <a class="nav-link" href="{% url 'core:login' %}">
+                                <i class="fas fa-sign-in-alt"></i> Entrar
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{% url 'core:register' %}">Cadastrar</a>
+                            <a class="nav-link" href="{% url 'core:register' %}">
+                                <i class="fas fa-user-plus"></i> Cadastrar
+                            </a>
                         </li>
                     {% endif %}
                 </ul>
@@ -118,8 +192,8 @@
     {% if messages %}
         <div class="container mt-3">
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="border: none; border-radius: var(--pulse-border-radius); box-shadow: var(--pulse-shadow-sm);">
+                    <i class="fas fa-info-circle"></i> {{ message }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             {% endfor %}
@@ -127,15 +201,27 @@
     {% endif %}
 
     <!-- Main Content -->
-    <main class="container my-4">
+    <main>
         {% block content %}
         {% endblock %}
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-3 mt-5">
+    <footer class="text-center py-4 mt-5">
         <div class="container">
-            <p>&copy; 2025 Pulse - Sistema de Agendamento. Todos os direitos reservados.</p>
+            <div class="row">
+                <div class="col-md-6 text-md-start">
+                    <p class="mb-0">
+                        <i class="fas fa-heartbeat"></i> 
+                        <strong>Dr. Pulse</strong> - Sistema de Gestão Médica
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">
+                        &copy; 2025 Todos os direitos reservados
+                    </p>
+                </div>
+            </div>
         </div>
     </footer>
 
@@ -146,7 +232,7 @@
     <script src="{% static 'js/pulse.js' %}"></script>
     
     <!-- Container para notificações -->
-    <div id="toast-container" class="toast-container"></div>
+    <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3"></div>
     
     {% block extra_js %}{% endblock %}
 </body>

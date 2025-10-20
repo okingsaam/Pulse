@@ -5,22 +5,26 @@
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-lg-4 col-md-6">
-        <div class="card pulse-card">
+    <div class="col-lg-5 col-md-7">
+        <div class="card pulse-card" style="background: var(--pulse-white); border-radius: var(--pulse-border-radius-lg); box-shadow: var(--pulse-shadow-lg); border: 1px solid var(--pulse-light-gray);">
             <div class="card-body p-5">
                 <div class="text-center mb-4">
-                    <i class="bi bi-heart-pulse display-1 text-primary"></i>
-                    <h2 class="card-title fw-bold">Entrar no Pulse</h2>
-                    <p class="text-muted">Acesse sua conta</p>
+                    <div style="width: 80px; height: 80px; background: var(--pulse-gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                        <i class="fas fa-heartbeat" style="font-size: 32px; color: var(--pulse-white);"></i>
+                    </div>
+                    <h2 class="card-title fw-bold" style="color: var(--pulse-primary); font-size: 28px;">Entrar no Pulse</h2>
+                    <p style="color: var(--pulse-gray); font-size: 16px;">Sistema Médico Especializado</p>
                 </div>
 
                 <form method="post">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label for="{{ form.username.id_for_label }}" class="form-label">Usuário</label>
+                        <label for="{{ form.username.id_for_label }}" class="form-label" style="color: var(--pulse-dark-gray); font-weight: 500;">Usuário</label>
                         <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-person"></i></span>
-                            {{ form.username }}
+                            <span class="input-group-text" style="background: var(--pulse-light); border: 2px solid var(--pulse-light-gray); color: var(--pulse-primary);">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <input type="text" name="username" class="form-control" style="border: 2px solid var(--pulse-light-gray); padding: 12px 15px; font-size: 16px;" placeholder="Digite seu usuário" required>
                         </div>
                         {% if form.username.errors %}
                             <div class="text-danger small">{{ form.username.errors }}</div>
@@ -28,6 +32,17 @@
                     </div>
 
                     <div class="mb-4">
+                        <label for="{{ form.password.id_for_label }}" class="form-label" style="color: var(--pulse-dark-gray); font-weight: 500;">Senha</label>
+                        <div class="input-group">
+                            <span class="input-group-text" style="background: var(--pulse-light); border: 2px solid var(--pulse-light-gray); color: var(--pulse-primary);">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            <input type="password" name="password" class="form-control" style="border: 2px solid var(--pulse-light-gray); padding: 12px 15px; font-size: 16px;" placeholder="Digite sua senha" required>
+                        </div>
+                        {% if form.password.errors %}
+                            <div class="text-danger small">{{ form.password.errors }}</div>
+                        {% endif %}
+                    </div>
                         <label for="{{ form.password.id_for_label }}" class="form-label">Senha</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-lock"></i></span>
@@ -38,21 +53,65 @@
                         {% endif %}
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100 pulse-btn">
-                        <i class="bi bi-box-arrow-in-right"></i> Entrar
+                    {% if form.errors %}
+                        <div class="alert alert-danger" style="background: var(--pulse-danger-light); border: 1px solid var(--pulse-danger); color: var(--pulse-danger); padding: 12px; border-radius: var(--pulse-border-radius); margin-bottom: 20px;">
+                            <i class="fas fa-exclamation-triangle"></i> 
+                            Dados inválidos. Verifique as informações e tente novamente.
+                        </div>
+                    {% endif %}
+
+                    <button type="submit" class="btn w-100" style="background: var(--pulse-gradient-primary); border: none; padding: 12px 20px; border-radius: var(--pulse-border-radius); color: var(--pulse-white); font-weight: 600; font-size: 16px; transition: all 0.3s ease;">
+                        <i class="fas fa-sign-in-alt"></i> Entrar no Sistema
                     </button>
                 </form>
 
-                <hr class="my-4">
-                
-                <div class="text-center">
-                    <p class="mb-0">Não tem uma conta?</p>
-                    <a href="{% url 'core:register' %}" class="btn btn-outline-primary w-100 pulse-btn mt-2">
-                        <i class="bi bi-person-plus"></i> Criar Conta
+                <div class="text-center mt-4">
+                    <p style="color: var(--pulse-gray); margin-bottom: 15px;">Não tem uma conta?</p>
+                    <a href="{% url 'core:register' %}" style="display: inline-block; background: transparent; border: 2px solid var(--pulse-primary); color: var(--pulse-primary); padding: 10px 20px; border-radius: var(--pulse-border-radius); text-decoration: none; font-weight: 500; transition: all 0.3s ease;">
+                        <i class="fas fa-user-plus"></i> Criar Conta
                     </a>
+                </div>
+
+                <div class="text-center mt-4 pt-4" style="border-top: 1px solid var(--pulse-light-gray);">
+                    <small style="color: var(--pulse-gray);">
+                        <i class="fas fa-shield-alt"></i> 
+                        Sistema seguro e protegido
+                    </small>
                 </div>
             </div>
         </div>
+        
+        <div class="text-center mt-4">
+            <p style="color: var(--pulse-gray);">
+                <i class="fas fa-heartbeat" style="color: var(--pulse-primary);"></i> 
+                Sistema Pulse - Cuidando da sua gestão médica
+            </p>
+        </div>
     </div>
 </div>
+
+<style>
+    .form-control:focus {
+        border-color: var(--pulse-primary) !important;
+        box-shadow: 0 0 0 0.2rem rgba(142, 68, 173, 0.25) !important;
+    }
+    
+    .input-group-text:focus-within {
+        background: var(--pulse-primary-light) !important;
+        border-color: var(--pulse-primary) !important;
+    }
+    
+    .btn:hover {
+        background: linear-gradient(135deg, #7d3c98, #6c3483) !important;
+        transform: translateY(-2px);
+        box-shadow: var(--pulse-shadow-md) !important;
+    }
+    
+    a[href*="register"]:hover {
+        background: var(--pulse-primary) !important;
+        color: var(--pulse-white) !important;
+        transform: translateY(-2px);
+        box-shadow: var(--pulse-shadow-md) !important;
+    }
+</style>
 {% endblock %}

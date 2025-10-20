@@ -6,10 +6,10 @@
     box-sizing: border-box !important;
 }
 
-/* Header aprimorado */
+/* Header aprimorado - Tema Roxo Pulse */
 #header {
-    background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%) !important;
-    box-shadow: 0 4px 20px rgba(21, 101, 192, 0.3) !important;
+    background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%) !important;
+    box-shadow: 0 4px 20px rgba(142, 68, 173, 0.3) !important;
     border-bottom: none !important;
 }
 
@@ -39,25 +39,25 @@
     background-color: rgba(255,255,255,0.1) !important;
 }
 
-/* Breadcrumbs médicos */
+/* Breadcrumbs médicos - Tema Roxo */
 .breadcrumbs {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
-    border: 1px solid #dee2e6 !important;
+    background: linear-gradient(135deg, #f4f1f8 0%, #f8f5fc 100%) !important;
+    border: 1px solid #bb8fce !important;
     border-radius: 8px !important;
     padding: 12px 20px !important;
     margin: 20px 0 !important;
     font-weight: 500 !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+    box-shadow: 0 2px 8px rgba(142, 68, 173, 0.1) !important;
 }
 
 .breadcrumbs a {
-    color: #1565C0 !important;
+    color: #8e44ad !important;
     text-decoration: none !important;
     font-weight: 600 !important;
 }
 
 .breadcrumbs a:hover {
-    color: #0D47A1 !important;
+    color: #6c3483 !important;
     text-decoration: underline !important;
 }
 
@@ -78,7 +78,7 @@
 }
 
 .module h2 {
-    background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%) !important;
+    background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%) !important;
     color: white !important;
     padding: 18px 25px !important;
     margin: 0 !important;
@@ -126,7 +126,7 @@
 }
 
 .results th {
-    background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%) !important;
+    background: linear-gradient(135deg, #8e44ad 0%, #6c3483 100%) !important;
     color: white !important;
     padding: 18px 15px !important;
     font-weight: 600 !important;
@@ -155,7 +155,7 @@
 
 /* Botões médicos profissionais */
 .default, input[type="submit"], button {
-    background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%) !important;
+    background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%) !important;
     color: white !important;
     border: none !important;
     padding: 12px 24px !important;
@@ -170,7 +170,7 @@
 .default:hover, input[type="submit"]:hover, button:hover {
     transform: translateY(-2px) !important;
     box-shadow: 0 8px 25px rgba(21, 101, 192, 0.4) !important;
-    background: linear-gradient(135deg, #0D47A1 0%, #1565C0 100%) !important;
+    background: linear-gradient(135deg, #6c3483 0%, #8e44ad 100%) !important;
 }
 
 /* Mensagens médicas */
@@ -211,7 +211,7 @@ input[type="number"], input[type="url"], textarea, select {
 
 input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus,
 input[type="number"]:focus, input[type="url"]:focus, textarea:focus, select:focus {
-    border-color: #1565C0 !important;
+    border-color: #8e44ad !important;
     outline: none !important;
     box-shadow: 0 0 0 4px rgba(21, 101, 192, 0.1) !important;
     background-color: white !important;
@@ -225,7 +225,7 @@ input[type="number"]:focus, input[type="url"]:focus, textarea:focus, select:focu
 }
 
 #nav-sidebar .current-app {
-    background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%) !important;
+    background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%) !important;
     border-radius: 8px !important;
     margin: 8px !important;
     box-shadow: 0 3px 10px rgba(21, 101, 192, 0.3) !important;
@@ -249,7 +249,7 @@ input[type="number"]:focus, input[type="url"]:focus, textarea:focus, select:focu
 
 /* Títulos médicos */
 h1, h2, h3 {
-    color: #1565C0 !important;
+    color: #8e44ad !important;
     font-weight: 700 !important;
     font-family: 'Segoe UI', sans-serif !important;
 }
@@ -266,23 +266,23 @@ h1, h2, h3 {
     margin: 0 5px !important;
     border-radius: 8px !important;
     border: 2px solid #e3f2fd !important;
-    color: #1565C0 !important;
+    color: #8e44ad !important;
     text-decoration: none !important;
     font-weight: 600 !important;
     transition: all 0.3s ease !important;
 }
 
 .paginator a:hover {
-    background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%) !important;
+    background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%) !important;
     color: white !important;
-    border-color: #1565C0 !important;
+    border-color: #8e44ad !important;
     transform: translateY(-1px) !important;
 }
 
 .paginator .this-page {
-    background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%) !important;
+    background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%) !important;
     color: white !important;
-    border-color: #1565C0 !important;
+    border-color: #8e44ad !important;
 }
 
 /* Indicadores médicos */
@@ -308,9 +308,9 @@ fieldset {
 fieldset legend {
     background: white !important;
     padding: 8px 18px !important;
-    border: 2px solid #1565C0 !important;
+    border: 2px solid #8e44ad !important;
     border-radius: 8px !important;
-    color: #1565C0 !important;
+    color: #8e44ad !important;
     font-weight: 700 !important;
     font-size: 16px !important;
 }

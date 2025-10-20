@@ -1,0 +1,86 @@
+/* Avatar do Dr. Pulse - Componente CSS */
+.dr-pulse-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 50%, #bb8fce 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    border: 3px solid rgba(255,255,255,0.9);
+    box-shadow: 0 4px 15px rgba(142, 68, 173, 0.5);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+/* Quando a imagem carregar, esconder o texto */
+.dr-pulse-avatar[style*="background-image"] {
+    color: transparent;
+}
+
+.dr-pulse-avatar:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 25px rgba(142, 68, 173, 0.6);
+    border-color: rgba(255,255,255,1);
+}
+
+/* Efeito de pulso médico */
+.dr-pulse-avatar::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 50%;
+    border: 2px solid rgba(142, 68, 173, 0.3);
+    animation: medical-pulse 2s infinite;
+}
+
+@keyframes medical-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.2);
+        opacity: 0;
+    }
+}
+
+.dr-pulse-avatar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2) 0%, transparent 50%);
+    border-radius: 50%;
+}
+
+/* Avatar em diferentes tamanhos */
+.dr-pulse-avatar.small {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+}
+
+.dr-pulse-avatar.large {
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+}
+
+/* Avatar para tema escuro */
+.dr-pulse-avatar.dark {
+    border: 3px solid rgba(255,255,255,0.5);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
