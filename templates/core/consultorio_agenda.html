@@ -1,107 +1,745 @@
 {% extends 'base.html' %}
 
-{% block title %}Agenda - Dr. Pulse{% endblock %}
+{% block title %}Agenda - Pulse{% endblock %}
+{% block page_title %}Agenda{% endblock %}
+
+{% block extra_css %}
+<style>
+    .agenda-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .date-navigation {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: var(--white);
+        padding: 0.75rem 1.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+    }
+
+    .date-nav-btn {
+        background: none;
+        border: none;
+        color: var(--primary-purple);
+        font-size: 1.25rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: var(--transition);
+    }
+
+    .date-nav-btn:hover {
+        background-color: rgba(142, 68, 173, 0.1);
+    }
+
+    .current-date {
+        font-weight: 600;
+        color: var(--dark-gray);
+        font-size: 1.1rem;
+        min-width: 200px;
+        text-align: center;
+    }
+
+    .view-selector {
+        display: flex;
+        background: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        padding: 0.25rem;
+    }
+
+    .view-btn {
+        padding: 0.5rem 1rem;
+        background: transparent;
+        border: none;
+        border-radius: calc(var(--border-radius) - 0.25rem);
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--medium-gray);
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .view-btn.active {
+        background: var(--primary-purple);
+        color: var(--white);
+    }
+
+    .agenda-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .agenda-stat {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        padding: 1rem;
+        text-align: center;
+        border-left: 4px solid var(--primary-purple);
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-purple);
+        margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+        font-size: 0.875rem;
+        color: var(--medium-gray);
+    }
+
+    .agenda-container {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+    }
+
+    .time-slots {
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        min-height: 600px;
+    }
+
+    .time-column {
+        background-color: #f8f9fa;
+        border-right: 1px solid #e0e0e0;
+    }
+
+    .time-slot {
+        padding: 0.75rem 0.5rem;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--medium-gray);
+        text-align: center;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .appointments-column {
+        position: relative;
+    }
+
+    .appointment-row {
+        height: 60px;
+        border-bottom: 1px solid #e0e0e0;
+        position: relative;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .appointment-card {
+        background: linear-gradient(135deg, var(--primary-purple), var(--light-purple));
+        color: var(--white);
+        border-radius: var(--border-radius);
+        padding: 0.75rem;
+        margin: 0.25rem;
+        width: calc(100% - 0.5rem);
+        cursor: pointer;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .appointment-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(142, 68, 173, 0.3);
+    }
+
+    .appointment-card.confirmed {
+        background: linear-gradient(135deg, #27ae60, #2ecc71);
+    }
+
+    .appointment-card.cancelled {
+        background: linear-gradient(135deg, #e74c3c, #f39c12);
+    }
+
+    .appointment-card.pending {
+        background: linear-gradient(135deg, #f39c12, #f1c40f);
+    }
+
+    .appointment-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .appointment-patient {
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .appointment-type {
+        font-size: 0.75rem;
+        opacity: 0.9;
+    }
+
+    .appointment-status {
+        font-size: 0.75rem;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.25rem 0.5rem;
+        border-radius: 10px;
+    }
+
+    .appointment-actions {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        opacity: 0;
+        transition: var(--transition);
+    }
+
+    .appointment-card:hover .appointment-actions {
+        opacity: 1;
+    }
+
+    .action-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: var(--white);
+        padding: 0.25rem;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 0.75rem;
+        margin-left: 0.25rem;
+        transition: var(--transition);
+    }
+
+    .action-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .empty-slot {
+        height: 60px;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--light-gray);
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .empty-slot:hover {
+        background-color: rgba(142, 68, 173, 0.05);
+        color: var(--primary-purple);
+    }
+
+    .agenda-sidebar {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        margin-left: 1.5rem;
+        height: fit-content;
+        min-width: 300px;
+    }
+
+    .sidebar-section {
+        margin-bottom: 2rem;
+    }
+
+    .sidebar-title {
+        font-weight: 600;
+        color: var(--dark-gray);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .next-appointments {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .next-appointment {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.75rem;
+        border-radius: var(--border-radius);
+        margin-bottom: 0.5rem;
+        border: 1px solid #f0f0f0;
+        transition: var(--transition);
+    }
+
+    .next-appointment:hover {
+        background-color: #f8f9fa;
+    }
+
+    .appointment-time-badge {
+        background: var(--primary-purple);
+        color: var(--white);
+        padding: 0.25rem 0.5rem;
+        border-radius: 10px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .quick-actions {
+        display: grid;
+        gap: 0.5rem;
+    }
+
+    .quick-action-btn {
+        padding: 0.75rem;
+        background: transparent;
+        border: 2px solid var(--light-purple);
+        color: var(--primary-purple);
+        border-radius: var(--border-radius);
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .quick-action-btn:hover {
+        background: var(--primary-purple);
+        color: var(--white);
+    }
+
+    .main-content {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+        .main-content {
+            grid-template-columns: 1fr;
+        }
+        
+        .agenda-sidebar {
+            margin-left: 0;
+            margin-top: 1.5rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .time-slots {
+            grid-template-columns: 60px 1fr;
+        }
+        
+        .appointment-card {
+            padding: 0.5rem;
+        }
+        
+        .appointment-patient {
+            font-size: 0.8rem;
+        }
+        
+        .appointment-type {
+            font-size: 0.7rem;
+        }
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="container-fluid mt-4">
-    <h2><i class="fas fa-calendar"></i> Agenda Médica</h2>
-    
-    <div class="row mb-4">
-        <div class="col-md-3">
-            <div class="card bg-primary text-white">
-                <div class="card-body text-center">
-                    <i class="fas fa-calendar-day fa-2x mb-2"></i>
-                    <h4>12</h4>
-                    <p>Consultas Hoje</p>
-                </div>
-            </div>
+<!-- Header -->
+<div class="agenda-header">
+    <div class="date-navigation">
+        <button class="date-nav-btn" id="prevDay">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="current-date" id="currentDate">
+            Segunda, 20 de Janeiro de 2025
         </div>
-        <div class="col-md-3">
-            <div class="card bg-success text-white">
-                <div class="card-body text-center">
-                    <i class="fas fa-check-circle fa-2x mb-2"></i>
-                    <h4>8</h4>
-                    <p>Concluídas</p>
-                </div>
+        <button class="date-nav-btn" id="nextDay">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <div class="view-selector">
+        <button class="view-btn" data-view="day">Dia</button>
+        <button class="view-btn active" data-view="week">Semana</button>
+        <button class="view-btn" data-view="month">Mês</button>
+    </div>
+
+    <button class="btn btn-primary">
+        <i class="fas fa-plus"></i> Nova Consulta
+    </button>
+</div>
+
+<!-- Stats -->
+<div class="agenda-stats">
+    <div class="agenda-stat">
+        <div class="stat-number">12</div>
+        <div class="stat-label">Consultas Hoje</div>
+    </div>
+    <div class="agenda-stat">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Horários Livres</div>
+    </div>
+    <div class="agenda-stat">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Confirmações Pendentes</div>
+    </div>
+    <div class="agenda-stat">
+        <div class="stat-number">R$ 2.160</div>
+        <div class="stat-label">Faturamento Previsto</div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Agenda -->
+    <div class="agenda-container">
+        <div class="time-slots">
+            <!-- Time Column -->
+            <div class="time-column">
+                <div class="time-slot">08:00</div>
+                <div class="time-slot">09:00</div>
+                <div class="time-slot">10:00</div>
+                <div class="time-slot">11:00</div>
+                <div class="time-slot">12:00</div>
+                <div class="time-slot">13:00</div>
+                <div class="time-slot">14:00</div>
+                <div class="time-slot">15:00</div>
+                <div class="time-slot">16:00</div>
+                <div class="time-slot">17:00</div>
+                <div class="time-slot">18:00</div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card bg-warning text-white">
-                <div class="card-body text-center">
-                    <i class="fas fa-clock fa-2x mb-2"></i>
-                    <h4>3</h4>
-                    <p>Pendentes</p>
+
+            <!-- Appointments Column -->
+            <div class="appointments-column">
+                <!-- 08:00 -->
+                <div class="appointment-row">
+                    <div class="appointment-card confirmed">
+                        <div class="appointment-actions">
+                            <button class="action-btn" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn" title="Cancelar">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="appointment-info">
+                            <div>
+                                <div class="appointment-patient">Maria Silva</div>
+                                <div class="appointment-type">Consulta de Rotina</div>
+                            </div>
+                            <div class="appointment-status">Confirmada</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card bg-danger text-white">
-                <div class="card-body text-center">
-                    <i class="fas fa-times-circle fa-2x mb-2"></i>
-                    <h4>1</h4>
-                    <p>Canceladas</p>
+
+                <!-- 09:00 -->
+                <div class="appointment-row">
+                    <div class="empty-slot" title="Clique para agendar">
+                        <i class="fas fa-plus"></i> Horário Livre
+                    </div>
+                </div>
+
+                <!-- 10:00 -->
+                <div class="appointment-row">
+                    <div class="appointment-card pending">
+                        <div class="appointment-actions">
+                            <button class="action-btn" title="Confirmar">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="action-btn" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                        <div class="appointment-info">
+                            <div>
+                                <div class="appointment-patient">João Santos</div>
+                                <div class="appointment-type">Exame de Rotina</div>
+                            </div>
+                            <div class="appointment-status">Pendente</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 11:00 -->
+                <div class="appointment-row">
+                    <div class="appointment-card confirmed">
+                        <div class="appointment-actions">
+                            <button class="action-btn" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn" title="Cancelar">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="appointment-info">
+                            <div>
+                                <div class="appointment-patient">Ana Costa</div>
+                                <div class="appointment-type">Consulta Especializada</div>
+                            </div>
+                            <div class="appointment-status">Confirmada</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 12:00 - Almoço -->
+                <div class="appointment-row" style="background-color: #f8f9fa;">
+                    <div style="width: 100%; text-align: center; color: var(--medium-gray); font-style: italic;">
+                        Horário de Almoço
+                    </div>
+                </div>
+
+                <!-- 13:00 -->
+                <div class="appointment-row" style="background-color: #f8f9fa;">
+                    <div style="width: 100%; text-align: center; color: var(--medium-gray); font-style: italic;">
+                        Horário de Almoço
+                    </div>
+                </div>
+
+                <!-- 14:00 -->
+                <div class="appointment-row">
+                    <div class="empty-slot" title="Clique para agendar">
+                        <i class="fas fa-plus"></i> Horário Livre
+                    </div>
+                </div>
+
+                <!-- 15:00 -->
+                <div class="appointment-row">
+                    <div class="appointment-card confirmed">
+                        <div class="appointment-actions">
+                            <button class="action-btn" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn" title="Cancelar">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="appointment-info">
+                            <div>
+                                <div class="appointment-patient">Carlos Oliveira</div>
+                                <div class="appointment-type">Retorno</div>
+                            </div>
+                            <div class="appointment-status">Confirmada</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 16:00 -->
+                <div class="appointment-row">
+                    <div class="appointment-card cancelled">
+                        <div class="appointment-actions">
+                            <button class="action-btn" title="Reagendar">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                        </div>
+                        <div class="appointment-info">
+                            <div>
+                                <div class="appointment-patient">Patrícia Lima</div>
+                                <div class="appointment-type">Consulta</div>
+                            </div>
+                            <div class="appointment-status">Cancelada</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 17:00 -->
+                <div class="appointment-row">
+                    <div class="empty-slot" title="Clique para agendar">
+                        <i class="fas fa-plus"></i> Horário Livre
+                    </div>
+                </div>
+
+                <!-- 18:00 -->
+                <div class="appointment-row">
+                    <div class="appointment-card confirmed">
+                        <div class="appointment-actions">
+                            <button class="action-btn" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn" title="Cancelar">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="appointment-info">
+                            <div>
+                                <div class="appointment-patient">Roberto Silva</div>
+                                <div class="appointment-type">Consulta de Rotina</div>
+                            </div>
+                            <div class="appointment-status">Confirmada</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    <h5><i class="fas fa-plus"></i> Ações Rápidas</h5>
-                </div>
-                <div class="card-body">
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-primary">Nova Consulta</button>
-                        <button class="btn btn-outline-primary">Novo Paciente</button>
-                        <button class="btn btn-outline-secondary">Exportar Agenda</button>
-                    </div>
-                </div>
+    <!-- Sidebar -->
+    <div class="agenda-sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-title">
+                <i class="fas fa-clock"></i>
+                Próximas Consultas
             </div>
+            <ul class="next-appointments">
+                <li class="next-appointment">
+                    <div class="appointment-time-badge">08:00</div>
+                    <div>
+                        <div style="font-weight: 600; font-size: 0.9rem;">Maria Silva</div>
+                        <div style="font-size: 0.8rem; color: var(--medium-gray);">Consulta de Rotina</div>
+                    </div>
+                </li>
+                <li class="next-appointment">
+                    <div class="appointment-time-badge">10:00</div>
+                    <div>
+                        <div style="font-weight: 600; font-size: 0.9rem;">João Santos</div>
+                        <div style="font-size: 0.8rem; color: var(--medium-gray);">Exame de Rotina</div>
+                    </div>
+                </li>
+                <li class="next-appointment">
+                    <div class="appointment-time-badge">11:00</div>
+                    <div>
+                        <div style="font-weight: 600; font-size: 0.9rem;">Ana Costa</div>
+                        <div style="font-size: 0.8rem; color: var(--medium-gray);">Consulta Especializada</div>
+                    </div>
+                </li>
+            </ul>
         </div>
-        
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-header">
-                    <h5><i class="fas fa-list"></i> Agenda do Dia</h5>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3 border-start border-success border-3 ps-3">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <span class="badge bg-primary me-2">08:00</span>
-                                <strong>Maria Silva</strong>
-                                <p class="mb-0 text-muted">Consulta de rotina</p>
-                            </div>
-                            <span class="badge bg-success">Confirmada</span>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-3 border-start border-warning border-3 ps-3">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <span class="badge bg-primary me-2">09:30</span>
-                                <strong>João Santos</strong>
-                                <p class="mb-0 text-muted">Exame de sangue</p>
-                            </div>
-                            <span class="badge bg-warning">Pendente</span>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-3 border-start border-success border-3 ps-3">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <span class="badge bg-primary me-2">11:00</span>
-                                <strong>Ana Costa</strong>
-                                <p class="mb-0 text-muted">Retorno cardiologia</p>
-                            </div>
-                            <span class="badge bg-success">Confirmada</span>
-                        </div>
-                    </div>
-                </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-title">
+                <i class="fas fa-tools"></i>
+                Ações Rápidas
+            </div>
+            <div class="quick-actions">
+                <button class="quick-action-btn">
+                    <i class="fas fa-plus"></i>
+                    Nova Consulta
+                </button>
+                <button class="quick-action-btn">
+                    <i class="fas fa-search"></i>
+                    Buscar Paciente
+                </button>
+                <button class="quick-action-btn">
+                    <i class="fas fa-calendar-alt"></i>
+                    Ver Calendário
+                </button>
+                <button class="quick-action-btn">
+                    <i class="fas fa-print"></i>
+                    Imprimir Agenda
+                </button>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Date navigation
+    const currentDateEl = document.getElementById('currentDate');
+    const prevDayBtn = document.getElementById('prevDay');
+    const nextDayBtn = document.getElementById('nextDay');
+    
+    let currentDate = new Date();
+    
+    function updateDateDisplay() {
+        const options = { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        };
+        currentDateEl.textContent = currentDate.toLocaleDateString('pt-BR', options);
+    }
+    
+    prevDayBtn.addEventListener('click', function() {
+        currentDate.setDate(currentDate.getDate() - 1);
+        updateDateDisplay();
+        // Here you would reload appointment data
+    });
+    
+    nextDayBtn.addEventListener('click', function() {
+        currentDate.setDate(currentDate.getDate() + 1);
+        updateDateDisplay();
+        // Here you would reload appointment data
+    });
+    
+    // View selector
+    const viewButtons = document.querySelectorAll('.view-btn');
+    viewButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            viewButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const view = this.dataset.view;
+            console.log('View changed to:', view);
+            // Here you would change the agenda view
+        });
+    });
+    
+    // Empty slot click handlers
+    const emptySlots = document.querySelectorAll('.empty-slot');
+    emptySlots.forEach(slot => {
+        slot.addEventListener('click', function() {
+            // Here you would open a new appointment modal
+            console.log('Create new appointment at this time slot');
+        });
+    });
+    
+    // Appointment card interactions
+    const appointmentCards = document.querySelectorAll('.appointment-card');
+    appointmentCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            if (!e.target.closest('.appointment-actions')) {
+                // Here you would open appointment details
+                console.log('Open appointment details');
+            }
+        });
+    });
+    
+    // Action button handlers
+    document.querySelectorAll('.action-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('fa-edit')) {
+                console.log('Edit appointment');
+            } else if (icon.classList.contains('fa-times')) {
+                console.log('Cancel appointment');
+            } else if (icon.classList.contains('fa-check')) {
+                console.log('Confirm appointment');
+            } else if (icon.classList.contains('fa-redo')) {
+                console.log('Reschedule appointment');
+            }
+        });
+    });
+    
+    // Quick action handlers
+    document.querySelectorAll('.quick-action-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const text = this.textContent.trim();
+            console.log('Quick action:', text);
+        });
+    });
+    
+    // Initialize date display
+    updateDateDisplay();
+});
+</script>
 {% endblock %}
