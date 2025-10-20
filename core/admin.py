@@ -168,10 +168,16 @@ class AgendamentoAdmin(admin.ModelAdmin):
     status_badge.short_description = 'Status'
     
     def valor_total(self, obj):
-        return format_html(
-            '<span style="color: green; font-weight: bold;">R$ {:.2f}</span>',
-            obj.servico.preco
-        )
+        try:
+            preco = float(obj.servico.preco) if obj.servico else 0
+            return format_html(
+                '<span style="color: green; font-weight: bold;">R$ {:.2f}</span>',
+                preco
+            )
+        except (ValueError, AttributeError):
+            return format_html(
+                '<span style="color: red;">Erro no preço</span>'
+            )
     valor_total.short_description = 'Valor'
     
     def marcar_confirmado(self, request, queryset):

@@ -30,7 +30,7 @@ class AdminOnlyMiddleware:
                 return redirect('core:login')
             elif request.user.role != 'admin':
                 messages.error(request, 'Acesso negado. Apenas administradores podem acessar esta página.')
-                return redirect('core:dashboard')
+                return redirect('core:consultorio_dashboard')
 
         response = self.get_response(request)
         return response

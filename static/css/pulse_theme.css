@@ -1,0 +1,180 @@
+/* 
+ * Pulse Medical System - Tema Padrão Roxo
+ * Sistema de cores padronizado para toda a aplicação
+ */
+
+:root {
+    /* Cores Primárias - Roxo */
+    --pulse-primary: #8e44ad;
+    --pulse-primary-dark: #7d3c98;
+    --pulse-primary-light: #bb8fce;
+    --pulse-primary-lightest: #ebdef0;
+    
+    /* Cores Secundárias */
+    --pulse-success: #27ae60;
+    --pulse-success-dark: #229954;
+    --pulse-warning: #f39c12;
+    --pulse-warning-dark: #e67e22;
+    --pulse-danger: #e74c3c;
+    --pulse-danger-dark: #c0392b;
+    --pulse-info: #3498db;
+    --pulse-info-dark: #2980b9;
+    
+    /* Cores Neutras */
+    --pulse-white: #ffffff;
+    --pulse-light: #f8f9fa;
+    --pulse-light-gray: #e3e8ee;
+    --pulse-gray: #64748b;
+    --pulse-dark-gray: #2c3e50;
+    --pulse-black: #1a1a1a;
+    
+    /* Gradientes */
+    --pulse-gradient-primary: linear-gradient(135deg, var(--pulse-primary), var(--pulse-primary-dark));
+    --pulse-gradient-success: linear-gradient(135deg, var(--pulse-success), var(--pulse-success-dark));
+    --pulse-gradient-warning: linear-gradient(135deg, var(--pulse-warning), var(--pulse-warning-dark));
+    --pulse-gradient-danger: linear-gradient(135deg, var(--pulse-danger), var(--pulse-danger-dark));
+    --pulse-gradient-info: linear-gradient(135deg, var(--pulse-info), var(--pulse-info-dark));
+    
+    /* Sombras */
+    --pulse-shadow-sm: 0 2px 8px rgba(142, 68, 173, 0.1);
+    --pulse-shadow-md: 0 4px 20px rgba(142, 68, 173, 0.15);
+    --pulse-shadow-lg: 0 8px 30px rgba(142, 68, 173, 0.2);
+    
+    /* Bordas */
+    --pulse-border-radius: 12px;
+    --pulse-border-radius-sm: 6px;
+    --pulse-border-radius-lg: 16px;
+    
+    /* Fonte */
+    --pulse-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Classes de Utilidade - Cores */
+.text-primary { color: var(--pulse-primary) !important; }
+.text-primary-dark { color: var(--pulse-primary-dark) !important; }
+.text-success { color: var(--pulse-success) !important; }
+.text-warning { color: var(--pulse-warning) !important; }
+.text-danger { color: var(--pulse-danger) !important; }
+.text-info { color: var(--pulse-info) !important; }
+.text-gray { color: var(--pulse-gray) !important; }
+.text-dark { color: var(--pulse-dark-gray) !important; }
+
+.bg-primary { background: var(--pulse-gradient-primary) !important; }
+.bg-success { background: var(--pulse-gradient-success) !important; }
+.bg-warning { background: var(--pulse-gradient-warning) !important; }
+.bg-danger { background: var(--pulse-gradient-danger) !important; }
+.bg-info { background: var(--pulse-gradient-info) !important; }
+
+/* Classes de Utilidade - Componentes */
+.pulse-card {
+    background: var(--pulse-white);
+    border-radius: var(--pulse-border-radius);
+    box-shadow: var(--pulse-shadow-md);
+    border: 1px solid var(--pulse-light-gray);
+    transition: all 0.3s ease;
+}
+
+.pulse-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--pulse-shadow-lg);
+}
+
+.pulse-btn {
+    background: var(--pulse-gradient-primary);
+    color: var(--pulse-white);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--pulse-border-radius-sm);
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-family: var(--pulse-font-family);
+}
+
+.pulse-btn:hover {
+    color: var(--pulse-white);
+    transform: translateY(-1px);
+    box-shadow: var(--pulse-shadow-md);
+}
+
+.pulse-btn-success {
+    background: var(--pulse-gradient-success);
+}
+
+.pulse-btn-warning {
+    background: var(--pulse-gradient-warning);
+}
+
+.pulse-btn-danger {
+    background: var(--pulse-gradient-danger);
+}
+
+.pulse-btn-info {
+    background: var(--pulse-gradient-info);
+}
+
+.pulse-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--pulse-border-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--pulse-white);
+    font-size: 20px;
+}
+
+.pulse-icon-primary { background: var(--pulse-gradient-primary); }
+.pulse-icon-success { background: var(--pulse-gradient-success); }
+.pulse-icon-warning { background: var(--pulse-gradient-warning); }
+.pulse-icon-danger { background: var(--pulse-gradient-danger); }
+.pulse-icon-info { background: var(--pulse-gradient-info); }
+
+/* Animações */
+@keyframes pulseZoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes pulseSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.pulse-animate-in {
+    animation: pulseZoomIn 0.6s ease-out;
+}
+
+.pulse-animate-slide {
+    animation: pulseSlideIn 0.5s ease-out;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .pulse-btn {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+    
+    .pulse-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+}

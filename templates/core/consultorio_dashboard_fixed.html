@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -7,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="{% load static %}{% static 'css/pulse_theme.css' %}" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,9 +17,9 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa;
-            color: #2c3e50;
+            font-family: var(--pulse-font-family);
+            background-color: var(--pulse-light);
+            color: var(--pulse-dark-gray);
         }
 
         /* Sidebar */
@@ -27,23 +29,23 @@
             top: 0;
             width: 250px;
             height: 100vh;
-            background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
-            border-right: 1px solid #e3e8ee;
+            background: linear-gradient(180deg, var(--pulse-white) 0%, var(--pulse-light) 100%);
+            border-right: 1px solid var(--pulse-light-gray);
             z-index: 1000;
             overflow-y: auto;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            box-shadow: var(--pulse-shadow-md);
         }
 
         .sidebar-header {
             padding: 20px;
-            border-bottom: 1px solid #e3e8ee;
-            background: white;
+            border-bottom: 1px solid var(--pulse-light-gray);
+            background: var(--pulse-white);
         }
 
         .sidebar-brand {
             display: flex;
             align-items: center;
-            color: #2c3e50;
+            color: var(--pulse-dark-gray);
             text-decoration: none;
             font-weight: 600;
             font-size: 18px;
@@ -52,12 +54,12 @@
         .sidebar-brand i {
             width: 32px;
             height: 32px;
-            background: linear-gradient(135deg, #8e44ad, #7d3c98);
-            border-radius: 8px;
+            background: var(--pulse-gradient-primary);
+            border-radius: var(--pulse-border-radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: var(--pulse-white);
             margin-right: 12px;
             font-size: 14px;
         }
@@ -75,7 +77,7 @@
             display: flex;
             align-items: center;
             padding: 12px 20px;
-            color: #64748b;
+            color: var(--pulse-gray);
             text-decoration: none;
             transition: all 0.3s ease;
             border-radius: 0 25px 25px 0;
@@ -84,8 +86,8 @@
 
         .sidebar-menu a:hover,
         .sidebar-menu a.active {
-            background: linear-gradient(135deg, #8e44ad, #7d3c98);
-            color: white;
+            background: var(--pulse-gradient-primary);
+            color: var(--pulse-white);
             transform: translateX(5px);
         }
 
@@ -102,17 +104,17 @@
             left: 250px;
             right: 0;
             height: 70px;
-            background: linear-gradient(135deg, #8e44ad, #7d3c98);
+            background: var(--pulse-gradient-primary);
             z-index: 999;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 30px;
-            box-shadow: 0 2px 10px rgba(52, 152, 219, 0.3);
+            box-shadow: var(--pulse-shadow-md);
         }
 
         .header-title {
-            color: white;
+            color: var(--pulse-white);
             font-size: 24px;
             font-weight: 600;
             margin: 0;
@@ -127,7 +129,7 @@
         .header-user {
             display: flex;
             align-items: center;
-            color: white;
+            color: var(--pulse-white);
         }
 
         .header-user img {
@@ -137,7 +139,7 @@
             margin-left: 15px;
             border: 3px solid rgba(255,255,255,0.3);
             object-fit: cover;
-            background: linear-gradient(135deg, #8e44ad, #7d3c98);
+            background: var(--pulse-gradient-primary);
         }
 
         .avatar-medical {
@@ -157,7 +159,7 @@
         .page-title {
             font-size: 32px;
             font-weight: 700;
-            color: #2c3e50;
+            color: var(--pulse-dark-gray);
             margin-bottom: 30px;
         }
 
@@ -170,11 +172,11 @@
         }
 
         .stat-card {
-            background: white;
-            border-radius: 16px;
+            background: var(--pulse-white);
+            border-radius: var(--pulse-border-radius-lg);
             padding: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #f1f5f9;
+            box-shadow: var(--pulse-shadow-md);
+            border: 1px solid var(--pulse-light-gray);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -182,7 +184,7 @@
 
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            box-shadow: var(--pulse-shadow-lg);
         }
 
         .stat-card::before {
@@ -192,50 +194,50 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(135deg, #8e44ad, #7d3c98);
+            background: var(--pulse-gradient-primary);
         }
 
         .stat-card.success::before {
-            background: linear-gradient(135deg, #27ae60, #229954);
+            background: var(--pulse-gradient-success);
         }
 
         .stat-card.warning::before {
-            background: linear-gradient(135deg, #f39c12, #e67e22);
+            background: var(--pulse-gradient-warning);
         }
 
         .stat-icon {
             width: 60px;
             height: 60px;
-            border-radius: 16px;
+            border-radius: var(--pulse-border-radius-lg);
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 15px;
             font-size: 24px;
-            color: white;
+            color: var(--pulse-white);
         }
 
-        .stat-icon.blue {
-            background: linear-gradient(135deg, #8e44ad, #7d3c98);
+        .stat-icon.purple {
+            background: var(--pulse-gradient-primary);
         }
 
         .stat-icon.green {
-            background: linear-gradient(135deg, #27ae60, #229954);
+            background: var(--pulse-gradient-success);
         }
 
         .stat-icon.orange {
-            background: linear-gradient(135deg, #f39c12, #e67e22);
+            background: var(--pulse-gradient-warning);
         }
 
         .stat-number {
             font-size: 36px;
             font-weight: 700;
-            color: #2c3e50;
+            color: var(--pulse-dark-gray);
             margin-bottom: 5px;
         }
 
         .stat-label {
-            color: #64748b;
+            color: var(--pulse-gray);
             font-size: 14px;
             font-weight: 500;
         }
@@ -249,17 +251,17 @@
         }
 
         .info-card {
-            background: white;
-            border-radius: 16px;
+            background: var(--pulse-white);
+            border-radius: var(--pulse-border-radius-lg);
             padding: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #f1f5f9;
+            box-shadow: var(--pulse-shadow-md);
+            border: 1px solid var(--pulse-light-gray);
         }
 
         .info-title {
             font-size: 18px;
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--pulse-dark-gray);
             margin-bottom: 20px;
         }
 
@@ -268,7 +270,7 @@
             display: flex;
             align-items: center;
             padding: 15px 0;
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 1px solid var(--pulse-light-gray);
         }
 
         .patient-item:last-child {
@@ -279,18 +281,18 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #8e44ad, #7d3c98);
+            background: var(--pulse-gradient-primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: var(--pulse-white);
             font-weight: 600;
             margin-right: 15px;
         }
 
         .patient-name {
             font-weight: 500;
-            color: #2c3e50;
+            color: var(--pulse-dark-gray);
         }
 
         /* Waiting Room */
@@ -302,7 +304,7 @@
         .waiting-number {
             width: 120px;
             height: 120px;
-            border: 4px solid #e3e8ee;
+            border: 4px solid var(--pulse-light-gray);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -310,11 +312,11 @@
             margin: 0 auto 20px;
             font-size: 48px;
             font-weight: 700;
-            color: #64748b;
+            color: var(--pulse-gray);
         }
 
         .waiting-label {
-            color: #64748b;
+            color: var(--pulse-gray);
             font-size: 14px;
         }
 
@@ -327,10 +329,10 @@
         }
 
         .action-btn {
-            background: linear-gradient(135deg, #8e44ad, #7d3c98);
-            color: white;
+            background: var(--pulse-gradient-primary);
+            color: var(--pulse-white);
             padding: 15px 20px;
-            border-radius: 12px;
+            border-radius: var(--pulse-border-radius);
             text-decoration: none;
             text-align: center;
             font-weight: 500;
@@ -342,21 +344,21 @@
         }
 
         .action-btn:hover {
-            color: white;
+            color: var(--pulse-white);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+            box-shadow: var(--pulse-shadow-md);
         }
 
         .action-btn.success {
-            background: linear-gradient(135deg, #27ae60, #229954);
+            background: var(--pulse-gradient-success);
         }
 
         .action-btn.warning {
-            background: linear-gradient(135deg, #f39c12, #e67e22);
+            background: var(--pulse-gradient-warning);
         }
 
         .action-btn.purple {
-            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            background: var(--pulse-gradient-primary);
         }
 
         /* Responsive */
@@ -405,7 +407,6 @@
             <li><a href="{% url 'core:consultorio_agenda' %}"><i class="fas fa-calendar-alt"></i> Agenda</a></li>
             <li><a href="{% url 'core:consultorio_financeiro' %}"><i class="fas fa-dollar-sign"></i> Financeiro</a></li>
             <li><a href="/admin/"><i class="fas fa-cog"></i> Administração</a></li>
-            <li><a href="/dashboard/"><i class="fas fa-chart-bar"></i> Dashboard Antigo</a></li>
             <li><a href="{% url 'admin:logout' %}"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
         </ul>
     </div>

@@ -1,0 +1,83 @@
+{
+  "timestamp": "2025-10-19T22:39:39.184722",
+  "total_tests": 6,
+  "passed_tests": 5,
+  "success_rate": 83.33333333333334,
+  "results": [
+    {
+      "test": "Database Integrity",
+      "success": true,
+      "message": "Banco de dados íntegro",
+      "details": [
+        "Users: 1 registros",
+        "Profissionais: 4 registros",
+        "Serviços: 4 registros",
+        "Agendamentos: 5 registros",
+        "Queries complexas: OK (5 agendamentos com relações)"
+      ],
+      "timestamp": "2025-10-19T22:39:38.608345"
+    },
+    {
+      "test": "URL Testing",
+      "success": true,
+      "message": "10/10 URLs funcionando",
+      "details": [
+        "Home: Status 200 (0.105s)",
+        "Dashboard: Status 200 (0.011s)",
+        "Agenda: Status 200 (0.008s)",
+        "Pacientes: Status 200 (0.002s)",
+        "Financeiro: Status 200 (0.002s)",
+        "Admin Home: Status 302 (0.001s)",
+        "Admin Profissionais: Status 302 (0.000s)",
+        "Admin Serviços: Status 302 (0.000s)",
+        "Admin Agendamentos: Status 302 (0.000s)",
+        "Admin Users: Status 302 (0.000s)"
+      ],
+      "timestamp": "2025-10-19T22:39:38.738656"
+    },
+    {
+      "test": "Admin Functionality",
+      "success": true,
+      "message": "Admin funcional - 5/5 páginas OK",
+      "details": [
+        "Login admin: OK",
+        "/admin/: OK",
+        "/admin/core/profissional/: OK",
+        "/admin/core/servico/: OK",
+        "/admin/core/agendamento/: OK",
+        "/admin/core/user/: OK"
+      ],
+      "timestamp": "2025-10-19T22:39:39.143535"
+    },
+    {
+      "test": "Static and Templates",
+      "success": true,
+      "message": "Arquivos: 7/7 encontrados",
+      "details": [
+        "static/css/pulse_theme.css: OK (5230 bytes)",
+        "static/admin/css/pulse_admin.css: OK (8295 bytes)",
+        "templates/core/consultorio_dashboard_fixed.html: OK",
+        "templates/core/consultorio_agenda.html: OK",
+        "templates/core/consultorio_pacientes.html: OK",
+        "templates/core/consultorio_financeiro.html: OK",
+        "templates/base.html: OK"
+      ],
+      "timestamp": "2025-10-19T22:39:39.144667"
+    },
+    {
+      "test": "Server Performance",
+      "success": true,
+      "message": "Performance boa",
+      "details": [
+        "/consultorio/: 0.019s (Status 200)",
+        "/consultorio/agenda/: 0.011s (Status 200)",
+        "/consultorio/pacientes/: 0.004s (Status 200)",
+        "/consultorio/financeiro/: 0.005s (Status 200)",
+        "Tempo médio: 0.010s",
+        "Tempo máximo: 0.019s"
+      ],
+      "timestamp": "2025-10-19T22:39:39.183911"
+    }
+  ],
+  "errors": []
+}

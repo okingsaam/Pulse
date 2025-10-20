@@ -73,11 +73,6 @@ urlpatterns = [
     # View: LogoutView do Django (pronta)
     # Redireciona para LOGOUT_REDIRECT_URL
     
-    path('dashboard/', views.dashboard, name='dashboard'),
-    # URL: "/dashboard/"
-    # View: views.dashboard
-    # Função: Painel principal do usuário
-    
     path('agendar/', views.agendar_consulta, name='agendar'),
     # URL: "/agendar/"
     # View: views.agendar_consulta
@@ -135,10 +130,10 @@ urlpatterns = [
 """
 FLUXO DE UMA REQUISIÇÃO:
 ========================
-1. Usuário acessa URL (ex: "/dashboard/")
+1. Usuário acessa URL (ex: "/consultorio/")
 2. Django procura a URL em urlpatterns
-3. Encontra: path('dashboard/', views.dashboard, name='dashboard')
-4. Executa: views.dashboard(request)
+3. Encontra: path('consultorio/', consultorio_dashboard, name='consultorio_dashboard')
+4. Executa: consultorio_dashboard(request)
 5. A view processa a lógica
 6. Retorna resposta (HTML, JSON, redirect, etc.)
 7. Navegador exibe o resultado

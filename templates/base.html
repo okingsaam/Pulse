@@ -9,28 +9,55 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     {% load static %}
+    <!-- Tema Pulse Padrão -->
+    <link href="{% static 'css/pulse_theme.css' %}" rel="stylesheet">
     <!-- Estilos customizados -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     
     <style>
-        .pulse-navbar {
-            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+        body {
+            font-family: var(--pulse-font-family);
+            background-color: var(--pulse-light);
         }
+        
+        .pulse-navbar {
+            background: var(--pulse-gradient-primary);
+            box-shadow: var(--pulse-shadow-md);
+        }
+        
         .pulse-card {
             border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: var(--pulse-border-radius-lg);
+            box-shadow: var(--pulse-shadow-md);
+            background: var(--pulse-white);
         }
+        
         .pulse-btn {
             border-radius: 25px;
             padding: 10px 25px;
+            background: var(--pulse-gradient-primary);
+            color: var(--pulse-white);
+            border: none;
+            transition: all 0.3s ease;
         }
+        
+        .pulse-btn:hover {
+            color: var(--pulse-white);
+            transform: translateY(-1px);
+            box-shadow: var(--pulse-shadow-md);
+        }
+        
         .stats-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 15px;
+            background: var(--pulse-gradient-primary);
+            color: var(--pulse-white);
+            border-radius: var(--pulse-border-radius-lg);
+            box-shadow: var(--pulse-shadow-md);
         }
     </style>
 </head>

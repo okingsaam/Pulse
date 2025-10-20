@@ -1,27 +1,30 @@
-/* CSS customizado para melhorar ainda mais a interface admin */
+/* CSS customizado para admin - Tema Roxo Padrão Pulse */
+
+/* Importar variáveis do tema principal */
+@import url('/static/css/pulse_theme.css');
 
 /* Melhorar aparência dos cards dos módulos */
 .module {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
-    border: 1px solid #e3f2fd !important;
-    border-radius: 12px !important;
-    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.1) !important;
+    background: linear-gradient(135deg, var(--pulse-white) 0%, var(--pulse-light) 100%) !important;
+    border: 1px solid var(--pulse-light-gray) !important;
+    border-radius: var(--pulse-border-radius) !important;
+    box-shadow: var(--pulse-shadow-md) !important;
     transition: all 0.3s ease !important;
     margin-bottom: 20px !important;
 }
 
 .module:hover {
-    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.15) !important;
+    box-shadow: var(--pulse-shadow-lg) !important;
     transform: translateY(-2px) !important;
 }
 
 /* Melhorar cabeçalhos dos módulos */
 .module h2 {
-    background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%) !important;
-    color: white !important;
+    background: var(--pulse-gradient-primary) !important;
+    color: var(--pulse-white) !important;
     padding: 15px 20px !important;
     margin: 0 !important;
-    border-radius: 12px 12px 0 0 !important;
+    border-radius: var(--pulse-border-radius) var(--pulse-border-radius) 0 0 !important;
     font-weight: 600 !important;
     font-size: 16px !important;
     border-bottom: none !important;
@@ -29,16 +32,16 @@
 
 /* Links dos módulos */
 .module h2 a {
-    color: white !important;
+    color: var(--pulse-white) !important;
     text-decoration: none !important;
 }
 
 /* Melhorar links de ação */
 .addlink, .changelink, .viewlink {
-    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%) !important;
-    color: white !important;
+    background: var(--pulse-gradient-success) !important;
+    color: var(--pulse-white) !important;
     padding: 8px 16px !important;
-    border-radius: 6px !important;
+    border-radius: var(--pulse-border-radius-sm) !important;
     text-decoration: none !important;
     display: inline-block !important;
     margin: 5px !important;
@@ -49,20 +52,20 @@
 
 .addlink:hover, .changelink:hover, .viewlink:hover {
     transform: translateY(-1px) !important;
-    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3) !important;
-    color: white !important;
+    box-shadow: var(--pulse-shadow-md) !important;
+    color: var(--pulse-white) !important;
 }
 
 /* Melhorar tabelas */
 .results {
-    border-radius: 8px !important;
+    border-radius: var(--pulse-border-radius-sm) !important;
     overflow: hidden !important;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+    box-shadow: var(--pulse-shadow-md) !important;
 }
 
 .results th {
-    background: linear-gradient(135deg, #7d3c98 0%, #0d47a1 100%) !important;
-    color: white !important;
+    background: var(--pulse-gradient-primary) !important;
+    color: var(--pulse-white) !important;
     padding: 15px 10px !important;
     font-weight: 600 !important;
     text-align: center !important;
@@ -70,47 +73,47 @@
 
 .results td {
     padding: 12px 10px !important;
-    border-bottom: 1px solid #e0e0e0 !important;
+    border-bottom: 1px solid var(--pulse-light-gray) !important;
     text-align: center !important;
 }
 
 .results tr:nth-child(even) {
-    background-color: #f8f9fa !important;
+    background-color: var(--pulse-light) !important;
 }
 
 .results tr:hover {
-    background-color: #e3f2fd !important;
+    background-color: var(--pulse-primary-lightest) !important;
     transition: background-color 0.2s ease !important;
 }
 
 /* Melhorar breadcrumbs */
 .breadcrumbs {
-    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%) !important;
-    border: 1px solid #e0e0e0 !important;
-    border-radius: 6px !important;
+    background: linear-gradient(135deg, var(--pulse-white) 0%, var(--pulse-light) 100%) !important;
+    border: 1px solid var(--pulse-light-gray) !important;
+    border-radius: var(--pulse-border-radius-sm) !important;
     padding: 12px 20px !important;
     margin-bottom: 20px !important;
     font-size: 14px !important;
 }
 
 .breadcrumbs a {
-    color: #8e44ad !important;
+    color: var(--pulse-primary) !important;
     text-decoration: none !important;
     font-weight: 500 !important;
 }
 
 .breadcrumbs a:hover {
-    color: #7d3c98 !important;
+    color: var(--pulse-primary-dark) !important;
     text-decoration: underline !important;
 }
 
 /* Melhorar botões de formulário */
 .default, input[type="submit"], button {
-    background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%) !important;
-    color: white !important;
+    background: var(--pulse-gradient-primary) !important;
+    color: var(--pulse-white) !important;
     border: none !important;
     padding: 10px 20px !important;
-    border-radius: 6px !important;
+    border-radius: var(--pulse-border-radius-sm) !important;
     font-weight: 500 !important;
     cursor: pointer !important;
     transition: all 0.3s ease !important;
@@ -118,72 +121,73 @@
 
 .default:hover, input[type="submit"]:hover, button:hover {
     transform: translateY(-1px) !important;
-    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3) !important;
+    box-shadow: var(--pulse-shadow-md) !important;
 }
 
 /* Melhorar mensagens */
 .messagelist {
-    border-radius: 6px !important;
+    border-radius: var(--pulse-border-radius-sm) !important;
     overflow: hidden !important;
     margin-bottom: 20px !important;
 }
 
 .messagelist .success {
-    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%) !important;
-    color: white !important;
+    background: var(--pulse-gradient-success) !important;
+    color: var(--pulse-white) !important;
     padding: 15px 20px !important;
     border: none !important;
 }
 
 .messagelist .error {
-    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%) !important;
-    color: white !important;
+    background: var(--pulse-gradient-danger) !important;
+    color: var(--pulse-white) !important;
     padding: 15px 20px !important;
     border: none !important;
 }
 
 .messagelist .warning {
-    background: linear-gradient(135deg, #ff9800 0%, #f57700 100%) !important;
-    color: white !important;
+    background: var(--pulse-gradient-warning) !important;
+    color: var(--pulse-white) !important;
     padding: 15px 20px !important;
     border: none !important;
 }
 
 /* Melhorar sidebar */
 #nav-sidebar {
-    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%) !important;
-    border-right: 1px solid #e0e0e0 !important;
+    background: linear-gradient(180deg, var(--pulse-light) 0%, var(--pulse-white) 100%) !important;
+    border-right: 1px solid var(--pulse-light-gray) !important;
 }
 
 #nav-sidebar .current-app {
-    background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%) !important;
-    border-radius: 6px !important;
+    background: var(--pulse-gradient-primary) !important;
+    border-radius: var(--pulse-border-radius-sm) !important;
     margin: 5px !important;
 }
 
 #nav-sidebar .current-app a {
-    color: white !important;
+    color: var(--pulse-white) !important;
     font-weight: 600 !important;
 }
 
 /* Melhorar campos de formulário */
 input[type="text"], input[type="email"], input[type="password"], 
 input[type="number"], input[type="url"], textarea, select {
-    border: 2px solid #e0e0e0 !important;
-    border-radius: 6px !important;
+    border: 2px solid var(--pulse-light-gray) !important;
+    border-radius: var(--pulse-border-radius-sm) !important;
     padding: 10px 15px !important;
     transition: border-color 0.3s ease !important;
     font-size: 14px !important;
+    font-family: var(--pulse-font-family) !important;
 }
 
 input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus,
 input[type="number"]:focus, input[type="url"]:focus, textarea:focus, select:focus {
-    border-color: #8e44ad !important;
+    border-color: var(--pulse-primary) !important;
     outline: none !important;
-    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1) !important;
+    box-shadow: 0 0 0 3px var(--pulse-primary-lightest) !important;
 }
 
-/* Adicionar ícones aos botões */
+/* Adicionar ícones aos botões com emojis modernos */
 .addlink:before {
     content: "➕ ";
     margin-right: 5px;
@@ -209,22 +213,23 @@ input[type="number"]:focus, input[type="url"]:focus, textarea:focus, select:focu
     display: inline-block !important;
     padding: 8px 12px !important;
     margin: 0 3px !important;
-    border-radius: 6px !important;
-    border: 1px solid #e0e0e0 !important;
-    color: #8e44ad !important;
+    border-radius: var(--pulse-border-radius-sm) !important;
+    border: 1px solid var(--pulse-light-gray) !important;
+    color: var(--pulse-primary) !important;
     text-decoration: none !important;
     transition: all 0.3s ease !important;
+    font-family: var(--pulse-font-family) !important;
 }
 
 .paginator a:hover {
-    background-color: #8e44ad !important;
-    color: white !important;
+    background-color: var(--pulse-primary) !important;
+    color: var(--pulse-white) !important;
 }
 
 .paginator .this-page {
-    background-color: #8e44ad !important;
-    color: white !important;
-    border-color: #8e44ad !important;
+    background-color: var(--pulse-primary) !important;
+    color: var(--pulse-white) !important;
+    border-color: var(--pulse-primary) !important;
 }
 
 /* Responsividade melhorada */
@@ -243,4 +248,34 @@ input[type="number"]:focus, input[type="url"]:focus, textarea:focus, select:focu
         font-size: 12px !important;
         margin: 3px !important;
     }
+}
+
+/* Melhorias adicionais para consistência visual */
+body {
+    font-family: var(--pulse-font-family) !important;
+    background-color: var(--pulse-light) !important;
+}
+
+.content {
+    background: var(--pulse-white) !important;
+    border-radius: var(--pulse-border-radius) !important;
+    box-shadow: var(--pulse-shadow-sm) !important;
+}
+
+/* Header do admin */
+#header {
+    background: var(--pulse-gradient-primary) !important;
+    color: var(--pulse-white) !important;
+}
+
+#branding h1 {
+    color: var(--pulse-white) !important;
+}
+
+#user-tools a {
+    color: var(--pulse-white) !important;
+}
+
+#user-tools a:hover {
+    color: var(--pulse-primary-lightest) !important;
 }

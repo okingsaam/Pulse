@@ -21,7 +21,7 @@ SECRET_KEY = '6SF_t3PDi34vsAETRg0n4VIZdrWq-YyypzluGhSepOIHui5sYKMHaQEfjS1O4rlQUU
 DEBUG = True  # Mantido como True para desenvolvimento local
 
 # Hosts permitidos (em produção, especificar domínios)
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver', '*.herokuapp.com']
 
 # Configurações de segurança para produção
 SECURE_BROWSER_XSS_FILTER = True

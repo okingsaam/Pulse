@@ -49,7 +49,7 @@ def home(request):
     - Se não está logado → mostra página de boas-vindas
     """
     if request.user.is_authenticated:
-        return redirect('core:dashboard')
+        return redirect('core:consultorio_dashboard')
     return render(request, 'core/home.html')
 
 def register(request):
@@ -68,59 +68,12 @@ def register(request):
             user = form.save()
             login(request, user)  # Já deixa logado
             messages.success(request, 'Cadastro realizado com sucesso!')
-            return redirect('core:dashboard')
+            return redirect('core:consultorio_dashboard')
     else:
         # Primeira visita → formulário vazio
         form = CustomUserCreationForm()
     
     return render(request, 'registration/register.html', {'form': form})
-
-@login_required  # Só usuários logados podem acessar
-def dashboard(request):
-    """
-    PAINEL PRINCIPAL ("/dashboard/")
-    
-    LÓGICA:
-    - Admin: Vê dados de todo o sistema com cache
-    - Paciente: Vê apenas seus próprios dados
-    """
-    cache_key = f"dashboard_data_{request.user.id}_{request.user.role}"
-    cached_data = cache.get(cache_key)
-    
-    if not cached_data:
-        if request.user.role == 'admin':
-            # ADMIN → Dados gerais do sistema com otimizações
-            agendamentos = Agendamento.objects.select_related(
-                'paciente', 'servico', 'profissional'
-            ).all().order_by('-data_hora')[:5]
-            
-            total_agendamentos = Agendamento.objects.count()
-            total_profissionais = Profissional.objects.count()
-            total_servicos = Servico.objects.count()
-            total_usuarios = User.objects.filter(role='paciente').count()
-        else:
-            # PACIENTE → Apenas seus agendamentos
-            agendamentos = Agendamento.objects.select_related(
-                'servico', 'profissional'
-            ).filter(paciente=request.user).order_by('-data_hora')[:5]
-            
-            total_agendamentos = Agendamento.objects.filter(paciente=request.user).count()
-            total_profissionais = None  # Paciente não vê estes dados
-            total_servicos = None
-            total_usuarios = None
-        
-        cached_data = {
-            'agendamentos': agendamentos,
-            'total_agendamentos': total_agendamentos,
-            'total_profissionais': total_profissionais,
-            'total_servicos': total_servicos,
-            'total_usuarios': total_usuarios,
-        }
-        
-        # Cache por 5 minutos
-        cache.set(cache_key, cached_data, 300)
-    
-    return render(request, 'core/dashboard.html', cached_data)
 
 @login_required
 def agendar_consulta(request):
@@ -142,7 +95,7 @@ def agendar_consulta(request):
             # Agora sim salvar no banco
             agendamento.save()
             messages.success(request, 'Agendamento realizado com sucesso!')
-            return redirect('core:dashboard')
+            return redirect('core:consultorio_dashboard')
     else:
         # Primeira visita → formulário vazio
         form = AgendamentoForm()
