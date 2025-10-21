@@ -47,6 +47,13 @@
             background-color: var(--light-gray);
             color: var(--dark-gray);
             line-height: 1.6;
+            overflow-x: hidden;
+            height: 100%;
+        }
+
+        html {
+            height: 100%;
+            overflow-x: hidden;
         }
 
         /* Sidebar */
@@ -117,8 +124,10 @@
         /* Main Content */
         .main-content {
             margin-left: var(--sidebar-width);
-            min-height: 100vh;
+            min-height: calc(100vh - var(--header-height));
+            max-height: 100vh;
             transition: var(--transition);
+            overflow-y: auto;
         }
 
         /* Header */

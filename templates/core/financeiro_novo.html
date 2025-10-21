@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financeiro - Pulse</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fc;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header-section {
+            background: linear-gradient(135deg, #8e44ad 0%, #bb8fce 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .stat-icon.receitas { background: linear-gradient(135deg, #8e44ad, #bb8fce); }
+        .stat-icon.despesas { background: linear-gradient(135deg, #7d3c98, #9b59b6); }
+        .stat-icon.lucro { background: linear-gradient(135deg, #bb8fce, #d2b4de); color: #2d3748; }
+        .stat-icon.pendente { background: linear-gradient(135deg, #a569bd, #c39bd3); }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+        
+        .stat-label {
+            color: #718096;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .chart-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        
+        .simple-chart {
+            display: flex;
+            justify-content: space-around;
+            align-items: end;
+            height: 200px;
+            background: #f8f9fc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .chart-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .bar {
+            width: 60px;
+            border-radius: 6px 6px 0 0;
+            margin-bottom: 10px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .bar:hover {
+            transform: scale(1.05);
+        }
+        
+        .bar.receitas { background: linear-gradient(to top, #8e44ad, #bb8fce); height: 120px; }
+        .bar.despesas { background: linear-gradient(to top, #7d3c98, #9b59b6); height: 80px; }
+        .bar.lucro { background: linear-gradient(to top, #bb8fce, #d2b4de); height: 100px; }
+        
+        .bar-label {
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+        
+        .bar-value {
+            font-weight: 700;
+            color: #2d3748;
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+        
+        .transactions-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: #f8f9fc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            padding: 20px 30px;
+            background: #f8f9fc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            background: white;
+            color: #6c757d;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: #8e44ad;
+            color: white;
+        }
+        
+        .filter-btn:hover {
+            background: #e9ecef;
+        }
+        
+        .filter-btn.active:hover {
+            background: #7d3c98;
+        }
+        
+        .transactions-table {
+            width: 100%;
+            margin: 0;
+        }
+        
+        .transactions-table th {
+            background: #f8f9fc;
+            color: #4a5568;
+            font-weight: 600;
+            padding: 15px 20px;
+            text-align: left;
+            border: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .transactions-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #2d3748;
+        }
+        
+        .transactions-table tr:hover {
+            background: #f8f9fc;
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-pago { background: #d4edda; color: #155724; }
+        .status-pendente { background: #fff3cd; color: #856404; }
+        .status-recorrente { background: #d1ecf1; color: #0c5460; }
+        
+        .value-positive { color: #28a745; font-weight: 700; }
+        .value-negative { color: #dc3545; font-weight: 700; }
+        
+        .summary-footer {
+            background: #f8f9fc;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .btn-primary-custom {
+            background: linear-gradient(135deg, #8e44ad, #bb8fce);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(142, 68, 173, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header-section">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="mb-2"><i class="fas fa-chart-line me-3"></i>Gestão Financeira</h1>
+                    <p class="mb-0 opacity-75">Sistema Pulse - Controle completo das suas finanças</p>
+                </div>
+                <div>
+                    <button class="btn btn-light me-2">
+                        <i class="fas fa-download me-2"></i>Relatório
+                    </button>
+                    <button class="btn btn-outline-light">
+                        <i class="fas fa-plus me-2"></i>Nova Transação
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon receitas">
+                    <i class="fas fa-arrow-up"></i>
+                </div>
+                <div class="stat-value">R$ 58.074</div>
+                <div class="stat-label">Receitas do Mês</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon despesas">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+                <div class="stat-value">R$ 32.441</div>
+                <div class="stat-label">Despesas do Mês</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon lucro">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-value">R$ 25.633</div>
+                <div class="stat-label">Lucro Líquido</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon pendente">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-value">R$ 7.400</div>
+                <div class="stat-label">A Receber</div>
+            </div>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="chart-section">
+            <h4 class="mb-4 text-center">
+                <i class="fas fa-chart-bar me-2"></i>Comparativo Financeiro
+            </h4>
+            
+            <div class="simple-chart">
+                <div class="chart-bar">
+                    <div class="bar receitas"></div>
+                    <div class="bar-label">Receitas</div>
+                    <div class="bar-value">R$ 58.074</div>
+                </div>
+                
+                <div class="chart-bar">
+                    <div class="bar despesas"></div>
+                    <div class="bar-label">Despesas</div>
+                    <div class="bar-value">R$ 32.441</div>
+                </div>
+                
+                <div class="chart-bar">
+                    <div class="bar lucro"></div>
+                    <div class="bar-label">Lucro</div>
+                    <div class="bar-value">R$ 25.633</div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-3">
+                <div class="d-inline-flex gap-4">
+                    <div><span class="badge" style="background: #4facfe;">Receitas: 64.2%</span></div>
+                    <div><span class="badge" style="background: #fa709a;">Despesas: 35.8%</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transactions -->
+        <div class="transactions-section">
+            <div class="section-header">
+                <h4 class="mb-0">
+                    <i class="fas fa-list me-2"></i>Transações - Abril/2023
+                </h4>
+                <button class="btn-primary-custom">
+                    <i class="fas fa-plus me-2"></i>Nova Transação
+                </button>
+            </div>
+            
+            <div class="filter-tabs">
+                <button class="filter-btn active" onclick="filterTransactions('recebimentos')">Recebimentos</button>
+                <button class="filter-btn" onclick="filterTransactions('despesas-fixas')">Despesas Fixas</button>
+                <button class="filter-btn" onclick="filterTransactions('despesas-variaveis')">Despesas Variáveis</button>
+                <button class="filter-btn" onclick="filterTransactions('pessoas')">Pessoas</button>
+                <button class="filter-btn" onclick="filterTransactions('impostos')">Impostos</button>
+                <button class="filter-btn" onclick="filterTransactions('transferencias')">Transferências</button>
+            </div>
+            
+            <table class="transactions-table">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Descrição</th>
+                        <th>Categoria</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="transactions-tbody">
+                    <tr data-category="recebimentos">
+                        <td>14/04/2023</td>
+                        <td><strong>TED-TRANSF ELET DISPON</strong><br><small class="text-muted">Brasil Soluções</small></td>
+                        <td>Mensalidade</td>
+                        <td class="value-positive">R$ 20.000,00</td>
+                        <td><span class="status-badge status-pago">Pago</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="viewTransaction(1)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="recebimentos">
+                        <td>03/04/2023</td>
+                        <td><strong>VISA CREDITO BRASIL</strong><br><small class="text-muted">Brasil Soluções</small></td>
+                        <td>Mensalidade</td>
+                        <td class="value-positive">R$ 10.342,29</td>
+                        <td><span class="status-badge status-pago">Pago</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="viewTransaction(2)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="recebimentos">
+                        <td>03/04/2023</td>
+                        <td><strong>MASTER CREDITO BRASIL</strong><br><small class="text-muted">Brasil Soluções</small></td>
+                        <td>Mensalidade</td>
+                        <td class="value-positive">R$ 1.310,89</td>
+                        <td><span class="status-badge status-recorrente">Recorrente</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="viewTransaction(3)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="despesas-fixas" style="display: none;">
+                        <td>05/04/2023</td>
+                        <td><strong>Aluguel Clínica</strong><br><small class="text-muted">Imobiliária XYZ</small></td>
+                        <td>Infraestrutura</td>
+                        <td class="value-negative">- R$ 3.500,00</td>
+                        <td><span class="status-badge status-pago">Pago</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="viewTransaction(4)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="despesas-fixas" style="display: none;">
+                        <td>10/04/2023</td>
+                        <td><strong>Sistema Médico</strong><br><small class="text-muted">Software House</small></td>
+                        <td>Tecnologia</td>
+                        <td class="value-negative">- R$ 450,00</td>
+                        <td><span class="status-badge status-recorrente">Recorrente</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="viewTransaction(5)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="summary-footer">
+                <div>
+                    <strong class="value-positive">Total Recebido: R$ 58.074,49</strong>
+                </div>
+                <div>
+                    <strong class="text-muted">A Receber: R$ 0,00</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Função para filtrar transações
+        function filterTransactions(category) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Hide all rows
+            document.querySelectorAll('#transactions-tbody tr').forEach(row => {
+                row.style.display = 'none';
+            });
+            
+            // Show rows matching category
+            document.querySelectorAll(`[data-category="${category}"]`).forEach(row => {
+                row.style.display = 'table-row';
+            });
+        }
+        
+        // Função para visualizar transação
+        function viewTransaction(id) {
+            alert(`Visualizando transação ID: ${id}\n\nEsta funcionalidade pode ser expandida para abrir um modal com detalhes completos da transação.`);
+        }
+        
+        // Efeitos de hover nas barras do gráfico
+        document.querySelectorAll('.bar').forEach(bar => {
+            bar.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+            });
+            
+            bar.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+        
+        console.log('Sistema Financeiro Pulse carregado com sucesso!');
+    </script>
+</body>
+</html>

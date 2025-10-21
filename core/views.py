@@ -111,32 +111,9 @@ def pacientes(request):
     return render(request, 'core/consultorio_pacientes.html', context)
 
 def financeiro(request):
-    """Página de controle financeiro"""
-    hoje = timezone.now().date()
-    mes_atual = hoje.replace(day=1)
-    
-    # Consultas do mês
-    consultas_mes = Consulta.objects.filter(
-        criado_em__date__gte=mes_atual
-    )
-    
-    # Estatísticas financeiras
-    faturamento_total = consultas_mes.aggregate(
-        total=Sum('valor')
-    )['total'] or 0
-    
-    faturamento_pago = consultas_mes.filter(
-        pago=True
-    ).aggregate(total=Sum('valor'))['total'] or 0
-    
-    faturamento_pendente = faturamento_total - faturamento_pago
-    
-    context = {
-        'faturamento_total': faturamento_total,
-        'faturamento_pago': faturamento_pago,
-        'faturamento_pendente': faturamento_pendente,
-        'consultas_pagas': consultas_mes.filter(pago=True).count(),
-        'consultas_pendentes': consultas_mes.filter(pago=False).count(),
-        'consultas_recentes': consultas_mes.order_by('-criado_em')[:10],
-    }
-    return render(request, 'core/consultorio_financeiro.html', context)
+    """Página de controle financeiro nova e funcional"""
+    return render(request, 'core/financeiro_novo.html')
+
+def financeiro_novo(request):
+    """Página de controle financeiro nova e funcional"""
+    return render(request, 'core/financeiro_teste.html')

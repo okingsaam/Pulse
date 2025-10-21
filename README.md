@@ -1,59 +1,157 @@
-# 🏥 Pulse - Sistema de Agendamento Médico
+# 🏥 Pulse - Sistema Médico Completo
 
 <div align="center">
   <img src="https://img.shields.io/badge/Django-4.2.25-092E20?style=for-the-badge&logo=django&logoColor=white" alt="Django">
   <img src="https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap">
+  <img src="https://img.shields.io/badge/Chart.js-4.0-FF6384?style=for-the-badge&logo=chart.js&logoColor=white" alt="Chart.js">
   <img src="https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite">
   <img src="https://img.shields.io/badge/API-REST-FF6B6B?style=for-the-badge" alt="REST API">
 </div>
 
 <div align="center">
-  <h3>🚀 Sistema web completo para agendamento de consultas médicas</h3>
-  <p><em>Plataforma moderna, segura e responsiva para gestão de clínicas e consultórios</em></p>
+  <h3>� Sistema médico moderno inspirado no iClinic</h3>
+  <p><em>Interface profissional, dashboard inteligente e gestão completa para clínicas</em></p>
 </div>
 
 ---
 
-## � Sobre o Projeto
+## 🖼️ Screenshots do Sistema
 
-O **Pulse** é uma solução completa para digitalização do processo de agendamento médico, desenvolvida com as melhores práticas de desenvolvimento web. O sistema oferece uma interface intuitiva para pacientes agendarem consultas e ferramentas administrativas robustas para gestão de profissionais, serviços e agendamentos.
+### 📊 Dashboard Principal
+<div align="center">
+  <img src="docs/screenshots/dashboard.png" alt="Dashboard do Pulse" width="800">
+  <p><em>Dashboard com estatísticas em tempo real, gráficos interativos e design moderno</em></p>
+</div>
+
+### 📅 Agenda Visual
+<div align="center">
+  <img src="docs/screenshots/agenda.png" alt="Agenda do Pulse" width="800">
+  <p><em>Sistema de agenda com visualização por horários e estatísticas do dia</em></p>
+</div>
+
+### 👥 Gestão de Pacientes
+<div align="center">
+  <img src="docs/screenshots/pacientes.png" alt="Pacientes do Pulse" width="800">
+  <p><em>Interface moderna para gestão de pacientes com busca e filtros</em></p>
+</div>
+
+### � Gestão Financeira
+<div align="center">
+  <img src="docs/screenshots/financeiro.png" alt="Sistema Financeiro do Pulse" width="800">
+  <p><em>Controle financeiro completo com gráficos, métricas em tempo real e histórico de transações</em></p>
+</div>
+
+### �🛠️ Painel Administrativo
+<div align="center">
+  <img src="docs/screenshots/admin.png" alt="Admin do Pulse" width="800">
+  <p><em>Painel administrativo completo integrado ao Django Admin</em></p>
+</div>
+
+---
+
+## 🎯 Sobre o Projeto
+
+O **Pulse** é um sistema médico completo com **interface moderna inspirada no iClinic**, desenvolvido com Django e tecnologias web atuais. Oferece uma experiência profissional para gestão de clínicas e consultórios com design responsivo e funcionalidades avançadas.
 
 ### ✨ Principais Funcionalidades
 
-- 🔐 **Sistema de Autenticação Completo** - Login, cadastro e controle de acesso
-- 👥 **Gestão de Usuários** - Diferenciação entre administradores e pacientes
-- 👨‍⚕️ **Cadastro de Profissionais** - Gestão de médicos e especialidades
-- 🩺 **Catálogo de Serviços** - Tipos de consulta, preços e durações
-- 📅 **Agendamento Inteligente** - Sistema completo de marcação de consultas
-- 📊 **Dashboard Personalizado** - Visão específica por tipo de usuário
-- 🌐 **API REST Completa** - Endpoints para integração com outras aplicações
-- 📱 **Interface Responsiva** - Design adaptável para todos os dispositivos
+#### 🎨 **Interface Moderna**
+- **Design iClinic**: Interface limpa e profissional
+- **Paleta Roxa**: Cores médicas elegantes (#8e44ad, #7d3c98, #bb8fce)
+- **Tipografia Inter**: Google Fonts para máxima legibilidade
+- **Responsividade Total**: Funciona em desktop, tablet e mobile
+
+#### � **Dashboard Inteligente**
+- **Estatísticas em Tempo Real**: Pacientes, consultas, faturamento
+- **Gráficos Interativos**: Chart.js para visualização de dados
+- **Aniversariantes**: Sistema de lembretes automáticos
+- **Métricas Visuais**: Cards com indicadores de crescimento
+
+#### 👥 **Gestão de Pacientes**
+- **Grid Moderno**: Cards individuais para cada paciente
+- **Busca Avançada**: Por nome, CPF ou telefone
+- **Filtros Inteligentes**: Ativos, novos, aniversariantes
+- **Ações Rápidas**: Ver, editar, agendar, ligar
+
+#### 📅 **Agenda Visual**
+- **Calendário por Horários**: Visualização tipo grade
+- **Status Coloridos**: Confirmado, pendente, cancelado
+- **Navegação por Datas**: Controles intuitivos
+- **Sidebar Informativa**: Próximas consultas e ações
+
+#### � **Controle Financeiro**
+- **Métricas Completas**: Receitas, despesas, lucro líquido
+- **Gráficos de Fluxo**: Visualização de entrada e saída
+- **Transações Detalhadas**: Histórico completo
+- **Filtros por Período**: Hoje, semana, mês, ano
+
+#### 🔐 **Sistema Robusto**
+- **Autenticação Segura**: Login e controle de acesso
+- **API REST**: Endpoints para integração
+- **Banco Otimizado**: SQLite com queries eficientes
+- **Logs Completos**: Sistema de auditoria
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
 ### Backend
-- **Django 4.2.25** - Framework web Python
-- **Django REST Framework** - API REST robusta
-- **SQLite** - Banco de dados relacional
+- **Django 4.2.25** - Framework web Python robusto
+- **Django REST Framework** - API REST completa
+- **SQLite** - Banco de dados otimizado
 - **Python 3.8+** - Linguagem de programação
 
-### Frontend
-- **Bootstrap 5** - Framework CSS responsivo
-- **HTML5/CSS3** - Estrutura e estilização
-- **JavaScript** - Interatividade
-- **Django Templates** - Sistema de templates
+### Frontend Moderno
+- **CSS Grid & Flexbox** - Layout responsivo avançado
+- **CSS Custom Properties** - Variáveis para tema consistente
+- **Chart.js** - Gráficos interativos e animados
+- **Font Awesome 6.4** - Ícones profissionais
+- **Google Fonts Inter** - Tipografia moderna
+- **JavaScript ES6+** - Funcionalidades interativas
+
+### Design System
+- **Paleta Médica** - Tons de roxo profissionais
+- **Componentes Reutilizáveis** - Cards, botões, forms
+- **Animações CSS3** - Transições suaves
+- **Mobile First** - Design responsivo
 
 ### Outras Tecnologias
-- **Django CORS Headers** - Configuração CORS para APIs
-- **Django Crispy Forms** - Formulários elegantes
+- **Django Templates** - Sistema de templates dinâmico
 - **Git** - Controle de versão
+- **Logging System** - Sistema de auditoria
 
 ---
 
-## � Instalação e Configuração
+## 🎨 Design e Experiência do Usuário
+
+### 💜 Inspiração iClinic
+O Pulse foi desenvolvido com design inspirado no **iClinic**, oferecendo:
+- Interface limpa e profissional
+- Navegação intuitiva com sidebar moderna
+- Cards estatísticos informativos
+- Gráficos interativos e responsivos
+- Paleta de cores médica elegante
+
+### 📱 Responsividade Total
+- **Desktop**: Layout completo com sidebar e múltiplas colunas
+- **Tablet**: Adaptação inteligente dos componentes
+- **Mobile**: Interface otimizada para toque
+
+### ⚡ Performance e Animações
+- **Carregamento Rápido**: CSS otimizado e recursos CDN
+- **Animações Suaves**: Transições CSS3 profissionais
+- **Feedback Visual**: Estados hover, active e focus bem definidos
+- **Loading States**: Indicadores visuais para melhor UX
+
+### 🎯 Acessibilidade
+- **Contraste Adequado**: Cores que atendem padrões WCAG
+- **Navegação por Teclado**: Suporte completo
+- **Ícones Semânticos**: Font Awesome com significado claro
+- **Textos Legíveis**: Tipografia Inter otimizada
+
+---
+
+## 🚀 Instalação e Configuração
 
 ### Pré-requisitos
 - Python 3.8 ou superior
@@ -168,21 +266,37 @@ Pulse/
 
 ---
 
-## 🎯 Demonstração
+## 🎯 Funcionalidades em Ação
 
-### Para Pacientes
-1. Cadastre-se no sistema
-2. Faça login
-3. Acesse o dashboard personalizado
-4. Agende consultas escolhendo profissional e horário
-5. Visualize seus agendamentos
+### 📊 Dashboard Inteligente
+- **Estatísticas Visuais**: Cards com dados em tempo real
+- **Gráficos Interativos**: Procedimentos, status de agendamentos e faturamento
+- **Aniversariantes**: Sistema automático de lembretes
+- **Consultas do Dia**: Lista organizada com status coloridos
 
-### Para Administradores
-1. Faça login com credenciais de admin
-2. Acesse dashboard com estatísticas completas
-3. Gerencie profissionais e serviços
-4. Visualize todos os agendamentos
-5. Acesse interface administrativa avançada
+### 👥 Gestão de Pacientes Moderna
+- **Interface em Cards**: Design elegante inspirado no iClinic
+- **Busca Inteligente**: Encontre por nome, CPF ou telefone
+- **Filtros Dinâmicos**: Todos, ativos, novos, aniversariantes
+- **Ações Contextuais**: Ver, editar, agendar, ligar diretamente
+
+### 📅 Agenda Visual Profissional
+- **Visualização por Horários**: Grade limpa e organizizada
+- **Status Coloridos**: Verde (confirmado), amarelo (pendente), vermelho (cancelado)
+- **Estatísticas do Dia**: Consultas, horários livres, faturamento previsto
+- **Navegação Temporal**: Controles intuitivos para navegar entre datas
+
+### 💰 Controle Financeiro Completo
+- **Métricas Principais**: Receitas, despesas, lucro líquido, pendências
+- **Gráficos de Análise**: Fluxo de caixa e distribuição de despesas
+- **Transações Detalhadas**: Histórico completo com filtros
+- **Indicadores de Crescimento**: Comparações mensais automáticas
+
+### 🛠️ Administração Avançada
+- **Painel Django Admin**: Interface administrativa completa
+- **Gerenciamento de Dados**: CRUD completo para todas as entidades
+- **Relatórios**: Visualização e exportação de dados
+- **Logs de Sistema**: Auditoria completa das operações
 
 ---
 
@@ -214,6 +328,42 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ---
 
+## 🆕 Novidades da Versão Atual
+
+### ✨ Interface Completamente Renovada
+- **Design iClinic**: Interface moderna e profissional
+- **Paleta Médica**: Tons de roxo elegantes
+- **Responsividade**: Funciona perfeitamente em todos os dispositivos
+
+### 📊 Dashboard Avançado
+- **Chart.js**: Gráficos interativos de procedimentos e faturamento
+- **Estatísticas em Tempo Real**: Dados atualizados automaticamente
+- **Aniversariantes**: Sistema de lembretes integrado
+
+### 🎨 Experiência do Usuário Aprimorada
+- **Animações CSS3**: Transições suaves e profissionais
+- **Feedback Visual**: Estados hover e active bem definidos
+- **Navegação Intuitiva**: Sidebar moderna com ícones Font Awesome
+
+### 🚀 Performance Otimizada
+- **CSS Grid & Flexbox**: Layout responsivo avançado
+- **Recursos CDN**: Carregamento rápido de bibliotecas
+- **Código Limpo**: Arquitetura bem estruturada
+
+---
+
+## 🎯 Status do Projeto
+
+- ✅ **Interface Moderna**: Implementada e funcional
+- ✅ **Dashboard Interativo**: Gráficos e estatísticas
+- ✅ **Gestão de Pacientes**: CRUD completo
+- ✅ **Sistema de Agenda**: Visualização profissional
+- ✅ **Controle Financeiro**: Métricas e relatórios
+- ✅ **Responsividade**: Total em todos os dispositivos
+- ✅ **Performance**: Otimizada e rápida
+
+---
+
 ## 👨‍💻 Autor
 
 **KingSam**
@@ -224,7 +374,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 📞 Suporte
 
-Encontrou um bug ou tem uma sugestão? 
+Encontrou um bug ou tem uma sugestão?
 - Abra uma [issue](https://github.com/okingsaam/Pulse/issues)
 - Entre em contato através do GitHub
 
@@ -232,5 +382,6 @@ Encontrou um bug ou tem uma sugestão?
 
 <div align="center">
   <p>⭐ Se este projeto foi útil para você, considere dar uma estrela!</p>
-  <p>Desenvolvido com ❤️ usando Django</p>
+  <p>💜 Desenvolvido com amor usando Django e inspirado no iClinic</p>
+  <p><strong>Sistema Pulse - Transformando a gestão médica!</strong></p>
 </div>

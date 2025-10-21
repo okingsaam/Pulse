@@ -1,636 +1,688 @@
 {% extends 'base.html' %}
 
-{% block title %}Financeiro - Pulse{% endblock %}
-{% block page_title %}Financeiro{% endblock %}
+{% block title %}Financeiro - Dr. Pulse{% endblock %}
 
 {% block extra_css %}
 <style>
-    .financial-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 2rem;
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
+body {
+    background-color: #f8f9fc;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
 
-    .period-selector {
-        display: flex;
-        background: var(--white);
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow);
-        padding: 0.25rem;
-    }
+.financial-container {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
 
-    .period-btn {
-        padding: 0.5rem 1rem;
-        background: transparent;
-        border: none;
-        border-radius: calc(var(--border-radius) - 0.25rem);
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: var(--medium-gray);
-        cursor: pointer;
-        transition: var(--transition);
-    }
+.financial-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e9ecef;
+}
 
-    .period-btn.active {
-        background: var(--primary-purple);
-        color: var(--white);
-    }
+.financial-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0;
+}
 
-    .financial-stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
 
-    .stat-card {
-        background: var(--white);
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow);
-        padding: 1.5rem;
-        position: relative;
-        overflow: hidden;
-    }
+.summary-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
 
-    .stat-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(135deg, var(--primary-purple), var(--light-purple));
-    }
+.summary-card.green {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
 
-    .stat-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1rem;
-    }
+.summary-card.blue {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
 
-    .stat-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.25rem;
-        color: var(--white);
-    }
+.summary-card.orange {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
 
-    .stat-icon.revenue {
-        background: linear-gradient(135deg, #27ae60, #2ecc71);
-    }
+.summary-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
 
-    .stat-icon.expenses {
-        background: linear-gradient(135deg, #e74c3c, #f39c12);
-    }
+.summary-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
 
-    .stat-icon.profit {
-        background: linear-gradient(135deg, #3498db, #2980b9);
-    }
+.chart-section {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
 
-    .stat-icon.pending {
-        background: linear-gradient(135deg, #f39c12, #f1c40f);
-    }
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
 
-    .stat-title {
-        font-size: 0.875rem;
-        color: var(--medium-gray);
-        font-weight: 500;
-    }
+.chart-canvas {
+    max-height: 300px !important;
+    max-width: 100% !important;
+}
 
-    .stat-value {
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--dark-gray);
-        margin-bottom: 0.5rem;
-    }
+.transactions-section {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
 
-    .stat-change {
-        font-size: 0.875rem;
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-    }
+.transactions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e9ecef;
+}
 
-    .stat-change.positive {
-        color: var(--success);
-    }
+.transactions-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0;
+}
 
-    .stat-change.negative {
-        color: var(--danger);
-    }
+.filter-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
 
-    .charts-section {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
+.filter-tab {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: none;
+    background: #f7fafc;
+    color: #4a5568;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
 
-    .chart-container {
-        background: var(--white);
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow);
-        padding: 1.5rem;
-    }
+.filter-tab.active {
+    background: #667eea;
+    color: white;
+}
 
-    .chart-title {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: var(--dark-gray);
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
+.filter-tab:hover {
+    background: #e2e8f0;
+}
 
-    .transactions-section {
-        background: var(--white);
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow);
-        padding: 1.5rem;
-    }
+.filter-tab.active:hover {
+    background: #5a67d8;
+}
 
-    .transactions-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.5rem;
-    }
+.transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-    .filter-tabs {
-        display: flex;
-        gap: 0.5rem;
-    }
+.transactions-table th {
+    text-align: left;
+    padding: 0.75rem;
+    font-weight: 600;
+    color: #4a5568;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #e2e8f0;
+}
 
-    .filter-tab {
-        padding: 0.5rem 1rem;
-        background: transparent;
-        border: 2px solid var(--light-purple);
-        color: var(--primary-purple);
-        border-radius: 20px;
-        font-size: 0.875rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: var(--transition);
-    }
+.transactions-table td {
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid #f7fafc;
+    vertical-align: middle;
+}
 
-    .filter-tab:hover,
-    .filter-tab.active {
-        background: var(--primary-purple);
-        color: var(--white);
-    }
+.transaction-row:hover {
+    background-color: #f7fafc;
+}
 
-    .transaction-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1rem;
-        border-radius: var(--border-radius);
-        border: 1px solid #f0f0f0;
-        margin-bottom: 0.5rem;
-        transition: var(--transition);
-    }
+.transaction-date {
+    font-weight: 600;
+    color: #2d3748;
+}
 
-    .transaction-item:hover {
-        background-color: #f8f9fa;
-        transform: translateX(5px);
-    }
+.transaction-description {
+    font-weight: 500;
+    color: #2d3748;
+    margin-bottom: 0.25rem;
+}
 
-    .transaction-info {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        flex: 1;
-    }
+.transaction-category {
+    font-size: 0.8rem;
+    color: #718096;
+}
 
-    .transaction-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1rem;
-        color: var(--white);
-    }
+.transaction-value {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
 
-    .transaction-icon.income {
-        background: linear-gradient(135deg, #27ae60, #2ecc71);
-    }
+.transaction-value.positive {
+    color: #38a169;
+}
 
-    .transaction-icon.expense {
-        background: linear-gradient(135deg, #e74c3c, #f39c12);
-    }
+.transaction-value.negative {
+    color: #e53e3e;
+}
 
-    .transaction-details h5 {
-        margin: 0 0 0.25rem 0;
-        font-weight: 600;
-        color: var(--dark-gray);
-    }
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
 
-    .transaction-details p {
-        margin: 0;
-        font-size: 0.875rem;
-        color: var(--medium-gray);
-    }
+.status-badge.recorrente {
+    background: #667eea;
+    color: white;
+}
 
-    .transaction-amount {
-        text-align: right;
-    }
+.status-badge.pago {
+    background: #48bb78;
+    color: white;
+}
 
-    .transaction-value {
-        font-weight: 600;
-        font-size: 1.1rem;
-        margin-bottom: 0.25rem;
-    }
+.status-badge.pendente {
+    background: #ed8936;
+    color: white;
+}
 
-    .transaction-value.income {
-        color: var(--success);
-    }
+.payment-type {
+    font-size: 0.8rem;
+    color: #718096;
+}
 
-    .transaction-value.expense {
-        color: var(--danger);
-    }
+.btn-new-transaction {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
 
-    .transaction-date {
-        font-size: 0.75rem;
-        color: var(--medium-gray);
-    }
+.btn-new-transaction:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
 
-    .empty-state {
-        text-align: center;
-        padding: 3rem 1rem;
-        color: var(--medium-gray);
-    }
+.summary-bottom {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
 
-    .empty-state i {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        color: var(--light-purple);
-    }
+.total-recebido {
+    color: #38a169;
+    font-size: 1.1rem;
+}
 
-    @media (max-width: 768px) {
-        .charts-section {
-            grid-template-columns: 1fr;
-        }
-        
-        .transaction-info {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.5rem;
-        }
-        
-        .transaction-item {
-            flex-direction: column;
-            align-items: stretch;
-        }
-        
-        .transaction-amount {
-            text-align: left;
-            margin-top: 0.5rem;
-        }
-    }
+.total-a-receber {
+    color: #718096;
+    font-size: 1.1rem;
+}
+
+/* GRÁFICO FORÇADO - NÃO PODE SER SOBRESCRITO */
+.forced-chart-container {
+    background: white !important;
+    padding: 30px !important;
+    border-radius: 12px !important;
+    margin: 20px 0 !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    min-height: 250px !important;
+}
+
+.ultra-simple-chart {
+    display: flex !important;
+    justify-content: space-around !important;
+    align-items: end !important;
+    height: 180px !important;
+    padding: 20px !important;
+    background: #f8f9fc !important;
+    border-radius: 8px !important;
+    margin: 20px 0 !important;
+}
+
+.chart-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+}
+
+.chart-bar {
+    width: 50px !important;
+    border-radius: 4px 4px 0 0 !important;
+    margin-bottom: 10px !important;
+    display: block !important;
+}
+
+.receitas-bar {
+    height: 120px !important;
+    background: linear-gradient(to top, #38a169, #68d391) !important;
+}
+
+.despesas-bar {
+    height: 80px !important;
+    background: linear-gradient(to top, #e53e3e, #fc8181) !important;
+}
+
+.lucro-bar {
+    height: 100px !important;
+    background: linear-gradient(to top, #667eea, #764ba2) !important;
+}
+
+.chart-label {
+    color: #4a5568 !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    line-height: 1.3 !important;
+}
+
+.chart-label strong {
+    color: #2d3748 !important;
+    font-weight: 700 !important;
+    font-size: 0.9rem !important;
+}
+
+.chart-summary {
+    display: flex !important;
+    justify-content: space-around !important;
+    padding: 20px !important;
+    background: #f7fafc !important;
+    border-radius: 8px !important;
+    margin-top: 20px !important;
+}
+
+.summary-item {
+    text-align: center !important;
+}
+
+.summary-label {
+    color: #718096 !important;
+    font-size: 0.9rem !important;
+    display: block !important;
+    margin-bottom: 5px !important;
+}
+
+.summary-value {
+    font-weight: 700 !important;
+    font-size: 1.2rem !important;
+}
+
+.summary-value.success {
+    color: #38a169 !important;
+}
+
+.summary-value.info {
+    color: #667eea !important;
+}
+
+.metric-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.5rem;
+}
+
+.income-icon { background: linear-gradient(135deg, #28a745, #20c997); color: white; }
+.received-icon { background: linear-gradient(135deg, #17a2b8, #6f42c1); color: white; }
+.pending-icon { background: linear-gradient(135deg, #ffc107, #fd7e14); color: white; }
+.overdue-icon { background: linear-gradient(135deg, #dc3545, #e83e8c); color: white; }
+
+.transactions-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f8f9fa;
+}
+
+.btn-modern {
+    border-radius: 25px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary-modern {
+    background: linear-gradient(135deg, #8e44ad, #bb8fce);
+    color: white;
+}
+
+.btn-primary-modern:hover {
+    background: linear-gradient(135deg, #7d3c98, #a569bd);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(142, 68, 173, 0.4);
+}
+
+.table-modern {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.table-modern thead th {
+    background: linear-gradient(135deg, #8e44ad, #bb8fce);
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 1rem;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+.table-modern tbody tr {
+    transition: all 0.3s ease;
+}
+
+.table-modern tbody tr:hover {
+    background: #f8f9fa;
+    transform: scale(1.01);
+}
+
+.table-modern tbody td {
+    padding: 1rem;
+    border: none;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.status-badge {
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-paid { background: #d4edda; color: #155724; }
+.status-pending { background: #fff3cd; color: #856404; }
+.status-overdue { background: #f8d7da; color: #721c24; }
+
+.summary-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.progress-modern {
+    height: 8px;
+    border-radius: 10px;
+    background: #f8f9fa;
+    overflow: hidden;
+}
+
+.progress-bar-modern {
+    border-radius: 10px;
+    transition: width 0.6s ease;
+}
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Header with Period Selector -->
-<div class="financial-header">
-    <div class="period-selector">
-        <button class="period-btn" data-period="today">Hoje</button>
-        <button class="period-btn" data-period="week">Semana</button>
-        <button class="period-btn active" data-period="month">Mês</button>
-        <button class="period-btn" data-period="year">Ano</button>
-    </div>
-    <button class="btn btn-primary">
-        <i class="fas fa-plus"></i> Nova Transação
-    </button>
-</div>
-
-<!-- Financial Stats -->
-<div class="financial-stats">
-    <div class="stat-card">
-        <div class="stat-header">
-            <div class="stat-icon revenue">
-                <i class="fas fa-arrow-up"></i>
-            </div>
-            <div class="stat-title">Receitas</div>
-        </div>
-        <div class="stat-value">R$ 12.450,00</div>
-        <div class="stat-change positive">
-            <i class="fas fa-arrow-up"></i>
-            <span>+15% em relação ao mês anterior</span>
-        </div>
-    </div>
-
-    <div class="stat-card">
-        <div class="stat-header">
-            <div class="stat-icon expenses">
-                <i class="fas fa-arrow-down"></i>
-            </div>
-            <div class="stat-title">Despesas</div>
-        </div>
-        <div class="stat-value">R$ 3.280,00</div>
-        <div class="stat-change negative">
-            <i class="fas fa-arrow-up"></i>
-            <span>+8% em relação ao mês anterior</span>
-        </div>
-    </div>
-
-    <div class="stat-card">
-        <div class="stat-header">
-            <div class="stat-icon profit">
-                <i class="fas fa-chart-line"></i>
-            </div>
-            <div class="stat-title">Lucro Líquido</div>
-        </div>
-        <div class="stat-value">R$ 9.170,00</div>
-        <div class="stat-change positive">
-            <i class="fas fa-arrow-up"></i>
-            <span>+18% em relação ao mês anterior</span>
-        </div>
-    </div>
-
-    <div class="stat-card">
-        <div class="stat-header">
-            <div class="stat-icon pending">
-                <i class="fas fa-clock"></i>
-            </div>
-            <div class="stat-title">Pendentes</div>
-        </div>
-        <div class="stat-value">R$ 2.150,00</div>
-        <div class="stat-change">
-            <i class="fas fa-minus"></i>
-            <span>7 consultas em aberto</span>
-        </div>
-    </div>
-</div>
-
-<!-- Charts Section -->
-<div class="charts-section">
-    <div class="chart-container">
-        <div class="chart-title">
-            <i class="fas fa-chart-area"></i>
-            Fluxo de Caixa - Últimos 6 Meses
-        </div>
-        <canvas id="cashFlowChart" height="120"></canvas>
-    </div>
-
-    <div class="chart-container">
-        <div class="chart-title">
-            <i class="fas fa-chart-pie"></i>
-            Categorias de Despesas
-        </div>
-        <canvas id="expensesChart" height="200"></canvas>
-    </div>
-</div>
-
-<!-- Transactions Section -->
-<div class="transactions-section">
-    <div class="transactions-header">
-        <h3>Transações Recentes</h3>
-        <div class="filter-tabs">
-            <button class="filter-tab active" data-filter="all">Todas</button>
-            <button class="filter-tab" data-filter="income">Receitas</button>
-            <button class="filter-tab" data-filter="expense">Despesas</button>
-        </div>
-    </div>
-
-    <div class="transactions-list">
-        <!-- Sample transactions -->
-        <div class="transaction-item" data-type="income">
-            <div class="transaction-info">
-                <div class="transaction-icon income">
-                    <i class="fas fa-plus"></i>
-                </div>
-                <div class="transaction-details">
-                    <h5>Consulta - Maria Silva</h5>
-                    <p>Consulta de rotina</p>
-                </div>
-            </div>
-            <div class="transaction-amount">
-                <div class="transaction-value income">+R$ 180,00</div>
-                <div class="transaction-date">Hoje, 14:30</div>
-            </div>
-        </div>
-
-        <div class="transaction-item" data-type="income">
-            <div class="transaction-info">
-                <div class="transaction-icon income">
-                    <i class="fas fa-plus"></i>
-                </div>
-                <div class="transaction-details">
-                    <h5>Consulta - João Santos</h5>
-                    <p>Exame de rotina</p>
-                </div>
-            </div>
-            <div class="transaction-amount">
-                <div class="transaction-value income">+R$ 150,00</div>
-                <div class="transaction-date">Hoje, 10:15</div>
-            </div>
-        </div>
-
-        <div class="transaction-item" data-type="expense">
-            <div class="transaction-info">
-                <div class="transaction-icon expense">
-                    <i class="fas fa-minus"></i>
-                </div>
-                <div class="transaction-details">
-                    <h5>Material Médico</h5>
-                    <p>Compra de insumos</p>
-                </div>
-            </div>
-            <div class="transaction-amount">
-                <div class="transaction-value expense">-R$ 450,00</div>
-                <div class="transaction-date">Ontem, 16:20</div>
-            </div>
-        </div>
-
-        <div class="transaction-item" data-type="expense">
-            <div class="transaction-info">
-                <div class="transaction-icon expense">
-                    <i class="fas fa-minus"></i>
-                </div>
-                <div class="transaction-details">
-                    <h5>Energia Elétrica</h5>
-                    <p>Conta de luz - Janeiro</p>
-                </div>
-            </div>
-            <div class="transaction-amount">
-                <div class="transaction-value expense">-R$ 280,00</div>
-                <div class="transaction-date">Ontem, 09:00</div>
-            </div>
-        </div>
-
-        <div class="transaction-item" data-type="income">
-            <div class="transaction-info">
-                <div class="transaction-icon income">
-                    <i class="fas fa-plus"></i>
-                </div>
-                <div class="transaction-details">
-                    <h5>Consulta - Ana Costa</h5>
-                    <p>Consulta especializada</p>
-                </div>
-            </div>
-            <div class="transaction-amount">
-                <div class="transaction-value income">+R$ 200,00</div>
-                <div class="transaction-date">2 dias atrás</div>
-            </div>
-        </div>
-    </div>
-
-    <div style="text-align: center; margin-top: 1.5rem;">
-        <button class="btn btn-outline-primary">
-            <i class="fas fa-eye"></i> Ver Todas as Transações
+<div class="financial-container">
+    <!-- Header -->
+    <div class="financial-header">
+        <h1 class="financial-title">Transações</h1>
+        <button class="btn-new-transaction">
+            + Nova transação
         </button>
     </div>
-</div>
-{% endblock %}
 
-{% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Cash Flow Chart
-    const cashFlowCtx = document.getElementById('cashFlowChart').getContext('2d');
-    new Chart(cashFlowCtx, {
-        type: 'line',
-        data: {
-            labels: ['Ago', 'Set', 'Out', 'Nov', 'Dez', 'Jan'],
-            datasets: [{
-                label: 'Receitas',
-                data: [8500, 9200, 11000, 10800, 12450, 13200],
-                borderColor: '#27ae60',
-                backgroundColor: 'rgba(39, 174, 96, 0.1)',
-                tension: 0.4,
-                fill: true
-            }, {
-                label: 'Despesas',
-                data: [3200, 3800, 4100, 3900, 3280, 3500],
-                borderColor: '#e74c3c',
-                backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                tension: 0.4,
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        callback: function(value) {
-                            return 'R$ ' + value.toLocaleString('pt-BR');
-                        }
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return context.dataset.label + ': R$ ' + context.parsed.y.toLocaleString('pt-BR');
-                        }
-                    }
-                }
-            }
-        }
-    });
+    <!-- Cards de Resumo -->
+    <div class="summary-cards">
+        <div class="summary-card">
+            <div class="summary-value">R$17.672,74</div>
+            <div class="summary-label">Resultado previsto no mês</div>
+        </div>
+        <div class="summary-card green">
+            <div class="summary-value">R$58.074,49</div>
+            <div class="summary-label">Recebido - 100%</div>
+        </div>
+        <div class="summary-card blue">
+            <div class="summary-value">R$40.401,75</div>
+            <div class="summary-label">Previsto - 80,30%</div>
+        </div>
+        <div class="summary-card orange">
+            <div class="summary-value">R$81.371,85</div>
+            <div class="summary-label">Saldo atual</div>
+        </div>
+    </div>
 
-    // Expenses Chart
-    const expensesCtx = document.getElementById('expensesChart').getContext('2d');
-    new Chart(expensesCtx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Material Médico', 'Energia', 'Telefone', 'Aluguel', 'Outros'],
-            datasets: [{
-                data: [45, 15, 8, 25, 7],
-                backgroundColor: [
-                    '#8e44ad',
-                    '#3498db',
-                    '#27ae60',
-                    '#f39c12',
-                    '#e74c3c'
-                ],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        padding: 15,
-                        usePointStyle: true
-                    }
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return context.label + ': ' + context.parsed + '%';
-                        }
-                    }
-                }
-            }
-        }
-    });
-
-    // Period selector
-    const periodButtons = document.querySelectorAll('.period-btn');
-    periodButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
-            periodButtons.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Here you would typically reload data for the selected period
-            console.log('Period changed to:', this.dataset.period);
-        });
-    });
-
-    // Filter tabs
-    const filterTabs = document.querySelectorAll('.filter-tab');
-    const transactionItems = document.querySelectorAll('.transaction-item');
-    
-    filterTabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            filterTabs.forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
-            
-            const filter = this.dataset.filter;
-            
-            transactionItems.forEach(item => {
-                if (filter === 'all') {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = item.dataset.type === filter ? 'flex' : 'none';
-                }
-            });
-        });
-    });
-
-    // Add hover animations to transaction items
-    transactionItems.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            this.style.backgroundColor = '#f8f9fa';
-        });
+    <!-- Gráfico -->
+    <div class="chart-section">
+        <h3 style="text-align: center; margin-bottom: 1rem; color: #2d3748;">
+            <i class="fas fa-chart-line me-2"></i>Receitas vs Despesas
+        </h3>
         
-        item.addEventListener('mouseleave', function() {
-            this.style.backgroundColor = 'transparent';
-        });
-    });
-});
-</script>
+        <!-- GRÁFICO FORÇADO COM !important -->
+        <div class="forced-chart-container">
+            <h4 style="text-align: center !important; color: #2d3748 !important; margin-bottom: 20px !important;">
+                📊 Resumo Financeiro
+            </h4>
+            
+            <!-- Gráfico Ultra Simples -->
+            <div class="ultra-simple-chart">
+                <!-- Receitas -->
+                <div class="chart-item receitas">
+                    <div class="chart-bar receitas-bar"></div>
+                    <div class="chart-label">Receitas<br><strong>R$ 58.074</strong></div>
+                </div>
+                
+                <!-- Despesas -->
+                <div class="chart-item despesas">
+                    <div class="chart-bar despesas-bar"></div>
+                    <div class="chart-label">Despesas<br><strong>R$ 32.441</strong></div>
+                </div>
+                
+                <!-- Lucro -->
+                <div class="chart-item lucro">
+                    <div class="chart-bar lucro-bar"></div>
+                    <div class="chart-label">Lucro<br><strong>R$ 25.633</strong></div>
+                </div>
+            </div>
+            
+            <!-- Resumo -->
+            <div class="chart-summary">
+                <div class="summary-item">
+                    <span class="summary-label">Taxa de Lucro:</span>
+                    <span class="summary-value success">44.2%</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Crescimento:</span>
+                    <span class="summary-value info">+15.8%</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Legenda estilo Procfy -->
+        <div style="display: flex; justify-content: center; gap: 30px; margin-top: 15px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 20px; height: 8px; background: linear-gradient(135deg, #38a169, #48bb78); border-radius: 4px;"></div>
+                <span style="font-size: 0.9rem; color: #4a5568; font-weight: 500;">Recebimentos</span>
+                <span style="font-size: 0.8rem; color: #38a169; font-weight: 600;">100,00%</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 20px; height: 8px; background: linear-gradient(135deg, #e53e3e, #fc8181); border-radius: 4px;"></div>
+                <span style="font-size: 0.9rem; color: #4a5568; font-weight: 500;">Despesas</span>
+                <span style="font-size: 0.8rem; color: #e53e3e; font-weight: 600;">80,30%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transações -->
+    <div class="transactions-section">
+        <div class="transactions-header">
+            <h2 class="transactions-title">Abr/2023</h2>
+        </div>
+
+        <!-- Filtros -->
+        <div class="filter-tabs">
+            <button class="filter-tab active">Recebimentos</button>
+            <button class="filter-tab">Despesas fixas</button>
+            <button class="filter-tab">Despesas variáveis</button>
+            <button class="filter-tab">Pessoas</button>
+            <button class="filter-tab">Impostos</button>
+            <button class="filter-tab">Transferências</button>
+        </div>
+
+        <!-- Tabela de Transações -->
+        <table class="transactions-table">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Descrição</th>
+                    <th>Recebido de</th>
+                    <th>Categoria</th>
+                    <th>Valor</th>
+                    <th>Tipo pagamento</th>
+                    <th>Pago?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="transaction-row">
+                    <td class="transaction-date">14/04/2023</td>
+                    <td>
+                        <div class="transaction-description">TED-TRANSF ELET DISPON REMET.BRASIL SOLUCO</div>
+                    </td>
+                    <td>BRASIL SOLUÇÕES</td>
+                    <td class="transaction-category">Mensalidade</td>
+                    <td class="transaction-value positive">R$20.000,00</td>
+                    <td>
+                        <span class="status-badge recorrente">1/12</span>
+                        <div class="payment-type">Recorrente Mensal</div>
+                    </td>
+                    <td>✅</td>
+                </tr>
+                <tr class="transaction-row">
+                    <td class="transaction-date">03/04/2023</td>
+                    <td>
+                        <div class="transaction-description">VISA CREDITO BRASIL SOLUÇÕES</div>
+                    </td>
+                    <td>BRASIL SOLUÇÕES</td>
+                    <td class="transaction-category">Mensalidade</td>
+                    <td class="transaction-value positive">R$10.342,29</td>
+                    <td>
+                        <span class="status-badge recorrente">1/12</span>
+                        <div class="payment-type">Recorrente Mensal</div>
+                    </td>
+                    <td>✅</td>
+                </tr>
+                <tr class="transaction-row">
+                    <td class="transaction-date">03/04/2023</td>
+                    <td>
+                        <div class="transaction-description">TED-TRANSF ELET DISPON REMET.BRASIL SOLUCO</div>
+                    </td>
+                    <td>BRASIL SOLUÇÕES</td>
+                    <td class="transaction-category">Mensalidade</td>
+                    <td class="transaction-value positive">R$23.543,00</td>
+                    <td>
+                        <span class="status-badge recorrente">1/12</span>
+                        <div class="payment-type">Recorrente Mensal</div>
+                    </td>
+                    <td>✅</td>
+                </tr>
+                <tr class="transaction-row">
+                    <td class="transaction-date">03/04/2023</td>
+                    <td>
+                        <div class="transaction-description">MASTER CREDITO BRASIL SOLUÇÕES</div>
+                    </td>
+                    <td>BRASIL SOLUÇÕES</td>
+                    <td class="transaction-category">Mensalidade</td>
+                    <td class="transaction-value positive">R$1.310,89</td>
+                    <td>
+                        <span class="status-badge recorrente">1/12</span>
+                        <div class="payment-type">Recorrente Mensal</div>
+                    </td>
+                    <td>✅</td>
+                </tr>
+                <tr class="transaction-row">
+                    <td class="transaction-date">03/04/2023</td>
+                    <td>
+                        <div class="transaction-description">VISA CREDITO BRASIL SOLUÇÕES</div>
+                    </td>
+                    <td>BRASIL SOLUÇÕES</td>
+                    <td class="transaction-category">Mensalidade</td>
+                    <td class="transaction-value positive">R$563,17</td>
+                    <td>
+                        <span class="status-badge recorrente">1/12</span>
+                        <div class="payment-type">Recorrente Mensal</div>
+                    </td>
+                    <td>✅</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Resumo Final -->
+        <div class="summary-bottom">
+            <div class="total-recebido">
+                Recebido: R$58.074,49
+            </div>
+            <div class="total-a-receber">
+                A Receber: R$0,00
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}
+            </div>
