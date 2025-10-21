@@ -149,3 +149,28 @@ logs/
 GITHUB_UPLOAD.md
 notas.md
 anotacoes.txt
+
+# Arquivos de teste e scripts temporários
+test_*.py
+*test*.py
+validation_report.json
+check_*.py
+create_auth_tables.py
+create_tables.py
+diagnostico_sistema.py
+fix_tables*.py
+start_server.py
+validate_*.py
+*.bat
+
+# Documentação temporária
+DOCUMENTACAO.md
+INTERFACE_MODERNA_COMPLETA.md
+PADRONIZACAO_CORES.md
+RELATORIO_*.md
+STATUS_*.md
+SOLUCAO_PROBLEMAS.md
+VALIDACAO_*.md
+
+# Backups
+backups/

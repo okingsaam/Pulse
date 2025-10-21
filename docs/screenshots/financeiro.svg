@@ -1,0 +1,94 @@
+<svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00b894;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00a085;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#bg)"/>
+  
+  <!-- Main container -->
+  <rect x="50" y="50" width="700" height="400" fill="white" rx="15" opacity="0.95"/>
+  
+  <!-- Header -->
+  <text x="400" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#2c3e50">💰 Gestão Financeira</text>
+  
+  <!-- Financial cards -->
+  <rect x="80" y="120" width="150" height="70" fill="#27ae60" rx="8"/>
+  <text x="155" y="140" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="white">Receita Mensal</text>
+  <text x="155" y="160" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="white">R$ 45.200</text>
+  <text x="155" y="175" text-anchor="middle" font-family="Arial" font-size="10" fill="white">+12% vs mês anterior</text>
+  
+  <rect x="250" y="120" width="150" height="70" fill="#3498db" rx="8"/>
+  <text x="325" y="140" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="white">Consultas Pagas</text>
+  <text x="325" y="160" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="white">178</text>
+  <text x="325" y="175" text-anchor="middle" font-family="Arial" font-size="10" fill="white">Este mês</text>
+  
+  <rect x="420" y="120" width="150" height="70" fill="#e74c3c" rx="8"/>
+  <text x="495" y="140" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="white">Pendências</text>
+  <text x="495" y="160" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="white">R$ 3.800</text>
+  <text x="495" y="175" text-anchor="middle" font-family="Arial" font-size="10" fill="white">12 contas em aberto</text>
+  
+  <rect x="590" y="120" width="150" height="70" fill="#9b59b6" rx="8"/>
+  <text x="665" y="140" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="white">Ticket Médio</text>
+  <text x="665" y="160" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="white">R$ 254</text>
+  <text x="665" y="175" text-anchor="middle" font-family="Arial" font-size="10" fill="white">Por consulta</text>
+  
+  <!-- Chart area -->
+  <rect x="80" y="210" width="340" height="150" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2" rx="8"/>
+  <text x="250" y="235" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#495057">Receita Mensal</text>
+  
+  <!-- Simple chart representation -->
+  <rect x="100" y="250" width="25" height="60" fill="#3498db"/>
+  <rect x="130" y="240" width="25" height="70" fill="#27ae60"/>
+  <rect x="160" y="230" width="25" height="80" fill="#e74c3c"/>
+  <rect x="190" y="220" width="25" height="90" fill="#f39c12"/>
+  <rect x="220" y="210" width="25" height="100" fill="#9b59b6"/>
+  <rect x="250" y="200" width="25" height="110" fill="#1abc9c"/>
+  <rect x="280" y="245" width="25" height="65" fill="#34495e"/>
+  <rect x="310" y="235" width="25" height="75" fill="#e67e22"/>
+  <rect x="340" y="225" width="25" height="85" fill="#95a5a6"/>
+  <rect x="370" y="215" width="25" height="95" fill="#2ecc71"/>
+  
+  <!-- Months labels -->
+  <text x="112" y="325" text-anchor="middle" font-family="Arial" font-size="8" fill="#6c757d">Jan</text>
+  <text x="142" y="325" text-anchor="middle" font-family="Arial" font-size="8" fill="#6c757d">Fev</text>
+  <text x="172" y="325" text-anchor="middle" font-family="Arial" font-size="8" fill="#6c757d">Mar</text>
+  <text x="202" y="325" text-anchor="middle" font-family="Arial" font-size="8" fill="#6c757d">Abr</text>
+  <text x="232" y="325" text-anchor="middle" font-family="Arial" font-size="8" fill="#6c757d">Mai</text>
+  <text x="262" y="325" text-anchor="middle" font-family="Arial" font-size="8" fill="#6c757d">Jun</text>
+  <text x="292" y="325" text-anchor="middle" font-family="Arial" font-size="8" fill="#6c757d">Jul</text>
+  <text x="322" y="325" text-anchor="middle" font-family="Arial" font-size="8" fill="#6c757d">Ago</text>
+  <text x="352" y="325" text-anchor="middle" font-family="Arial" font-size="8" fill="#6c757d">Set</text>
+  <text x="382" y="325" text-anchor="middle" font-family="Arial" font-size="8" fill="#6c757d">Out</text>
+  
+  <!-- Transaction history -->
+  <rect x="440" y="210" width="300" height="150" fill="#f8f9fa" stroke="#dee2e6" rx="8"/>
+  <text x="590" y="235" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#495057">Últimas Transações</text>
+  
+  <!-- Transaction 1 -->
+  <rect x="450" y="245" width="280" height="25" fill="white" stroke="#e9ecef"/>
+  <text x="460" y="260" font-family="Arial" font-size="10" fill="#212529">Consulta - Maria Silva</text>
+  <text x="720" y="260" text-anchor="end" font-family="Arial" font-size="10" font-weight="bold" fill="#28a745">+R$ 250</text>
+  
+  <!-- Transaction 2 -->
+  <rect x="450" y="270" width="280" height="25" fill="#f8f9fa" stroke="#e9ecef"/>
+  <text x="460" y="285" font-family="Arial" font-size="10" fill="#212529">Consulta - João Costa</text>
+  <text x="720" y="285" text-anchor="end" font-family="Arial" font-size="10" font-weight="bold" fill="#28a745">+R$ 180</text>
+  
+  <!-- Transaction 3 -->
+  <rect x="450" y="295" width="280" height="25" fill="white" stroke="#e9ecef"/>
+  <text x="460" y="310" font-family="Arial" font-size="10" fill="#212529">Exame - Ana Lima</text>
+  <text x="720" y="310" text-anchor="end" font-family="Arial" font-size="10" font-weight="bold" fill="#28a745">+R$ 120</text>
+  
+  <!-- Transaction 4 -->
+  <rect x="450" y="320" width="280" height="25" fill="#f8f9fa" stroke="#e9ecef"/>
+  <text x="460" y="335" font-family="Arial" font-size="10" fill="#212529">Equipamento Médico</text>
+  <text x="720" y="335" text-anchor="end" font-family="Arial" font-size="10" font-weight="bold" fill="#dc3545">-R$ 1.200</text>
+  
+  <!-- Footer -->
+  <text x="400" y="390" text-anchor="middle" font-family="Arial" font-size="12" fill="#6c757d">Controle financeiro completo com gráficos e métricas em tempo real</text>
+  <text x="400" y="410" text-anchor="middle" font-family="Arial" font-size="10" fill="#6c757d">Relatórios automáticos • Análise de tendências • Histórico detalhado</text>
+</svg>

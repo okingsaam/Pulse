@@ -19,31 +19,31 @@
 
 ### 📊 Dashboard Principal
 <div align="center">
-  <img src="docs/screenshots/dashboard.png" alt="Dashboard do Pulse" width="800">
+  <img src="docs/screenshots/dashboard.svg" alt="Dashboard do Pulse" width="800">
   <p><em>Dashboard com estatísticas em tempo real, gráficos interativos e design moderno</em></p>
 </div>
 
 ### 📅 Agenda Visual
 <div align="center">
-  <img src="docs/screenshots/agenda.png" alt="Agenda do Pulse" width="800">
+  <img src="docs/screenshots/agenda.svg" alt="Agenda do Pulse" width="800">
   <p><em>Sistema de agenda com visualização por horários e estatísticas do dia</em></p>
 </div>
 
 ### 👥 Gestão de Pacientes
 <div align="center">
-  <img src="docs/screenshots/pacientes.png" alt="Pacientes do Pulse" width="800">
+  <img src="docs/screenshots/pacientes.svg" alt="Pacientes do Pulse" width="800">
   <p><em>Interface moderna para gestão de pacientes com busca e filtros</em></p>
 </div>
 
-### � Gestão Financeira
+### 💰 Gestão Financeira
 <div align="center">
-  <img src="docs/screenshots/financeiro.png" alt="Sistema Financeiro do Pulse" width="800">
+  <img src="docs/screenshots/financeiro.svg" alt="Sistema Financeiro do Pulse" width="800">
   <p><em>Controle financeiro completo com gráficos, métricas em tempo real e histórico de transações</em></p>
 </div>
 
-### �🛠️ Painel Administrativo
+### ⚙️ Painel Administrativo
 <div align="center">
-  <img src="docs/screenshots/admin.png" alt="Admin do Pulse" width="800">
+  <img src="docs/screenshots/admin.svg" alt="Admin do Pulse" width="800">
   <p><em>Painel administrativo completo integrado ao Django Admin</em></p>
 </div>
 

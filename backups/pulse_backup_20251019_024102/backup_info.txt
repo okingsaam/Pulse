@@ -1,4 +1,0 @@
-Backup do Sistema Pulse
-Data: 2025-10-19 02:41:03.067916
-Versão Django: 4.2.25
-Ambiente: Desenvolvimento

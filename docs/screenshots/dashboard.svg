@@ -1,0 +1,44 @@
+<svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#bg)"/>
+  
+  <!-- Main container -->
+  <rect x="50" y="50" width="700" height="400" fill="white" rx="15" opacity="0.95"/>
+  
+  <!-- Header -->
+  <text x="400" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#2c3e50">🏥 Pulse - Dashboard</text>
+  
+  <!-- Stats cards -->
+  <rect x="80" y="130" width="150" height="80" fill="#3498db" rx="8"/>
+  <text x="155" y="155" text-anchor="middle" font-family="Arial" font-size="24" font-weight="bold" fill="white">245</text>
+  <text x="155" y="175" text-anchor="middle" font-family="Arial" font-size="12" fill="white">Pacientes Ativos</text>
+  
+  <rect x="250" y="130" width="150" height="80" fill="#27ae60" rx="8"/>
+  <text x="325" y="155" text-anchor="middle" font-family="Arial" font-size="24" font-weight="bold" fill="white">18</text>
+  <text x="325" y="175" text-anchor="middle" font-family="Arial" font-size="12" fill="white">Consultas Hoje</text>
+  
+  <rect x="420" y="130" width="150" height="80" fill="#e74c3c" rx="8"/>
+  <text x="495" y="155" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold" fill="white">R$ 12.500</text>
+  <text x="495" y="175" text-anchor="middle" font-family="Arial" font-size="12" fill="white">Receita Mensal</text>
+  
+  <rect x="590" y="130" width="150" height="80" fill="#9b59b6" rx="8"/>
+  <text x="665" y="155" text-anchor="middle" font-family="Arial" font-size="24" font-weight="bold" fill="white">95%</text>
+  <text x="665" y="175" text-anchor="middle" font-family="Arial" font-size="12" fill="white">Taxa Satisfação</text>
+  
+  <!-- Chart placeholder -->
+  <rect x="80" y="240" width="660" height="120" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2" stroke-dasharray="5,5" rx="8"/>
+  <text x="410" y="290" text-anchor="middle" font-family="Arial" font-size="18" fill="#6c757d">📊 Gráfico de Consultas por Dia</text>
+  <text x="410" y="315" text-anchor="middle" font-family="Arial" font-size="14" fill="#6c757d">Dashboard com estatísticas em tempo real</text>
+  
+  <!-- Bottom chart -->
+  <rect x="80" y="380" width="660" height="60" fill="#e8f5e8" stroke="#27ae60" stroke-width="1" rx="8"/>
+  <text x="410" y="405" text-anchor="middle" font-family="Arial" font-size="16" fill="#27ae60">💰 Análise Financeira em Tempo Real</text>
+  <text x="410" y="425" text-anchor="middle" font-family="Arial" font-size="12" fill="#27ae60">Métricas e gráficos interativos</text>
+</svg>
